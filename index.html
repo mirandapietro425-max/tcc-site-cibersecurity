@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CyberShield — Cibersegurança, LGPD & Segurança para Devs</title>
+  <meta name="description" content="Soluções de cibersegurança pessoal, corporativa, de software e conformidade com a LGPD. Guia completo para usuários e desenvolvedores." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300ffa3'%3E%3Cpath d='M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3Z'/%3E%3C/svg%3E" />
+</head>
+<body>
+
+  <!-- ========== FUNDO ANIMADO ========== -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow" aria-hidden="true"></div>
+  <canvas id="particles" aria-hidden="true"></canvas>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#top" class="nav__logo">
+        <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+          <path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>CyberShield</span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="#areas">Áreas</a></li>
+        <li><a href="#pilares">Pilares</a></li>
+        <li><a href="#ameacas">Ameaças</a></li>
+        <li><a href="#social">Engenharia Social</a></li>
+        <li><a href="#lgpd">LGPD</a></li>
+        <li><a href="#dev">Dev Seguro</a></li>
+      </ul>
+      <a href="#areas" class="nav__cta">Começar</a>
+      <button class="nav__toggle" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <header class="hero" id="top">
+    <div class="hero__inner">
+      <div class="hero__badge">
+        <span class="dot"></span>
+        <span>Status: monitorando ameaças em tempo real</span>
+      </div>
+
+      <h1 class="hero__title">
+        Cibersegurança <span class="grad">de ponta a ponta</span>
+        para pessoas, empresas e código.
+      </h1>
+
+      <p class="hero__sub">
+        Estratégia, defesa inteligente e conformidade com a LGPD em um único
+        ecossistema. Conheça os pilares da segurança, identifique as ameaças
+        e construa software à prova de invasores.
+      </p>
+
+      <div class="hero__cta">
+        <a href="#areas" class="btn btn--primary">
+          Explorar áreas
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#dev" class="btn btn--ghost">Checklist do dev</a>
+      </div>
+
+      <div class="hero__stats">
+        <div class="stat">
+          <span class="stat__num" data-target="4">0</span>
+          <span class="stat__label">áreas de atuação</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num" data-target="3" data-suffix="">0</span>
+          <span class="stat__label">pilares fundamentais</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num" data-target="5">0</span>
+          <span class="stat__label">ameaças críticas</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num" data-target="100" data-suffix="%">0</span>
+          <span class="stat__label">foco em defesa</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card flutuante "terminal" no hero -->
+    <div class="hero__terminal" aria-hidden="true">
+      <div class="t-window">
+        <div class="t-bar">
+          <span class="t-dot t-dot--r"></span>
+          <span class="t-dot t-dot--y"></span>
+          <span class="t-dot t-dot--g"></span>
+          <span class="t-title">cybershield — auditoria</span>
+        </div>
+        <div class="t-body">
+          <p><span class="prompt">$</span> scan --target empresa.com</p>
+          <p class="t-ok">[ok] TLS 1.3 detectado</p>
+          <p class="t-ok">[ok] Headers seguros ativos</p>
+          <p class="t-warn">[warn] 2 dependências vulneráveis</p>
+          <p class="t-ok">[ok] LGPD: política presente</p>
+          <p class="t-pulse"><span class="cursor">█</span></p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ========== ÁREAS DE ATUAÇÃO ========== -->
+    <section class="section" id="areas">
+      <header class="section__head">
+        <span class="eyebrow">// 01 — Áreas de atuação</span>
+        <h2>Defesa em todas as frentes</h2>
+        <p>Quatro pilares de proteção que cobrem do usuário final ao deploy em produção.</p>
+      </header>
+
+      <div class="grid-4">
+        <article class="card card--area" style="--accent:#00ffa3">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">
+              <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+              <path d="M4 21c0-4 4-7 8-7s8 3 8 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Segurança Pessoal</h3>
+          <p>Proteja sua identidade, contas, senhas e dispositivos contra golpes e vazamentos.</p>
+          <a href="#" class="card__link">Saiba mais →</a>
+        </article>
+
+        <article class="card card--area" style="--accent:#7c5cff">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">
+              <path d="M3 21V9l9-6 9 6v12" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M9 21v-7h6v7" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Segurança Corporativa</h3>
+          <p>Estratégia de defesa para empresas: redes, endpoints, BYOD e cultura de segurança.</p>
+          <a href="#" class="card__link">Saiba mais →</a>
+        </article>
+
+        <article class="card card--area" style="--accent:#00d4ff">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">
+              <path d="M8 6 2 12l6 6M16 6l6 6-6 6M14 4l-4 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Segurança de Software</h3>
+          <p>Código seguro por padrão: SAST, secrets, dependências e hardening de aplicações.</p>
+          <a href="#" class="card__link">Saiba mais →</a>
+        </article>
+
+        <article class="card card--area" style="--accent:#ffb020">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">
+              <path d="M12 3 4 6v6c0 4.4 3.2 8.5 8 9 4.8-.5 8-4.6 8-9V6l-8-3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>LGPD &amp; Conformidade</h3>
+          <p>Privacy by Design, tratamento de dados sensíveis e adequação à Lei Geral de Proteção.</p>
+          <a href="#" class="card__link">Saiba mais →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========== PILARES ========== -->
+    <section class="section" id="pilares">
+      <header class="section__head">
+        <span class="eyebrow">// 02 — Fundamentos</span>
+        <h2>Toda segurança se apoia em três pilares</h2>
+        <p>A tríade <strong>CIA</strong> define o que proteger, contra quem e em qual nível.</p>
+      </header>
+
+      <div class="grid-3 pillars">
+        <article class="pillar" style="--c:#00ffa3">
+          <div class="pillar__abbr">C</div>
+          <h3>Confidencialidade</h3>
+          <p>Apenas pessoas autorizadas acessam a informação. Criptografia, autenticação forte e controle de acesso.</p>
+          <span class="pillar__chip">criptografia · ACL · MFA</span>
+        </article>
+        <article class="pillar" style="--c:#7c5cff">
+          <div class="pillar__abbr">I</div>
+          <h3>Integridade</h3>
+          <p>Os dados não foram alterados de forma indevida. Hashes, assinaturas e logs de auditoria.</p>
+          <span class="pillar__chip">hash · assinatura · auditoria</span>
+        </article>
+        <article class="pillar" style="--c:#00d4ff">
+          <div class="pillar__abbr">A</div>
+          <h3>Disponibilidade</h3>
+          <p>Sistemas e dados acessíveis quando necessário. Redundância, backups e mitigação de DDoS.</p>
+          <span class="pillar__chip">redundância · backup · DDoS</span>
+        </article>
+      </div>
+
+      <div class="callout">
+        <strong>Você é o elo mais forte.</strong>
+        Tecnologia defende sistemas, mas o fator humano decide entre um clique seguro e um incidente.
+      </div>
+    </section>
+
+    <!-- ========== AMEAÇAS ========== -->
+    <section class="section" id="ameacas">
+      <header class="section__head">
+        <span class="eyebrow">// 03 — O que te ataca</span>
+        <h2>Suas possíveis ameaças</h2>
+        <p>Conheça o inimigo antes de mapear a defesa. As 5 categorias que mais causam incidentes.</p>
+      </header>
+
+      <div class="grid-threats">
+        <article class="threat">
+          <div class="threat__head">
+            <span class="threat__tag">rede</span>
+            <h3>Worms</h3>
+          </div>
+          <p>Programas que se propagam automaticamente entre computadores explorando falhas de rede, sem precisar de interação do usuário.</p>
+          <div class="threat__bar"><span style="width:78%;--c:#ff5577"></span></div>
+          <span class="threat__lvl">Risco · alto</span>
+        </article>
+
+        <article class="threat">
+          <div class="threat__head">
+            <span class="threat__tag">disfarce</span>
+            <h3>Trojans</h3>
+          </div>
+          <p>Disfarçam-se de softwares legítimos, mas transformam a máquina em um servidor acessível para invasores.</p>
+          <div class="threat__bar"><span style="width:72%;--c:#ff5577"></span></div>
+          <span class="threat__lvl">Risco · alto</span>
+        </article>
+
+        <article class="threat">
+          <div class="threat__head">
+            <span class="threat__tag">sequestro</span>
+            <h3>Ransomware</h3>
+          </div>
+          <p>O temido sequestro de dados: criptografa arquivos e exige resgate em criptomoedas para liberar o acesso.</p>
+          <div class="threat__bar"><span style="width:92%;--c:#ff2040"></span></div>
+          <span class="threat__lvl">Risco · crítico</span>
+        </article>
+
+        <article class="threat">
+          <div class="threat__head">
+            <span class="threat__tag">insider</span>
+            <h3>Bomba Lógica</h3>
+          </div>
+          <p>Código oculto que só dispara quando uma condição específica acontece — como a demissão de um programador.</p>
+          <div class="threat__bar"><span style="width:55%;--c:#ffb020"></span></div>
+          <span class="threat__lvl">Risco · médio</span>
+        </article>
+
+        <article class="threat">
+          <div class="threat__head">
+            <span class="threat__tag">zumbi</span>
+            <h3>Botnets</h3>
+          </div>
+          <p>Dispositivos infectados controlados remotamente para ataques em massa — DDoS, mineração e spam.</p>
+          <div class="threat__bar"><span style="width:66%;--c:#ffb020"></span></div>
+          <span class="threat__lvl">Risco · médio</span>
+        </article>
+
+        <article class="threat threat--hint">
+          <h3>Defesa em camadas</h3>
+          <p>Nenhuma medida isolada resolve. Combine antivírus, firewall, atualizações, MFA e backups para criar uma defesa resiliente.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========== ENGENHARIA SOCIAL ========== -->
+    <section class="section" id="social">
+      <header class="section__head">
+        <span class="eyebrow">// 04 — O elo mais frágil</span>
+        <h2>Engenharia Social</h2>
+        <p>Você sempre será o alvo mais fácil. Manipulação psicológica antes da exploração técnica.</p>
+      </header>
+
+      <div class="alert">
+        <span class="alert__icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path d="M12 9v4M12 17h.01M10.3 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.7 3.86a2 2 0 0 0-3.4 0Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <p><strong>Atenção:</strong> 95% dos incidentes de segurança começam com um clique humano.</p>
+      </div>
+
+      <div class="grid-social">
+        <article class="soc soc--voice">
+          <div class="soc__icon">
+            <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Vishing</h3>
+          <p>Golpistas usam chamadas telefônicas e técnicas de persuasão por voz para extrair dados e senhas.</p>
+          <span class="soc__tag">voz · telefone</span>
+        </article>
+
+        <article class="soc soc--sms">
+          <div class="soc__icon">
+            <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Smishing</h3>
+          <p>Golpes via SMS que criam um falso senso de urgência para forçar um clique em links maliciosos.</p>
+          <span class="soc__tag">SMS · mensagens</span>
+        </article>
+
+        <article class="soc soc--phish">
+          <div class="soc__icon">
+            <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2Z" fill="none" stroke="currentColor" stroke-width="2"/>
+              <path d="m22 6-10 7L2 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Phishing</h3>
+          <p>Manipulação psicológica para roubar senhas e dados bancários através de e-mails e links falsos.</p>
+          <span class="soc__tag">e-mail · links</span>
+        </article>
+
+        <article class="soc soc--id">
+          <div class="soc__icon">
+            <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+              <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+              <path d="M4 21c0-4 4-7 8-7s8 3 8 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M16 4l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Roubo de Identidade</h3>
+          <p>O desfecho comum dessas manipulações: dados pessoais usados para fraudes e golpes financeiros.</p>
+          <span class="soc__tag">fraude · financeiro</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========== LGPD ========== -->
+    <section class="section" id="lgpd">
+      <header class="section__head">
+        <span class="eyebrow">// 05 — Conformidade</span>
+        <h2>Proteção de Dados &amp; LGPD no ambiente corporativo</h2>
+        <p>Privacidade não é checkbox — é arquitetura. Construa sistemas que respeitam dados por padrão.</p>
+      </header>
+
+      <div class="grid-3 lgpd">
+        <article class="lgpd__card">
+          <span class="lgpd__num">01</span>
+          <h3>O Desafio do BYOD</h3>
+          <p>O uso de equipamentos pessoais no trabalho remoto dificulta o controle de segurança e expande a superfície de ataque das organizações.</p>
+          <ul class="lgpd__list">
+            <li>Segmentação de redes</li>
+            <li>MDM e políticas corporativas</li>
+            <li>Zero Trust para endpoints</li>
+          </ul>
+        </article>
+
+        <article class="lgpd__card">
+          <span class="lgpd__num">02</span>
+          <h3>Privacy by Design</h3>
+          <p>A privacidade deve ser incorporada à arquitetura do software desde as primeiras linhas de código — não como ajuste posterior.</p>
+          <ul class="lgpd__list">
+            <li>Minimização de dados</li>
+            <li>Consentimento granular</li>
+            <li>Criptografia end-to-end</li>
+          </ul>
+        </article>
+
+        <article class="lgpd__card">
+          <span class="lgpd__num">03</span>
+          <h3>Risco das IAs Generativas</h3>
+          <p>Atenção aos vibe-coders: usar IA para gerar código rápido sem validar brechas críticas ou o tratamento adequado de dados sensíveis é um risco real.</p>
+          <ul class="lgpd__list">
+            <li>Revisão humana obrigatória</li>
+            <li>Dados sensíveis fora de prompts</li>
+            <li>Validação com SAST</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========== DEV SEGURO ========== -->
+    <section class="section" id="dev">
+      <header class="section__head">
+        <span class="eyebrow">// 06 — Para desenvolvedores</span>
+        <h2>Seu usuário seguro começa no seu código</h2>
+        <p>Checklist não-negociável para quem leva segurança a sério.</p>
+      </header>
+
+      <div class="terminal">
+        <div class="t-window">
+          <div class="t-bar">
+            <span class="t-dot t-dot--r"></span>
+            <span class="t-dot t-dot--y"></span>
+            <span class="t-dot t-dot--g"></span>
+            <span class="t-title">~/seu-usuario-seguro — checklist.sh</span>
+          </div>
+          <ul class="t-list">
+            <li><span class="t-check">✓</span><span>Nunca envie arquivos <code>.env</code> para repositórios públicos — adicione-os ao <code>.gitignore</code>.</span></li>
+            <li><span class="t-check">✓</span><span>Limpe comentários de depuração (como <code>// TODO</code> ou <code>console.log</code>) antes do deploy.</span></li>
+            <li><span class="t-check">✓</span><span>Use ferramentas de análise estática (SAST) no pipeline de build.</span></li>
+            <li><span class="t-check">✓</span><span>Salve senhas com algoritmos de hashing fortes como BCrypt — nunca em texto puro.</span></li>
+            <li><span class="t-check">✓</span><span>Adote HTTPS everywhere, HSTS e cookies <code>Secure</code> + <code>HttpOnly</code>.</span></li>
+            <li><span class="t-check">✓</span><span>Valide toda entrada no servidor — SQL Injection e XSS não são bug, são decisão de arquitetura.</span></li>
+          </ul>
+          <p class="t-prompt"><span class="cursor">█</span> <span class="t-muted">build com sucesso — 0 vulnerabilidades críticas</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CTA FINAL ========== -->
+    <section class="cta">
+      <div class="cta__inner">
+        <h2>Comece sua defesa hoje.</h2>
+        <p>Segurança não é produto. É processo, cultura e código.</p>
+        <div class="hero__cta">
+          <a href="#areas" class="btn btn--primary">Ver áreas de atuação</a>
+          <a href="#dev" class="btn btn--ghost">Quero um dev mais seguro</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+        <span>CyberShield</span>
+      </div>
+      <p class="footer__txt">Conteúdo educativo sobre cibersegurança, LGPD e desenvolvimento seguro.</p>
+      <p class="footer__copy">© 2026 CyberShield · Feito com <span style="color:#ff5577">♥</span> para um digital mais seguro.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
