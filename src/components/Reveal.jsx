@@ -1,19 +1,20 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Reveal({ as: Tag = "div", className = "", delay = 0, children, ...rest }) {
   const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const node = ref.current;
     if (!node) return undefined;
     if (!("IntersectionObserver" in window)) {
-      node.classList.add("is-visible");
+      setVisible(true);
       return undefined;
     }
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          node.classList.add("is-visible");
+          setVisible(true);
           observer.disconnect();
         }
       },
@@ -24,7 +25,12 @@ export default function Reveal({ as: Tag = "div", className = "", delay = 0, chi
   }, []);
 
   return (
-    <Tag ref={ref} className={`reveal ${className}`} style={{ transitionDelay: `${delay}ms` }} {...rest}>
+    <Tag
+      ref={ref}
+      className={`reveal ${visible ? "is-visible " : ""}${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+      {...rest}
+    >
       {children}
     </Tag>
   );
