@@ -1,54 +1,67 @@
 # CyberShield — Métodos de segurança na internet
 
-Experiência educativa e responsiva baseada no TCC de Pietro de Moraes Miranda. O site organiza cibersegurança pessoal, proteção corporativa, LGPD, engenharia social e desenvolvimento seguro em uma jornada interativa.
+Experiência educativa e responsiva baseada no TCC de Pietro de Moraes Miranda. O site organiza cibersegurança pessoal, proteção corporativa, LGPD, engenharia social e desenvolvimento seguro em uma jornada interativa, agora como aplicação React (Vite) com várias páginas.
 
-## O que mudou
+## Páginas
 
-- Hero visual com mapa de defesa em profundidade, sem alegações de monitoramento em tempo real.
-- Mapa de quatro frentes: pessoas, empresas, código e dados.
-- Explorador interativo da tríade CID (confidencialidade, integridade e disponibilidade).
-- Filtro e painel de defesa para ransomware, trojans, worms, phishing, vishing e smishing.
-- Fluxo educativo de engenharia social com a regra dos três segundos.
-- Ciclo visual de tratamento de dados alinhado a Privacy by Design e LGPD.
-- Checklist de desenvolvimento seguro com progresso salvo somente no navegador.
-- Autoavaliação de postura e verificador de força de senha executados localmente.
-- Referências do TCC para OWASP, CERT.br e legislação brasileira.
+| Rota | O que oferece |
+| --- | --- |
+| `/` | Hero imersivo, arte de defesa em profundidade, tríade CID e resumo das experiências |
+| `/ameacas` | Radar animado em Canvas, filtros por grupo e painel de defesa por ameaça |
+| `/laboratorio` | Cenários de phishing, vishing, smishing, quishing e deepfake com feedback e pontuação |
+| `/lgpd` | Ciclo interativo do dado (coletar, usar, proteger, descartar) e direitos do titular |
+| `/dev-seguro` | Pipeline modelar/construir/publicar com checklist salvo no navegador |
+| `/ferramentas` | Autoavaliação, medidor e gerador de senha, analisador textual de links |
+| `/referencias` | Benchmark internacional e referências técnicas do TCC |
+
+## Privacidade das ferramentas
+
+Autoavaliação, senha, links e checklist rodam inteiramente no navegador. Nenhum dado é enviado para servidor, nenhum link informado é acessado automaticamente e o progresso do checklist fica apenas no `localStorage`. O radar de ameaças é uma visualização educativa simulada, não telemetria real.
 
 ## Deploy no Vercel
 
-O projeto continua sendo um site estático: `index.html` está na raiz e não exige build, framework ou variáveis de ambiente.
+O projeto agora usa build Vite. O `vercel.json` já declara tudo:
 
-1. Importe `mirandapietro425-max/tcc-site-cibersecurity` no Vercel.
-2. Use **Other** como Framework Preset.
-3. Deixe Build Command e Install Command vazios.
-4. Use `.` como Root Directory.
+- Framework: `vite`
+- Build Command: `npm run build`
+- Output Directory: `dist`
+- Rewrites de SPA para que as rotas funcionem em acesso direto
+- Headers de segurança (CSP, HSTS, X-Frame-Options, Permissions-Policy)
 
-O `vercel.json` aplica headers de segurança e cada push na branch principal pode gerar uma nova versão no projeto já conectado ao Vercel.
+Root Directory continua `.`. Cada push na branch principal gera nova versão no projeto já conectado ao Vercel.
+
+## Executar localmente
+
+```bash
+npm install
+npm run dev      # servidor de desenvolvimento
+npm run build    # build de produção em dist/
+npm run preview  # serve o build
+npm run lint     # ESLint
+```
 
 ## Estrutura
 
 ```text
 .
-├── index.html              # conteúdo, estrutura e ferramentas da experiência
-├── style.css               # sistema visual responsivo e acessível
-├── script.js               # tabs, filtros, checklist e ferramentas locais
-├── vercel.json             # deploy e headers de segurança
+├── index.html              # shell da aplicação (Vite)
+├── src/
+│   ├── main.jsx            # bootstrap React + Router
+│   ├── App.jsx             # rotas
+│   ├── components/         # layout, arte SVG, radar Canvas, animação de entrada
+│   ├── data/content.js     # ameaças, cenários, LGPD, pipeline, referências, benchmark
+│   ├── pages/              # uma página por rota
+│   └── styles/             # base.css (sistema visual original) + app.css (camada React)
+├── vercel.json             # build, rewrites de SPA e headers de segurança
 ├── img-referencias/        # materiais visuais já presentes no repositório
 ├── PROMPTS.md              # prompts de referências anteriores
 └── preview-*.png           # prévias anteriores
 ```
 
-## Executar localmente
-
-```bash
-python3 -m http.server 8000
-```
-
-Depois, acesse `http://localhost:8000`.
-
 ## Tecnologias
 
-- HTML5 semântico e navegação por teclado
-- CSS3 com Grid, Flexbox, custom properties e animações reduzidas quando necessário
-- JavaScript vanilla, sem dependências de build
+- React 18 + React Router 6
+- Vite 5
+- Canvas 2D e SVG animado para as artes
+- CSS3 com Grid, Flexbox, custom properties e respeito a `prefers-reduced-motion`
 - Google Fonts: DM Sans, Space Grotesk e Space Mono
