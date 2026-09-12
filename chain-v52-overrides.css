@@ -13,7 +13,7 @@
 
 @media (max-width:760px){ .attack-rail ol { grid-template-columns:repeat(2,minmax(0,1fr)); } .attack-rail ol > li:last-child { grid-column:1 / -1; } }
 
-/* V52 — English artwork removed from the Chain experience. Visual field is CSS-only. */
+/* V52 — Arte estrangeira removida da experiência da Cadeia; campo visual somente em CSS. */
 .attack-page .attack-hero::after{display:none!important;background:none!important;content:none!important}
 .hero-art-frame{background:
   radial-gradient(circle at 50% 50%,rgba(112,231,247,.10),transparent 34%),

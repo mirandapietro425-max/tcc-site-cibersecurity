@@ -1,0 +1,167 @@
+/* CyberShield V53 — final cross-page responsive/interaction layer.
+   Loaded last. It does not replace page metaphors; it prevents layout/interaction regressions. */
+*,*::before,*::after{box-sizing:border-box}
+html{max-width:100%;overflow-x:hidden}
+body{max-width:100%;overflow-x:clip}
+img,video,canvas,svg,iframe,model-viewer{max-width:100%}
+button,a,input,select,textarea{min-width:0}
+button,.button,.action,.scene-action,.ghost,.sound{touch-action:manipulation}
+:where(button,a,input,select,textarea):focus-visible{outline:2px solid currentColor;outline-offset:3px}
+
+/* Prevent real content from disappearing when an old hover-only rule is applied. */
+@media (hover:none){
+  .signal-card:after,.scene-hotspot:after,.threat-card:after{transition:none}
+}
+
+/* Global nav: scroll the nav, never the document. */
+@media (max-width:760px){
+  .page-header,.topbar{min-width:0;max-width:100%;}
+  .immersive-nav,.primary-nav,.nav-links{
+    min-width:0;max-width:100%;overflow-x:auto;overflow-y:hidden;
+    flex-wrap:nowrap!important;justify-content:flex-start!important;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain;
+  }
+  .immersive-nav::-webkit-scrollbar,.primary-nav::-webkit-scrollbar,.nav-links::-webkit-scrollbar{display:none}
+  .immersive-nav>a,.primary-nav>a,.nav-links>a{flex:0 0 auto;white-space:nowrap}
+  .brand{flex:0 0 auto;white-space:nowrap}
+}
+
+/* Large touch targets without making desktop controls oversized. */
+@media (pointer:coarse){
+  button,.button,.scene-control,.rail-btn,.r43-signal-btn,.r43-decision-btn,.ps-life,.ps-data-bubble,.pb45-node,.pb45-capsule{min-height:44px}
+}
+
+/* Images and visual stages stay inside their columns. */
+.hero-visual,.hero-visual-hacker,.hero-art,.chain-art,.signal-art,.data-art,
+.attack-hero-stage,.attack-scene,.r43-scope-stage,.pb45-stage,.pb45-archive-bg,
+.ps-scene,.ps-quiet-stage,.lab46-chamber,.lab46-core{min-width:0;max-width:100%}
+
+/* Home 3D canvas: always owns its box on desktop and mobile. */
+.chapter .webgl,.chapter canvas{display:block;width:100%;height:100%;max-width:100%;}
+@media (max-width:700px){
+  .chapter .webgl{opacity:.64}
+  .chapter-content,.intro-copy{max-width:100%;}
+}
+@media (min-width:701px){
+  .chapter .webgl{opacity:.9}
+}
+
+/* Radar: robust header and stage sizing in every desktop/mobile state. */
+.radar-page .topbar{position:sticky;top:0;isolation:isolate;display:flex;align-items:center;gap:18px;padding:14px clamp(14px,3vw,38px);background:linear-gradient(180deg,rgba(2,7,12,.94),rgba(2,7,12,.78));border-bottom:1px solid rgba(170,225,240,.14);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.radar-page .brand{color:#eaf8fb;text-decoration:none;font:700 12px/1 "Space Mono";letter-spacing:.1em}
+.radar-page .brand span{color:#71e7f5}
+.radar-page .primary-nav{display:flex;gap:6px;align-items:center;margin-left:auto}
+.radar-page .primary-nav a{padding:8px 10px;border:1px solid transparent;border-radius:9px;color:#8ea6b0;text-decoration:none;font:700 9px/1 "Space Mono";letter-spacing:.05em;white-space:nowrap}
+.radar-page .primary-nav a:hover,.radar-page .primary-nav a.active,.radar-page .primary-nav a:focus-visible{color:#eefbff;background:rgba(113,231,245,.07);border-color:rgba(113,231,245,.22);outline:none}
+.r43-scope-stage{contain:layout paint;}
+.r43-canvas{display:block;}
+@media (min-width:761px){
+  .radar-page .primary-nav{overflow:visible;}
+  .r43-grid{grid-template-columns:minmax(250px,.72fr) minmax(520px,1.5fr) minmax(280px,.78fr)}
+}
+@media (max-width:1100px) and (min-width:761px){
+  .r43-grid{grid-template-columns:minmax(220px,.7fr) minmax(420px,1.3fr)}
+  .r43-intel{grid-column:1}.r43-scope-panel{grid-column:2}.r43-decision{grid-column:1/-1}
+}
+@media (max-width:760px){
+  .radar-page .topbar{flex-wrap:wrap;padding-inline:14px}
+  .radar-page .primary-nav{width:100%;order:3;margin-left:0;padding-top:2px}
+  .r43-hero{min-height:max(680px,100svh)}
+  .r43-hero-inner{padding:118px 16px 60px}
+  .r43-hero h1{font-size:clamp(2.75rem,13.2vw,5.4rem);overflow-wrap:anywhere}
+  .r43-scope-stage{height:clamp(350px,108vw,540px);min-height:350px;}
+  .r43-scope-panel{min-height:0;}
+  .r43-signal-dock{max-width:100%;}
+  .r43-signal-btn{min-width:104px;}
+  .r43-corr-graphic{width:100%;overflow:hidden;}
+  .r43-corr-graphic svg{display:block;width:100%;height:auto;}
+  .r43-audio{right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));}
+}
+@media (max-width:380px){
+  .r43-hero-inner{padding-inline:13px}
+  .r43-hero h1{font-size:clamp(2.45rem,13.7vw,3.4rem)}
+  .r43-scope-stage{height:350px}
+  .r43-signal-btn{min-width:92px}
+}
+
+/* Playbook floating layers: dossier must never cover both permanent controls. */
+@media (max-width:760px){
+  .pb45-audio{right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));}
+  .pb45-motion{right:max(12px,env(safe-area-inset-right));bottom:64px;}
+  .pb45-dossier{left:12px;right:12px;bottom:max(86px,calc(76px + env(safe-area-inset-bottom)));width:auto;max-height:min(64svh,520px);overflow:auto;transform:none;}
+  .pb45-archive,.pb45-sticky{min-width:0;max-width:100%;overflow:hidden;}
+}
+@media (max-width:420px){
+  .pb45-dossier{left:9px;right:9px;bottom:max(86px,calc(78px + env(safe-area-inset-bottom)));padding:16px 48px 15px 15px;}
+}
+
+/* Laboratory: preserve Chamber composition while making node/detail flow linear. */
+@media (max-width:760px){
+  .lab46-floor{display:grid;grid-template-columns:1fr;gap:10px;}
+  .lab46-core{order:1;min-height:260px;width:min(100%,360px);margin-inline:auto;}
+  .lab46-side.left{order:0}.lab46-side.right{order:2}
+  .lab46-detail{grid-template-columns:1fr;}
+  .lab46-audio{position:relative;max-width:100%;}
+  .lab-hero{grid-template-columns:1fr;}
+  .lab-hero-scene{min-height:320px;}
+  .lab-console{grid-template-columns:1fr;}
+  .lab-console-rail{display:flex;gap:8px;overflow-x:auto;}
+  .lab-scenario{flex:0 0 min(78vw,260px);}
+}
+
+/* Privacy: lifecycle cards, data stage and rights stage never exceed viewport width. */
+@media (max-width:900px){
+  .ps-lifecycle-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .ps-life{min-width:0;}
+}
+@media (max-width:600px){
+  .privacy-super .page-header{left:0!important;right:0!important;transform:none!important;width:100%!important;padding-inline:14px;}
+  .privacy-super .immersive-nav{max-width:62vw;}
+  .ps-lifecycle-grid{grid-template-columns:1fr;}
+  .ps-life{min-height:300px;padding:19px;}
+  .ps-life h3{margin-top:34px;font-size:24px;}
+  .ps-progress{display:grid;right:7px;gap:8px;} .ps-progress button{position:relative;}
+  .ps-progress button{width:8px;height:8px;}
+  .ps-quiet-stage{min-height:470px;width:100%;}
+  .ps-data-core{max-width:74vw;}
+  .ps-data-bubble{max-width:82px;}
+}
+
+/* Chain: no legacy visual can reappear above the Portuguese/current hero. */
+.attack-page .hero-art-frame{min-width:0;}
+.attack-page .hero-art-frame,.attack-page .chain-hero-art{overflow:hidden;}
+@media (max-width:760px){
+  .attack-page .attack-hero{min-height:0;}
+  .attack-page .attack-hero-stage{width:100%;}
+  .attack-page .attack-rail ol{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .attack-page .attack-rail ol>li:last-child{grid-column:1/-1;}
+  .attack-page .signal-cards{grid-template-columns:1fr;}
+  .attack-page .deep-grid{grid-template-columns:1fr;}
+}
+
+/* Never force a hover-dependent effect to be the only visual state. */
+@media (hover:none){
+  .attack-page .attack-hero-stage:hover .hero-visual-main{transform:none;}
+  .signal-card:after{opacity:.55;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important;}
+}
+
+
+/* Desktop experience visibility: decorative layers remain visible without hover dependency. */
+@media (min-width:761px){
+  .pb45-capsule{opacity:1;visibility:visible;}
+  .pb45-route{opacity:1;}
+  .lab46-core,.lab46-particle{visibility:visible;}
+  .r43-corr-graphic,.r43-scope-stage{visibility:visible;}
+  .attack-page .chain-hero-art,.attack-page .attack-scene{visibility:visible;}
+}
+
+/* Very narrow devices: never allow a decorative absolute layer to force clipping of copy. */
+@media (max-width:360px){
+  .hero-proof,.hero-pills,.r43-hero-bar{max-width:100%;}
+  .button,.scene-action,.cta,.ghost{max-width:100%;}
+  .ps-hero-copy,.ps-scene-inner,.lab46-intro,.attack-hero-copy,.attack-intro,.section-head{min-width:0;}
+}

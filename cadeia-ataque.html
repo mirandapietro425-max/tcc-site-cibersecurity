@@ -13,9 +13,10 @@
     <link rel="stylesheet" href="ux-polish.css" />
   <link rel="stylesheet" href="cadeia-ataque.css" />
   <link rel="stylesheet" href="cadeia-v48.css?v=48" />
-  <link rel="stylesheet" href="chain-v50-overrides.css?v=50" />
+  <link rel="stylesheet" href="chain-v52-overrides.css?v=52" />
+  <link rel="stylesheet" href="chain-v53-final.css?v=53" />
   <link rel="stylesheet" href="ux-audit-v38.css?v=38">
-  <link rel="stylesheet" href="responsive-v51-hardening.css?v=51" />
+  <link rel="stylesheet" href="responsive-v53-final.css?v=53" />
 </head>
 <body data-sp-page="cadeia-ataque" class="immersive-page attack-page">
   <div class="attack-progress" aria-hidden="true"><span id="attack-progress-bar"></span></div>
@@ -45,6 +46,7 @@
             <span><b>0</b> dados reais</span>
           </div>
           <a class="attack-begin" href="#journey"><span>Entrar na sequência</span><i>↓</i></a>
+          <button class="chain-sound chain-sound-hero" id="chain-sound-top" type="button" aria-pressed="false">Som da sequência · OFF</button>
         </div>
 
         <div class="attack-hero-stage" id="hero-stage">
@@ -52,8 +54,19 @@
           <div class="hero-haze hero-haze-b"></div>
           <div class="hero-orbit orbit-one"></div>
           <div class="hero-orbit orbit-two"></div>
-          <figure class="hero-art-frame">
-            <img class="hero-visual hero-visual-main" src="assets/superproduction-v41/cybershield-cadeia.jpg" alt="Ambiente artístico da cadeia de ataque do CyberShield" />
+          <figure class="hero-art-frame" aria-label="Campo visual abstrato da cadeia de ataque, sem texto em inglês">
+            <div class="chain-hero-art" aria-hidden="true">
+              <span class="chain-hero-beam beam-a"></span>
+              <span class="chain-hero-beam beam-b"></span>
+              <span class="chain-hero-core"></span>
+              <span class="chain-hero-node node-1">01</span>
+              <span class="chain-hero-node node-2">02</span>
+              <span class="chain-hero-node node-3">03</span>
+              <span class="chain-hero-node node-4">04</span>
+              <span class="chain-hero-node node-5">05</span>
+              <span class="chain-hero-node node-6">06</span>
+              <span class="chain-hero-node node-7">07</span>
+            </div>
             <figcaption>SEQUÊNCIA FICTÍCIA · SETE ELOS</figcaption>
           </figure>
           <span class="hero-chip chip-a">SUPERFÍCIE / PÚBLICA</span>
@@ -162,13 +175,13 @@
       </section>
 
       <section class="chain-contemplation" aria-labelledby="contemplation-title">
-        <div class="contemplation-bg"></div>
+        <div class="contemplation-bg" aria-hidden="true"></div>
         <div class="contemplation-grid">
           <p class="eyebrow">PAUSA · LEITURA</p>
           <h2 id="contemplation-title">A cadeia também pode ser lida <span>em silêncio.</span></h2>
           <p>Nem todo sinal pede ação imediata. Às vezes, compreender a sequência inteira é o que permite escolher o ponto certo para colocar fricção.</p>
           <div class="contemplation-pulse" aria-hidden="true"><i></i><i></i><i></i></div>
-          <button class="button button-secondary" id="chain-sound" type="button" aria-pressed="false">Som da sequência · OFF</button>
+          <button class="button button-secondary chain-sound" id="chain-sound" type="button" aria-pressed="false">Som da sequência · OFF</button>
         </div>
       </section>
 
@@ -208,6 +221,8 @@
 
     <footer class="page-footer attack-footer"><span>CyberShield · experiência educativa local, sem coleta de dados</span><a href="privacidade.html">Privacidade →</a></footer>
   </div>
-  <script src="cadeia-v49.js?v=49" defer></script>
+  <audio autoplay="autoplay" id="chain-audio" src="assets/superproduction-v41/cybershield-cadeia.mp3" loop preload="auto" aria-label="Ambiente sonoro da sequência"></audio>
+  <script src="cadeia-v52.js?v=52" defer></script>
+<script src="site-v53-final.js?v=53" defer></script>
 </body>
 </html>

@@ -7,7 +7,7 @@
 
   // Progress is driven by the actual narrative sections, so inserted chapters cannot desynchronize the rail.
   const dots = $$('.ps-progress button');
-  const chapterSections = $$('#ps-hero, #ps-collect, #ps-lifecycle, #ps-quiet, #ps-protect, #ps-close');
+  const chapterSections = $$('#ps-hero, #ps-collect, #ps-lifecycle, #ps-quiet, #ps-use, #ps-protect, #ps-close');
   const sceneSections = $$('.ps-scene');
   const activateChapter = (section) => {
     const targetId = section?.id ? `#${section.id}` : '';

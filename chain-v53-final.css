@@ -1,0 +1,27 @@
+/* CyberShield V53 — final Chain layout hardening */
+.attack-page .hero-visual-main,
+.attack-page .hero-visual-hacker { display:none !important; }
+.attack-page .hero-art-frame { min-width:0; max-width:100%; }
+.attack-page .chain-hero-art { min-width:0; }
+.attack-page .attack-hero-stage { overflow:hidden; }
+.attack-page .chain-sound-hero { position:relative; z-index:20; }
+@media (max-width:760px){
+  .attack-page .attack-hero{grid-template-columns:1fr;}
+  .attack-page .attack-hero-copy{min-width:0;}
+  .attack-page .attack-hero-stage{min-height:320px;}
+  .attack-page .hero-art-frame{height:clamp(300px,82vw,380px);}
+  .attack-page .attack-rail ol{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .attack-page .attack-rail ol>li:last-child{grid-column:1/-1;}
+  .attack-page .attack-scene{height:clamp(450px,120vw,560px);}
+  .attack-page .scene-terminal{right:10px;top:10px;max-width:min(42vw,170px);}
+  .attack-page .scene-caption{left:12px;bottom:12px;max-width:calc(100% - 24px);}
+  .attack-page .scene-caption b,.attack-page .scene-caption small{max-width:100%;overflow-wrap:anywhere;}
+}
+@media (max-width:380px){
+  .attack-page .attack-hero h1{font-size:clamp(2.55rem,14vw,3.5rem);}
+  .attack-page .hero-art-frame{height:300px;}
+  .attack-page .chain-hero-node{width:30px;height:30px;font-size:.46rem;}
+}
+@media (prefers-reduced-motion:reduce){
+  .attack-page .hero-orbit,.attack-page .hero-scanline,.attack-page .scene-pulse{animation:none!important;}
+}

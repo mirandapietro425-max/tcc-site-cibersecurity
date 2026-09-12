@@ -4,7 +4,7 @@
   const path = location.pathname.toLowerCase();
   const map = path.includes('laboratorio') ? ['laboratorio','cybershield-laboratorio.mp3','cybershield-laboratorio.jpg']
     : path.includes('privacidade') ? ['privacidade','cybershield-privacidade.mp3','cybershield-privacidade.jpg']
-    : path.includes('cadeia') ? ['cadeia','cybershield-cadeia.mp3','cybershield-cadeia.jpg']
+    : path.includes('cadeia') ? ['cadeia','cybershield-cadeia.mp3','cybershield-cadeia-seven-stages-ptbr.png']
     : path.includes('radar') ? ['radar','cybershield-radar.mp3','cybershield-radar.jpg']
     : path.includes('playbook') ? ['playbook','cybershield-playbook.mp3','cybershield-archive.jpg']
     : ['home','cybershield-home.mp3','cybershield-city.jpg'];

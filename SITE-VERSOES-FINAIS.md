@@ -1,3 +1,8 @@
+# CyberShield — versão final V53
+
+V53 consolida o site completo com hardening final de responsividade, acessibilidade e coerência de experiências entre desktop e mobile.
+
+Principais páginas: Home, Radar, Playbook, Laboratório, Privacidade e Cadeia de Ataque.
 # CyberShield — Site completo consolidado
 
 Base geral: Superprodução V42 / UX hardening V38
@@ -25,7 +30,7 @@ Esta pasta é um pacote de deploy do site inteiro. Não é necessário juntar ou
 
 ## Revisão de produção V50
 
-- Cadeia de Ataque: hero simplificado para um único artwork canônico (`cybershield-cadeia.jpg`), removendo sobreposição de imagens.
+- Cadeia de Ataque: hero simplificado para um único artwork canônico (`cybershield-cadeia-seven-stages-ptbr.png`), removendo sobreposição de imagens.
 - Cadeia: removidas camadas CSS legadas específicas que não eram mais usadas no hero.
 - Cadeia: mantido apenas o mapa canônico em português no Atlas.
 - Laboratório: corrigidos atributos `style` duplicados no espectro.

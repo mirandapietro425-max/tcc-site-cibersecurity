@@ -1,0 +1,95 @@
+/* CyberShield V51 — final responsive hardening layer.
+   Loaded last so older generations remain intact while narrow-screen edge cases are contained. */
+
+html, body { max-width:100%; }
+body { overflow-x:clip; }
+*, *::before, *::after { box-sizing:border-box; }
+img, video, canvas, svg, iframe, model-viewer { max-width:100%; }
+button, a, input, select, textarea { min-width:0; }
+button, .button, .action, .scene-action, .ghost, .sound { touch-action:manipulation; }
+
+/* Long labels must not create accidental horizontal overflow. */
+.brand, .page-header, .immersive-nav, .nav-links, .hero-actions, .lab-hero-actions,
+.lab-hero-readout, .hero-proof, .lab-section-meta, .section-meta, .ps-aside-head,
+.ps-footer-card, .ps-choice, .r43-toolbar, .r43-statusbar { min-width:0; }
+.brand, .immersive-nav a, .nav-links a { white-space:nowrap; }
+
+/* Mobile navigation: horizontally scroll only the navigation, never the whole page. */
+@media (max-width:760px) {
+  .page-header { gap:10px; }
+  .attack-page .immersive-nav { display:flex !important; }
+  .immersive-nav, .nav-links {
+    max-width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+    flex-wrap:nowrap !important;
+    justify-content:flex-start !important;
+    scrollbar-width:none;
+    overscroll-behavior-x:contain;
+    -webkit-overflow-scrolling:touch;
+    padding-bottom:2px;
+  }
+  .immersive-nav::-webkit-scrollbar, .nav-links::-webkit-scrollbar { display:none; }
+  .immersive-nav a, .nav-links a, .nav-button { flex:0 0 auto; }
+
+  .hero-actions, .lab-hero-actions, .scenario-actions, .result-actions { width:100%; }
+  .hero-actions > *, .lab-hero-actions > *, .result-actions > * { max-width:100%; }
+
+  /* Prevent large typography from colliding with viewport edges on 320–380px devices. */
+  .hero h1, .immersive-hero h1, .ps-title, .ps-section-head h2,
+  .lab46-intro h2, .pb45-copy h2, .atlas-copy h2, .contemplation-grid h2 {
+    overflow-wrap:anywhere;
+    text-wrap:balance;
+  }
+
+  /* Decorative absolutely-positioned artwork should never become the page width. */
+  .hero-visual, .hero-visual *, .attack-hero-stage, .attack-hero-stage * { max-width:100%; }
+
+  /* Fixed floating controls need safe-area spacing on modern phones. */
+  .ps-sound, .r43-audio, .pb45-audio, .pb45-motion {
+    bottom:max(12px, env(safe-area-inset-bottom));
+  }
+  .ps-sound { left:max(12px, env(safe-area-inset-left)); }
+  .r43-audio, .pb45-audio, .pb45-motion { right:max(12px, env(safe-area-inset-right)); }
+
+  /* Horizontal data/indicator rows become scrollable strips rather than shrinking into illegibility. */
+  .hero-proof, .hero-pills, .sources-strip, .password-rules, .scenario-list { overflow-x:auto; }
+}
+
+@media (max-width:520px) {
+  .hero-proof { grid-template-columns:1fr !important; }
+  .pb45-dossier { left:12px; right:12px; width:auto; transform:none; }
+  .ps-rights-content { padding-inline:18px; }
+  .ps-footer-card .ps-button, .ps-button { max-width:100%; white-space:normal; }
+}
+
+@media (max-width:380px) {
+  .container, .ps-wrap, .pb45-knowledge, .r43-observatory, .r43-correlation, .r43-finish {
+    width:min(100% - 24px, 1440px);
+  }
+  .hero h1 { font-size:clamp(2.15rem,12vw,3rem); }
+  .lab46-intro h2 { font-size:clamp(2.6rem,13vw,4rem); }
+  .atlas-copy h2 { font-size:clamp(2.4rem,12vw,3.4rem); }
+  .hero-art-frame { height:320px !important; }
+  .attack-hero-stage { min-height:330px !important; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  html { scroll-behavior:auto !important; }
+  *, *::before, *::after {
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+    scroll-behavior:auto !important;
+  }
+}
+
+/* V52 cross-page media coherence */
+figure{min-width:0;}
+figure img{display:block;}
+@media (max-width:760px){
+  .attack-page .hero-art-frame,.radar-page .r43-corr-graphic,.r43-panel,.lab46-chamber,.ps-quiet,.pb45-airspace{max-width:100%;}
+  .attack-page img,.radar-page img,.lab46-chamber img,.ps-quiet img,.pb45-airspace img{height:auto;}
+  .page-footer,.attack-footer{padding-bottom:max(24px,env(safe-area-inset-bottom));}
+}
+@media (max-width:420px){.attack-page .attack-hero-meta{gap:7px}.attack-page .attack-hero-meta span{max-width:100%}.r43-hero-bar{gap:6px}.r43-chip{max-width:100%}}
