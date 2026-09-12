@@ -78,7 +78,7 @@
 
   // Optional ambient sound — only starts from explicit user action.
   const sound = $('#privacy-sound');
-  const audio = new Audio('assets/audio/cybershield-ambient-hazy-after-hours.mp3');
+  const audio = new Audio('assets/superproduction-v41/cybershield-privacidade.mp3');
   audio.loop = true; audio.volume = .12;
   let soundOn = false;
   sound?.addEventListener('click', async () => {
