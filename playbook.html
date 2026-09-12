@@ -4,7 +4,7 @@
 <title>Playbook — CyberShield</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="pages.css"><link rel="stylesheet" href="ux-polish.css"><link rel="stylesheet" href="experience-v7.css"><link rel="stylesheet" href="protect-v30.css">
+<link rel="stylesheet" href="pages.css"><link rel="stylesheet" href="ux-polish.css"><link rel="stylesheet" href="experience-v7.css"><link rel="stylesheet" href="protect-v30.css?v=31">
 </head>
 <body class="immersive-page"><div class="container">
 <header class="page-header"><a class="brand" href="index.html#inicio"><span class="brand-mark">◇</span><span>CYBER<span class="brand-slash">/</span>SHIELD</span></a>
@@ -22,69 +22,76 @@
 
 <section class="protect-experience" id="proteger" aria-label="Experiência Proteger">
   <div class="protect-shell">
-    <div class="protect-intro-row">
+    <header class="protect-topbar">
       <div>
-        <p class="protect-eyebrow">03 / PROTEGER · DEFESA EM PROFUNDIDADE</p>
+        <p class="protect-eyebrow">03 / PROTEGER · EXPERIÊNCIA IMERSIVA</p>
         <h2 class="protect-title">Proteção começa <em>antes</em> do ataque.</h2>
         <p class="protect-lede">Uma defesa boa não depende de uma única barreira. Ela reduz o risco, mantém o contexto e cria caminhos para detectar, responder e recuperar.</p>
       </div>
-      <div class="protect-intro-side">
-        <span class="protect-counter"><b id="protect-counter-current">01</b><i></i><span>05</span></span>
-        <span class="protect-intro-note">DEFESA EM PROFUNDIDADE</span>
-      </div>
-    </div>
+      <div class="protect-top-meta"><span>DEFESA EM PROFUNDIDADE</span><b>05 CAMADAS</b></div>
+    </header>
 
-    <div class="protect-stage" id="protect-stage">
-      <div class="protect-universe" aria-hidden="true">
-        <span class="universe-glow glow-a"></span>
-        <span class="universe-glow glow-b"></span>
-        <span class="universe-star star-a"></span><span class="universe-star star-b"></span><span class="universe-star star-c"></span>
-        <span class="universe-star star-d"></span><span class="universe-star star-e"></span><span class="universe-star star-f"></span>
-        <span class="universe-line line-a"></span><span class="universe-line line-b"></span>
+    <div class="protect-experience-frame" id="protect-stage">
+      <div class="protect-bg" aria-hidden="true">
+        <div class="protect-bg-image is-active" data-bg="command"><img src="assets/protect-scenes/command-center.webp" alt=""></div>
+        <div class="protect-bg-image" data-bg="threat"><img src="assets/protect-scenes/threat.webp" alt=""></div>
+        <div class="protect-bg-image" data-bg="protected"><img src="assets/protect-scenes/protected.webp" alt=""></div>
+        <div class="protect-bg-overlay"></div>
+        <div class="protect-bg-texture"></div>
+        <div class="protect-grid-lines"></div>
       </div>
 
-      <div class="protect-visual" id="protect-visual">
-        <div class="protect-image-wrap">
-          <img id="protect-image" src="assets/protect-story/01-guardiao-humano.png" alt="Guardião humano" decoding="async">
-        </div>
-        <div class="protect-image-caption"><span id="protect-image-step">CAMADA 01</span><i></i><span id="protect-image-caption">IDENTIDADE</span></div>
-      </div>
-
-      <div class="protect-copy-card" aria-live="polite">
-        <div class="protect-copy-top"><span id="protect-meta">IDENTIDADE</span><span id="protect-status"><i></i> CAMADA ATIVA</span></div>
-        <h3 id="protect-scene-title">A proteção começa por <em>você</em>.</h3>
-        <p id="protect-scene-body">Antes de proteger sistemas, precisamos saber quem está entrando. Identidade forte reduz o espaço para abuso antes do primeiro acesso.</p>
-        <div class="protect-control-line"><span>CONTROLE</span><b id="protect-scene-control">MFA + autenticação</b></div>
-      </div>
-
-      <div class="protect-scene-nav" aria-label="Etapas da proteção">
-        <div class="protect-scene-nav-head"><span>MAPA DE DEFESA</span><span id="protect-nav-count">01 / 05</span></div>
-        <div class="protect-scene-buttons">
+      <aside class="protect-rail" aria-label="Etapas da proteção">
+        <div class="protect-rail-head"><span>PROTEGE</span><strong id="protect-nav-count">01 / 05</strong></div>
+        <div class="protect-rail-items">
           <button class="protect-scene-btn is-active" type="button" data-step="0"><span>01</span><strong>IDENTIDADE</strong><small>Quem atravessa</small></button>
           <button class="protect-scene-btn" type="button" data-step="1"><span>02</span><strong>DISPOSITIVO</strong><small>Endpoint protegido</small></button>
           <button class="protect-scene-btn" type="button" data-step="2"><span>03</span><strong>REDE</strong><small>Caminhos controlados</small></button>
           <button class="protect-scene-btn" type="button" data-step="3"><span>04</span><strong>AMEAÇA</strong><small>Sinais percebidos</small></button>
           <button class="protect-scene-btn" type="button" data-step="4"><span>05</span><strong>ESCUDO</strong><small>Defesa consolidada</small></button>
         </div>
-        <div class="protect-nav-foot"><span>SCROLL OU CLIQUE</span><i><b id="protect-nav-progress"></b></i></div>
+        <div class="protect-rail-foot"><span>SCROLL OU CLIQUE</span><i><b id="protect-nav-progress"></b></i></div>
+      </aside>
+
+      <div class="protect-scene" id="protect-scene">
+        <div class="protect-scene-copy" aria-live="polite">
+          <div class="protect-status-row"><span id="protect-meta">IDENTIDADE</span><span id="protect-status"><i></i> CAMADA ATIVA</span></div>
+          <div class="protect-kicker" id="protect-image-step">CAMADA 01</div>
+          <h3 id="protect-scene-title">A proteção começa por <em>você</em>.</h3>
+          <p id="protect-scene-body">Antes de proteger sistemas, precisamos saber quem está entrando. Identidade forte reduz o espaço para abuso antes do primeiro acesso.</p>
+          <button class="protect-control" id="protect-control" type="button"><span>CONTROLE</span><b id="protect-scene-control">MFA + autenticação</b><strong>↗</strong></button>
+        </div>
+
+        <figure class="protect-art" id="protect-art">
+          <div class="protect-art-frame"><img id="protect-image" src="assets/protect-story/01-guardiao-humano.png" alt="Guardião humano" decoding="async"></div>
+          <figcaption><span id="protect-image-caption">IDENTIDADE</span><i></i><span id="protect-image-hint">CLIQUE PARA DETALHAR</span></figcaption>
+        </figure>
+
+        <div class="protect-mini-panel" id="protect-mini-panel">
+          <span class="protect-mini-label">SINAL</span>
+          <strong id="protect-mini-title">MFA ativo</strong>
+          <p id="protect-mini-body">Uma identidade validada reduz a superfície de abuso.</p>
+        </div>
+
+        <div class="protect-scene-index"><b id="protect-counter-current">01</b><span></span><em>05</em></div>
       </div>
     </div>
 
-    <div class="protect-takeaway-row">
-      <div class="protect-takeaway-copy">
-        <span class="protect-eyebrow">DEFESA EM PROFUNDIDADE</span>
+    <section class="protect-summary">
+      <div class="protect-summary-copy">
+        <span class="protect-eyebrow">FECHAMENTO DA EXPERIÊNCIA</span>
         <h3>Proteger é saber o que está acontecendo.</h3>
         <p>Identidade, dispositivo, rede, visibilidade e resposta trabalham juntos para reduzir o espaço de um ataque antes que ele se torne impacto.</p>
         <button class="protect-primary-cta" id="protect-explore" type="button"><span>EXPLORAR A PROTEÇÃO</span><b>→</b></button>
       </div>
-      <div class="protect-takeaway-grid">
+      <div class="protect-summary-grid">
         <button type="button" data-step="0"><b>01 — IDENTIDADE</b><span>Confirme quem pode atravessar.</span></button>
         <button type="button" data-step="1"><b>02 — DISPOSITIVO</b><span>Reduza a superfície do endpoint.</span></button>
         <button type="button" data-step="2"><b>03 — REDE</b><span>Controle caminhos e privilégios.</span></button>
         <button type="button" data-step="3"><b>04 — AMEAÇA</b><span>Observe sinais antes do impacto.</span></button>
         <button type="button" data-step="4"><b>05 — ESCUDO</b><span>Consolide prevenção, detecção e resposta.</span></button>
       </div>
-    </div>
+    </section>
   </div>
 </section>
 
@@ -98,5 +105,5 @@
 <article class="tcc-insight"><span class="tcc-tag">RESPOSTA</span><h3>Tenha um caminho</h3><p>Defina contenção, investigação, comunicação, recuperação e continuidade antes de um incidente.</p></article>
 </div></section></main>
 <footer class="page-footer"><p>Baseado nos conceitos do TCC, incluindo boas práticas, segurança web, proteção de dados e Defesa em Profundidade.</p></footer>
-</div><script src="protect-v30.js" defer></script>
+</div><script src="protect-v30.js?v=31" defer></script>
 </body></html>
