@@ -1,0 +1,6 @@
+
+.attack-canonical-map{margin:34px 0 0;position:relative;border:1px solid rgba(140,206,235,.16);background:rgba(3,10,15,.46);overflow:hidden;box-shadow:0 20px 70px rgba(0,0,0,.25)}
+.attack-canonical-map img{display:block;width:100%;height:auto;filter:saturate(.88) contrast(1.03);transition:transform .7s cubic-bezier(.2,.75,.2,1)}
+.attack-canonical-map:hover img{transform:scale(1.012)}
+.attack-canonical-map figcaption{position:absolute;left:12px;bottom:10px;padding:7px 9px;background:rgba(3,9,14,.72);border-left:2px solid #ffc76b;color:#d7e4ea;font:700 9px "Space Mono",monospace;letter-spacing:.12em}
+@media (max-width:900px){.attack-canonical-map figcaption{position:relative;left:auto;bottom:auto;background:rgba(3,9,14,.9)}}
