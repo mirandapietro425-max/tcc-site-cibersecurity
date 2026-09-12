@@ -1,0 +1,13 @@
+
+@view-transition { navigation: auto; }
+:root { --sp-opacity: .16; --sp-blur: 0px; }
+.sp-cinematic-layer{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:var(--sp-opacity);isolation:isolate}
+.sp-cinematic-layer::before{content:"";position:absolute;inset:0;background-image:var(--sp-image);background-size:cover;background-position:center;filter:blur(var(--sp-blur)) saturate(.82);transform:scale(1.035);will-change:transform;mask-image:linear-gradient(180deg,rgba(0,0,0,.92),rgba(0,0,0,.56) 46%,transparent 92%)}
+.sp-cinematic-layer::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 35%,transparent 0 34%,rgba(0,0,0,.35) 82%),linear-gradient(180deg,rgba(1,5,9,.38),rgba(1,5,9,.82))}
+.sp-audio-toggle{position:fixed;right:22px;bottom:22px;z-index:100;border:1px solid rgba(160,220,255,.22);background:rgba(2,7,12,.72);color:#dcecf3;border-radius:999px;padding:10px 13px;font:700 10px/1 "Space Mono",monospace;letter-spacing:.09em;backdrop-filter:blur(12px);cursor:pointer;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+.sp-audio-toggle:hover,.sp-audio-toggle:focus-visible{border-color:rgba(112,231,247,.6);outline:none;box-shadow:0 0 0 3px rgba(112,231,247,.10)}
+.sp-story-beacon{position:fixed;left:18px;bottom:20px;z-index:80;display:flex;align-items:center;gap:8px;color:#7f96a2;font:700 9px "Space Mono",monospace;letter-spacing:.13em;pointer-events:none;opacity:.7}
+.sp-story-beacon i{display:block;width:6px;height:6px;border-radius:50%;background:#8cffb5;box-shadow:0 0 12px rgba(140,255,181,.45)}
+.sp-transition-bar{position:fixed;left:0;right:0;top:0;height:2px;z-index:120;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,transparent,#70e7f7,#8cffb5,transparent);opacity:.8}
+@media (max-width:760px){.sp-cinematic-layer{--sp-opacity:.12}.sp-audio-toggle{right:14px;bottom:14px}.sp-story-beacon{left:12px;bottom:14px;font-size:8px}.sp-cinematic-layer::before{background-position:center top}}
+@media (prefers-reduced-motion:reduce){.sp-cinematic-layer::before{transform:none}.sp-transition-bar{display:none}}

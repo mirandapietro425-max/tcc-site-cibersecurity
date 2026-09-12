@@ -1,86 +1,159 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#03080d"><meta name="description" content="Radar educativo CyberShield — uma experiência interativa de percepção, correlação e resposta a sinais de segurança.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#02070b">
+<meta name="description" content="CyberShield Radar — experiência educativa interativa para detectar, correlacionar e responder a sinais de segurança.">
 <title>Radar — CyberShield</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="radar.css">
-<style>@view-transition{navigation:auto}.story__marker{height:20vh;position:relative;scroll-margin-top:25vh}.story__track .story__marker:first-child{height:5vh}.story__track .story__marker:last-child{height:10vh}.topbar .brand span{color:#70e7f7}</style>
-  <link rel="stylesheet" href="ux-audit-v38.css?v=38">
+<link rel="stylesheet" href="ux-audit-v38.css?v=38">
+<link rel="stylesheet" href="superproduction-v41.css?v=41">
 </head>
-<body class="radar-page">
+<body data-sp-page="radar" class="radar-page">
 <header class="topbar">
-  <a class="brand" href="index.html">CYBER<span>/</span>SHIELD</a>
-  <nav aria-label="Navegação principal"><a class="active" href="radar.html">Radar</a><a href="playbook.html">Playbook</a><a href="laboratorio.html">Laboratório</a><a href="privacidade.html">Privacidade</a><a href="cadeia-ataque.html">Cadeia de ataque</a></nav>
-  <button class="sound" aria-pressed="false">SOM · OFF</button>
+  <a class="brand" href="index.html" aria-label="CyberShield — início">CYBER<span>/</span>SHIELD</a>
+  <nav class="primary-nav" aria-label="Navegação principal">
+    <a href="radar.html" class="active" aria-current="page">Radar</a>
+    <a href="playbook.html">Playbook</a>
+    <a href="laboratorio.html">Laboratório</a>
+    <a href="privacidade.html">Privacidade</a>
+    <a href="cadeia-ataque.html">Cadeia de ataque</a>
+  </nav>
+  <button class="sound" type="button" aria-pressed="false">SOM · OFF</button>
 </header>
-<main>
-<section class="hero">
-  <div class="hero__grid"></div><div class="hero__glow"></div>
-  <div class="hero__content">
-    <div>
-      <div class="eyebrow">01 / RADAR DE AMEAÇAS</div>
-      <h1>Aprenda a <em>perceber</em><br>antes de reagir.</h1>
-      <p>O Radar transforma sinais de segurança em uma história interativa: observar, correlacionar, decidir e recuperar o controle. É uma simulação educativa — não um monitoramento real.</p>
-      <div class="hero__meta"><span class="chip">NARRATIVA INTERATIVA</span><span class="chip">5 ESTADOS</span><span class="chip">SIMULAÇÃO</span><span class="chip">SEM DADOS REAIS</span></div>
-      <div class="hero__scroll">ROLE PARA INICIAR A ESCUTA · SETAS PARA NAVEGAR</div>
-    </div>
-    <div class="characters">
-      <img class="char char--main" src="assets/protect-characters/female_cybersecurity_specialist_walk_left_right.png" alt="Especialista de cibersegurança em movimento">
-      <img class="char char--robot" src="assets/protect-characters/neutral_cybersecurity_humanoid_robot_walk_left_right.png" alt="Robô humanoide de cibersegurança">
-      <img class="char char--guardian" src="assets/protect-characters/cybersecurity_guardian_walk_forward.png" alt="Guardião de cibersegurança">
-      <div class="character-label"><b>CYBERSHIELD · WATCH</b><span>o sistema ainda está quieto</span></div>
-    </div>
-  </div>
-</section>
 
-<section class="story" aria-label="Simulação narrativa do Radar">
-  <div class="story__track">
-    <div class="story__marker" data-scene="0"></div><div class="story__marker" data-scene="1"></div><div class="story__marker" data-scene="2"></div><div class="story__marker" data-scene="3"></div><div class="story__marker" data-scene="4"></div>
-    <div class="story__stage">
-      <div class="story__ambient"></div><div class="story__mesh"></div>
-      <div class="story__content">
-        <aside class="story__copy">
-          <div class="story__step" data-step>01 / 05 · VIGÍLIA</div>
-          <h2 data-copy-title>A rede parece <em>quieta</em>.</h2>
-          <p data-copy-body>O Radar começa sem respostas prontas. Você observa o ambiente, identifica padrões e acompanha a leitura sem transformar ruído em alarme.</p>
-          <div class="story__hint"><b data-status>AMBIENTE ESTÁVEL</b> · <span>clique em um ponto do radar para abrir uma leitura</span></div>
-          <div style="margin-top:22px;font:700 10px 'Space Mono';color:#677f8b;letter-spacing:.14em">SINAIS ATIVOS · <span data-counter style="color:#e8f5fa">00</span></div>
-        </aside>
-        <div class="stage-right">
-          <div class="radar-wrap">
-            <div class="radar">
-              <div class="crosshair"></div><div class="sweep"></div>
-              <button class="node node--1" aria-label="Sinal 1" data-severity="low"></button>
-              <button class="node node--2" aria-label="Sinal 2" data-severity="medium"></button>
-              <button class="node node--3" aria-label="Sinal 3" data-severity="high"></button>
-              <button class="node node--4" aria-label="Sinal 4" data-severity="medium"></button>
-              <button class="node node--5" aria-label="Sinal 5" data-severity="low"></button>
-              <div class="radar-readout"><small>POSTURA</small><strong>ATENTA</strong><span data-readout>LIVE / SIMULAÇÃO</span></div>
-            </div>
-            <div class="hud"><div class="hud__item"><span class="hud__dot"></span> SENSOR EDUCACIONAL</div><div class="hud__item">RAIO 360° · ONLINE</div></div>
-          </div>
-          <div class="threat-card"><div class="threat-card__tag" data-card-tag>SINAL</div><h3 data-card-title>DOMÍNIO SUSPEITO</h3><p data-card-body>A primeira leitura indica um desvio. Antes de clicar, confirme remetente, domínio, urgência e canal.</p></div>
+<main>
+  <section class="radar-hero" aria-labelledby="radar-title">
+    <div class="hero-noise"></div>
+    <div class="hero-content">
+      <div class="hero-copy">
+        <div class="eyebrow">01 / RADAR DE AMEAÇAS</div>
+        <h1 id="radar-title">Não procure<br>um ataque.<br><em>Procure o padrão.</em></h1>
+        <p>Uma sala de escuta onde sinais dispersos ganham contexto. Você vai observar a superfície, correlacionar evidências e escolher quando agir.</p>
+        <div class="hero-actions">
+          <button class="hero-cta" type="button" data-jump="radar-console">ENTRAR NO RADAR <span>↓</span></button>
+          <span class="hero-note">SIMULAÇÃO EDUCACIONAL · SEM DADOS REAIS</span>
         </div>
       </div>
-      <div class="chapters" aria-label="Capítulos"><button class="chapter-dot is-current" type="button" title="Vigília" aria-label="Ir para o capítulo Vigília"></button><button class="chapter-dot" type="button" title="Sinal" aria-label="Ir para o capítulo Sinal"></button><button class="chapter-dot" type="button" title="Correlação" aria-label="Ir para o capítulo Correlação"></button><button class="chapter-dot" type="button" title="Decisão" aria-label="Ir para o capítulo Decisão"></button><button class="chapter-dot" type="button" title="Containment" aria-label="Ir para o capítulo Containment"></button></div>
-      <div class="outcome" aria-live="polite"></div>
-      <div class="action-dock"><div class="actions"><button class="action" data-action="investigate">INVESTIGAR</button><button class="action primary" data-action="contain">CONTER</button><button class="action" data-action="monitor">MONITORAR</button></div></div>
+      <div class="hero-orbit" aria-hidden="true">
+        <div class="orbit-ring orbit-ring-a"></div>
+        <div class="orbit-ring orbit-ring-b"></div>
+        <div class="orbit-core"><span>WATCH</span><strong>360°</strong></div>
+        <span class="orbit-dot dot-a"></span><span class="orbit-dot dot-b"></span><span class="orbit-dot dot-c"></span>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="after">
-  <div class="after__grid">
-    <div><div class="eyebrow">SISTEMA DE LEITURA</div><h2>O Radar não adivinha.<br>Ele <em style="font-style:normal;color:#70e7f7">ensina a notar.</em></h2><p>Os sinais desta experiência foram construídos a partir dos conteúdos educativos do CyberShield: engenharia social, malware, credenciais e comportamento anômalo. A intenção é desenvolver percepção e tomada de decisão, não reproduzir um centro operacional real.</p></div>
-    <div style="display:grid;gap:12px"><article class="insight"><b>01 · SINAL</b><h3>Observe sem precipitar</h3><p>Um evento isolado pode ser apenas ruído. Contexto, origem e repetição pesam na leitura.</p></article><article class="insight"><b>02 · CORRELAÇÃO</b><h3>Conecte evidências</h3><p>Quando pequenas anomalias se conectam, o cenário muda. A decisão fica mais informada.</p></article><article class="insight"><b>03 · RESPOSTA</b><h3>Escolha o próximo passo</h3><p>Investigar, conter ou monitorar são atitudes diferentes. A boa resposta depende do risco.</p></article></div>
-  </div>
-  <div style="max-width:1200px;margin:70px auto 0;display:flex;gap:10px;align-items:center"><button class="action replay" style="flex:0 0 auto">REINICIAR EXPERIÊNCIA</button><a class="action" href="laboratorio.html" style="text-decoration:none;display:inline-flex;align-items:center">IR AO LABORATÓRIO ↗</a></div>
-</section>
+  <section id="radar-console" class="console-section" aria-labelledby="console-title">
+    <div class="console-shell">
+      <div class="console-head">
+        <div>
+          <div class="eyebrow">02 / SALA DE ESCUTA</div>
+          <h2 id="console-title">O radar começa <em>silencioso</em>.</h2>
+        </div>
+        <div class="console-meta" aria-label="Estado do sistema">
+          <span class="status-pill"><i aria-hidden="true"></i><b data-console-status>VIGILÂNCIA</b></span>
+          <span class="meta-code">SIM / EDU-360</span>
+        </div>
+      </div>
+
+      <div class="console-grid">
+        <aside class="intel-panel" aria-labelledby="intel-title">
+          <div class="panel-kicker">LEITURA DE SINAL</div>
+          <h3 id="intel-title" data-intel-title>Aguarde o primeiro retorno.</h3>
+          <p data-intel-body>O ambiente ainda está estável. O objetivo não é disparar alarmes, mas aprender a distinguir ruído de contexto.</p>
+          <div class="signal-profile" aria-label="Perfil do sinal">
+            <div><span>ORIGEM</span><b data-intel-origin>—</b></div>
+            <div><span>IMPACTO</span><b data-intel-impact>—</b></div>
+            <div><span>CONFIANÇA</span><b data-intel-confidence>—</b></div>
+          </div>
+          <div class="intel-divider"></div>
+          <div class="event-log" aria-live="polite" aria-label="Linha de eventos">
+            <div class="log-head"><span>EVENT STREAM</span><b data-event-count>00</b></div>
+            <ol data-event-log></ol>
+          </div>
+        </aside>
+
+        <div class="scope-panel">
+          <div class="scope-wrap">
+            <canvas id="radarCanvas" class="radar-canvas" aria-label="Radar interativo de sinais simulados"></canvas>
+            <div class="scope-readout" aria-hidden="true">
+              <span>POSTURA</span><strong data-posture>ATENTA</strong><small data-scope-clock>00:00:00</small>
+            </div>
+            <div class="scope-overlay top-left"><b>AZIMUTE</b><span data-azimuth>000°</span></div>
+            <div class="scope-overlay top-right"><b>SETOR</b><span data-sector>ALFA</span></div>
+            <div class="scope-overlay bottom-left"><b>ALCANCE</b><span>360° / SIM</span></div>
+            <div class="scope-overlay bottom-right"><b>FONTE</b><span>EDU-SENSOR</span></div>
+            <div class="scope-crosshair" aria-hidden="true"></div>
+            <div class="scope-marker-layer" data-marker-layer></div>
+          </div>
+          <div class="scope-toolbar" aria-label="Controles do radar">
+            <div class="legend"><span><i class="low"></i>baixo</span><span><i class="medium"></i>atenção</span><span><i class="high"></i>alto</span></div>
+            <div class="toolbar-actions">
+              <button type="button" class="mini-btn" data-toggle-scan aria-pressed="true">SCAN · ON</button>
+              <button type="button" class="mini-btn" data-replay>RESET</button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="decision-panel" aria-labelledby="decision-title">
+          <div class="panel-kicker">PROTOCOLO DE RESPOSTA</div>
+          <h3 id="decision-title">Um sinal não é uma sentença.</h3>
+          <p>Selecione um contato no radar. Depois escolha a resposta mais proporcional.</p>
+          <div class="decision-list" role="group" aria-label="Respostas possíveis">
+            <button class="decision-btn" type="button" data-action="investigate"><span>01</span><b>INVESTIGAR</b><small>abrir contexto</small></button>
+            <button class="decision-btn primary" type="button" data-action="contain"><span>02</span><b>CONTER</b><small>interromper o caminho</small></button>
+            <button class="decision-btn" type="button" data-action="monitor"><span>03</span><b>MONITORAR</b><small>acompanhar o padrão</small></button>
+          </div>
+          <div class="decision-feedback" data-feedback aria-live="polite">Escolha um alvo para começar.</div>
+          <button class="text-link" type="button" data-next-story>CONTINUAR A LEITURA →</button>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="correlation-section" aria-labelledby="corr-title">
+    <div class="correlation-inner">
+      <div class="corr-copy">
+        <div class="eyebrow">03 / CORRELAÇÃO</div>
+        <h2 id="corr-title">A inteligência está no <em>intervalo</em> entre os sinais.</h2>
+        <p>Um único evento pode ser ruído. Três eventos com origem, tempo e comportamento relacionados formam um padrão muito mais relevante. É aqui que o Radar deixa de ser decoração e vira instrumento de leitura.</p>
+      </div>
+      <div class="correlation-map" aria-label="Exemplo visual de correlação">
+        <svg viewBox="0 0 620 330" role="img" aria-labelledby="corr-svg-title corr-svg-desc">
+          <title id="corr-svg-title">Correlação de três sinais</title>
+          <desc id="corr-svg-desc">Três eventos se conectam a uma decisão de risco.</desc>
+          <g class="corr-grid"><path d="M0 55H620M0 110H620M0 165H620M0 220H620M0 275H620"/><path d="M55 0V330M110 0V330M165 0V330M220 0V330M275 0V330M330 0V330M385 0V330M440 0V330M495 0V330M550 0V330"/></g>
+          <path class="corr-line" d="M120 92C180 135 196 145 260 162S330 184 378 130"/><path class="corr-line" d="M120 230C195 218 245 198 300 170S354 128 378 130"/>
+          <circle class="corr-node low-node" cx="120" cy="92" r="7"/><circle class="corr-node med-node" cx="120" cy="230" r="8"/><circle class="corr-node high-node" cx="378" cy="130" r="10"/>
+          <circle class="corr-core" cx="500" cy="166" r="42"/><text x="500" y="162" text-anchor="middle">RISK</text><text x="500" y="184" text-anchor="middle">72%</text>
+          <text class="corr-label" x="90" y="55">DOMÍNIO</text><text class="corr-label" x="88" y="266">HORÁRIO</text><text class="corr-label" x="350" y="102">CREDENCIAL</text><text class="corr-label" x="456" y="244">DECISÃO</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="training-section" aria-labelledby="training-title">
+    <div class="training-inner">
+      <div class="eyebrow">04 / O QUE VOCÊ LEVA</div>
+      <h2 id="training-title">Veja menos.<br><em>Entenda mais.</em></h2>
+      <div class="training-grid">
+        <article><span>01</span><h3>Sinal</h3><p>Perceba alterações sem confundir novidade com ameaça.</p></article>
+        <article><span>02</span><h3>Contexto</h3><p>Relacione origem, repetição, horário e impacto.</p></article>
+        <article><span>03</span><h3>Resposta</h3><p>Escolha a intervenção proporcional ao risco observado.</p></article>
+      </div>
+      <div class="end-actions"><button type="button" class="hero-cta" data-replay-full>REINICIAR EXPERIÊNCIA ↺</button><a class="text-link" href="laboratorio.html">IR AO LABORATÓRIO ↗</a></div>
+    </div>
+  </section>
 </main>
+
 <footer class="footer">CyberShield Radar · experiência educativa · sem monitoramento real, sem coleta de dados · 2026</footer>
 <script src="radar.js" defer></script>
 <script src="ux-audit-v38.js?v=38" defer></script>
-</body></html>
+<script src="superproduction-v41.js?v=41" defer></script>
+</body>
+</html>
