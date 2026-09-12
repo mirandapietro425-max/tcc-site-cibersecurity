@@ -1,0 +1,75 @@
+/* CyberShield UX Audit V38 — hotfix conservador.
+   Foco: sobreposição, legibilidade, áreas clicáveis e contenção de overflow.
+   Não altera a arquitetura das experiências. */
+
+*,*::before,*::after{box-sizing:border-box}
+html{overflow-x:clip}
+body{overflow-x:clip}
+
+/* Evita conteúdo visual atravessando a largura sem necessidade. */
+img,svg,canvas,video{max-width:100%}
+
+/* Camadas de navegação e HUD não devem roubar cliques de conteúdo. */
+.page-header,.topbar,.audio-hud,.lab-progress,.attack-progress,.ps-progress,.ps-sound{isolation:isolate}
+
+/* Cabeçalhos das páginas internas permanecem acima das experiências sem encobrir o conteúdo. */
+.immersive-page .page-header{position:relative;z-index:50}
+.immersive-page .immersive-nav{position:relative;z-index:55}
+
+/* Os painéis transparentes continuam legíveis sobre cenas e personagens. */
+.immersive-page .immersive-hero-copy,
+.immersive-page .section-head,
+.immersive-page .lab-hero-copy,
+.immersive-page .attack-hero-copy{isolation:isolate}
+
+/* Estados de foco visíveis sem deslocar layout. */
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{
+  outline:2px solid rgba(112,231,247,.85);
+  outline-offset:3px;
+}
+
+/* Evita botões estreitos demais em telas touch. */
+button,.button,.scene-action,.cta,.ghost,.action,.sound{min-height:40px}
+
+/* Nenhuma experiência deve criar um painel maior do que sua própria viewport por causa de flex/grid. */
+.lab-hero > *, .attack-hero > *, .scenario-panel > *, .dev-workbench > *,
+.story__content > *, .after__grid > *{min-width:0}
+
+/* Protege superfícies interativas contra clipping acidental. */
+.interactive-card,.glass,.chain-detail,.attack-panel,.break-lab,.decision-result{isolation:isolate}
+
+/* Em navegação móvel, o menu oculto não deve continuar ocupando camada sobre a página. */
+@media (max-width:760px){
+  .immersive-page .page-header{gap:10px}
+  .immersive-page .container{width:min(100% - 28px,1180px)}
+  .immersive-page .immersive-hero{grid-template-columns:1fr;gap:24px;padding-top:48px}
+  .immersive-page .immersive-nav{display:flex;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;max-width:100%;padding-bottom:3px;scrollbar-width:none}
+  .immersive-page .immersive-nav::-webkit-scrollbar{display:none}
+  .immersive-page .immersive-nav a{white-space:nowrap}
+  .lab-hero,.attack-hero{padding-top:32px}
+  .scenario-panel,.dev-workbench{grid-template-columns:1fr}
+}
+
+/* Movimento ligado ao scroll usa somente propriedades amigáveis ao compositor. */
+@media (prefers-reduced-motion:no-preference){
+  .lab-scene-image,.char,.radar-wrap,.story__ambient,.outcome,.node,.action,.button,.ghost,.cta{will-change:transform,opacity}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
+/* Final V38 hardening: readable focus, resilient media fallback and explicit mobile navigation. */
+[role="tab"]:focus-visible,.chapter-dot:focus-visible,.sound:focus-visible{outline:2px solid rgba(112,231,247,.9);outline-offset:4px}
+.chapter-dot{min-width:32px;min-height:32px;display:grid;place-items:center;background-clip:padding-box}
+.media-fallback{display:grid;place-items:center;min-height:160px;width:100%;padding:24px;border:1px dashed rgba(112,231,247,.24);border-radius:18px;background:rgba(112,231,247,.04);color:#8ea0b2;font:700 .62rem var(--mono,monospace);letter-spacing:.1em;text-align:center}
+.motion-reduced *{scroll-behavior:auto!important}
+@media (max-width:760px){
+  .page-header{align-items:flex-start}
+  .immersive-page .immersive-nav{font-size:.58rem}
+  .immersive-page .immersive-nav a{padding:8px 9px}
+}
+@media (pointer:coarse){
+  button,.button,.scene-action,.cta,.ghost,.action,.sound,.chapter-dot,.chapter-dot.is-current{min-width:44px;min-height:44px}
+  .chapter-dot{padding:6px}
+}

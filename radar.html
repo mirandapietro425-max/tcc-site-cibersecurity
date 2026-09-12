@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="radar.css">
 <style>@view-transition{navigation:auto}.story__marker{height:20vh;position:relative;scroll-margin-top:25vh}.story__track .story__marker:first-child{height:5vh}.story__track .story__marker:last-child{height:10vh}.topbar .brand span{color:#70e7f7}</style>
+  <link rel="stylesheet" href="ux-audit-v38.css?v=38">
 </head>
 <body class="radar-page">
 <header class="topbar">
@@ -27,9 +28,9 @@
       <div class="hero__scroll">ROLE PARA INICIAR A ESCUTA · SETAS PARA NAVEGAR</div>
     </div>
     <div class="characters">
-      <img class="char char--main" src="assets/radar-characters/female_cybersecurity_specialist_walk_left_right.png" alt="Especialista de cibersegurança em movimento">
-      <img class="char char--robot" src="assets/radar-characters/neutral_cybersecurity_humanoid_robot_walk_left_right.png" alt="Robô humanoide de cibersegurança">
-      <img class="char char--guardian" src="assets/radar-characters/cybersecurity_guardian_walk_forward.png" alt="Guardião de cibersegurança">
+      <img class="char char--main" src="assets/protect-characters/female_cybersecurity_specialist_walk_left_right.png" alt="Especialista de cibersegurança em movimento">
+      <img class="char char--robot" src="assets/protect-characters/neutral_cybersecurity_humanoid_robot_walk_left_right.png" alt="Robô humanoide de cibersegurança">
+      <img class="char char--guardian" src="assets/protect-characters/cybersecurity_guardian_walk_forward.png" alt="Guardião de cibersegurança">
       <div class="character-label"><b>CYBERSHIELD · WATCH</b><span>o sistema ainda está quieto</span></div>
     </div>
   </div>
@@ -64,7 +65,7 @@
           <div class="threat-card"><div class="threat-card__tag" data-card-tag>SINAL</div><h3 data-card-title>DOMÍNIO SUSPEITO</h3><p data-card-body>A primeira leitura indica um desvio. Antes de clicar, confirme remetente, domínio, urgência e canal.</p></div>
         </div>
       </div>
-      <div class="chapters" aria-label="Capítulos"><button class="chapter-dot is-current" title="Vigília"></button><button class="chapter-dot" title="Sinal"></button><button class="chapter-dot" title="Correlação"></button><button class="chapter-dot" title="Decisão"></button><button class="chapter-dot" title="Containment"></button></div>
+      <div class="chapters" aria-label="Capítulos"><button class="chapter-dot is-current" type="button" title="Vigília" aria-label="Ir para o capítulo Vigília"></button><button class="chapter-dot" type="button" title="Sinal" aria-label="Ir para o capítulo Sinal"></button><button class="chapter-dot" type="button" title="Correlação" aria-label="Ir para o capítulo Correlação"></button><button class="chapter-dot" type="button" title="Decisão" aria-label="Ir para o capítulo Decisão"></button><button class="chapter-dot" type="button" title="Containment" aria-label="Ir para o capítulo Containment"></button></div>
       <div class="outcome" aria-live="polite"></div>
       <div class="action-dock"><div class="actions"><button class="action" data-action="investigate">INVESTIGAR</button><button class="action primary" data-action="contain">CONTER</button><button class="action" data-action="monitor">MONITORAR</button></div></div>
     </div>
@@ -81,4 +82,5 @@
 </main>
 <footer class="footer">CyberShield Radar · experiência educativa · sem monitoramento real, sem coleta de dados · 2026</footer>
 <script src="radar.js" defer></script>
+<script src="ux-audit-v38.js?v=38" defer></script>
 </body></html>
