@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="ux-polish.css" />
   <link rel="stylesheet" href="experience-v7.css" />
   <link rel="stylesheet" href="privacidade-super.css" />
+  <link rel="stylesheet" href="privacidade-v47.css?v=47" />
   <link rel="stylesheet" href="ux-audit-v38.css?v=38">
-<link rel="stylesheet" href="superproduction-v41.css?v=41">
 </head>
 <body data-sp-page="privacidade" class="privacy-super">
   <div class="ps-progress" aria-label="Progresso da experiência">
@@ -23,6 +23,7 @@
     <button data-target="#ps-use" aria-label="Usar"></button>
     <button data-target="#ps-protect" aria-label="Proteger"></button>
     <button data-target="#ps-delete" aria-label="Encerrar"></button>
+    <button data-target="#ps-quiet" aria-label="Observatório do dado"></button>
   </div>
   <button class="ps-sound" id="privacy-sound" type="button">SOM · OFF</button>
 
@@ -63,6 +64,41 @@
         <article class="ps-life" data-target="#ps-use"><div class="ps-life-no">02 / USAR</div><h3>Transparência</h3><p>Use os dados dentro da finalidade comunicada e compreensível.</p><div class="ps-life-orbit"></div><div class="ps-life-dot"></div></article>
         <article class="ps-life" data-target="#ps-protect"><div class="ps-life-no">03 / PROTEGER</div><h3>Controle</h3><p>Limite acesso, registre eventos e aplique proteção proporcional.</p><div class="ps-life-orbit"></div><div class="ps-life-dot"></div></article>
         <article class="ps-life" data-target="#ps-delete"><div class="ps-life-no">04 / ENCERRAR</div><h3>Retenção</h3><p>Sem finalidade, a pergunta volta: guardar para quê?</p><div class="ps-life-orbit"></div><div class="ps-life-dot"></div></article>
+      </div>
+    </section>
+
+    <section class="ps-quiet" id="ps-quiet" data-privacy-chapter="4">
+      <div class="ps-quiet-bg"></div>
+      <div class="ps-quiet-noise" aria-hidden="true"></div>
+      <div class="ps-quiet-inner ps-wrap">
+        <div class="ps-quiet-copy">
+          <div class="ps-kicker">OBSERVATÓRIO DO DADO · PAUSA CONTEMPLATIVA</div>
+          <h2>Antes de guardar,<br><em>imagine o percurso.</em></h2>
+          <p>Os dados parecem abstratos quando ficam em uma política. Aqui eles ganham forma: cada esfera representa um tipo de informação que pode atravessar serviços, equipes e dispositivos.</p>
+          <div class="ps-quiet-rule"><span>REGRA DE DESIGN</span><b>Quanto maior o tempo e a distância percorrida, maior deve ser a justificativa.</b></div>
+          <div class="ps-quiet-controls">
+            <label for="ps-retention"><span>RETENÇÃO</span><b><output id="ps-retention-value">6 meses</output></b></label>
+            <input id="ps-retention" type="range" min="1" max="24" value="6" aria-label="Tempo de retenção em meses">
+            <div class="ps-retention-scale"><span>1m</span><span>12m</span><span>24m</span></div>
+          </div>
+        </div>
+        <div class="ps-quiet-stage" aria-label="Experiência interativa de fluxo de dados">
+          <div class="ps-data-field">
+            <button class="ps-data-bubble b1" type="button" data-quiet-data="identidade" aria-label="Explorar dados de identidade">identidade</button>
+            <button class="ps-data-bubble b2" type="button" data-quiet-data="contato" aria-label="Explorar dados de contato">contato</button>
+            <button class="ps-data-bubble b3" type="button" data-quiet-data="comportamento" aria-label="Explorar dados de comportamento">comportamento</button>
+            <button class="ps-data-bubble b4" type="button" data-quiet-data="localização" aria-label="Explorar dados de localização">localização</button>
+            <button class="ps-data-bubble b5" type="button" data-quiet-data="preferências" aria-label="Explorar dados de preferências">preferências</button>
+            <span class="ps-orbit-line orbit-one"></span><span class="ps-orbit-line orbit-two"></span>
+          </div>
+          <div class="ps-data-core" tabindex="0" role="button" aria-label="Abrir o núcleo de dados">
+            <div class="ps-data-core-glow"></div>
+            <div class="ps-data-core-ring"></div>
+            <model-viewer id="ps-model" src="assets/models/cybershield_robot_woman.glb" alt="Modelo 3D de uma guardiã cibernética representando proteção do titular" camera-controls disable-pan interaction-prompt="none" exposure="0.9" shadow-intensity="0.5" environment-image="neutral" loading="lazy"></model-viewer>
+            <div class="ps-model-fallback" role="img" aria-label="Núcleo visual de proteção de dados"><span>DATA<br>GUARDIAN</span></div>
+          </div>
+          <div class="ps-data-caption"><span id="ps-quiet-title">Núcleo de dados</span><b id="ps-quiet-copy">Toque em uma esfera para observar o que muda.</b></div>
+        </div>
       </div>
     </section>
 
@@ -129,8 +165,9 @@
       <div class="ps-footer-card"><div><div class="ps-kicker">CYBERSHIELD / PRIVACIDADE</div><h2>Projetar privacidade é<br>projetar confiança.</h2></div><a class="ps-button" href="cadeia-ataque.html">PRÓXIMA EXPERIÊNCIA →</a></div>
     </section>
   </main>
-  <script src="privacidade-super.js"></script>
+  <script type="module" src="https://unpkg.com/@google/model-viewer@4.1.0/dist/model-viewer.min.js"></script>
+<script src="privacidade-super.js"></script>
+<script src="privacidade-v47.js?v=47" defer></script>
 <script src="ux-audit-v38.js?v=38" defer></script>
-<script src="superproduction-v41.js?v=41" defer></script>
 </body>
 </html>
