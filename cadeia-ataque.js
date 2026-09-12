@@ -1,426 +1,170 @@
-/* cadeia-ataque.js
-   Experiência "Cadeia de Ataque" do CyberShield.
+(() => {
+  const stages = [
+    {id:'recon', index:'01', name:'Reconhecimento', short:'Coleta de informação', line:'observing_surface_01…', signal:'Muitas tentativas de login, varreduras incomuns ou pedidos de informação fora do padrão.', threat:'O invasor começa sem tocar no sistema. Ele observa pessoas, tecnologias expostas, fornecedores e o que o próprio alvo publica.', defenses:[['GV','Política sobre o que a organização publica e compartilha'],['ID','Inventário atualizado da superfície de ataque'],['PR','Treinamento para reduzir exposição desnecessária']], fn:'GV · ID · PR'},
+    {id:'weapon', index:'02', name:'Armamento', short:'Preparo do ataque', line:'building_payload_02…', signal:'A etapa tende a ser invisível do lado do alvo; o primeiro indício aparece quando o artefato chega.', threat:'Com uma oportunidade identificada, o invasor prepara o conteúdo ou dependência que pretende usar contra o alvo.', defenses:[['ID','Gestão de vulnerabilidades e acompanhamento de CVEs'],['PR','Atualizações e patches em dia'],['PR','Verificação de integridade de dependências']], fn:'ID · PR'},
+    {id:'delivery', index:'03', name:'Entrega', short:'O conteúdo chega ao alvo', line:'delivery_channel_03…', signal:'Urgência incomum, remetente inesperado ou link fora do padrão oficial.', threat:'O conteúdo chega por e-mail, mensagem, site falso ou outro canal de entrega. É quando o risco passa a disputar atenção com a rotina.', defenses:[['PR','Filtros e verificação de domínio'],['DE','Sandbox e análise de anexos'],['PR','Pausa de três segundos: verificar antes de agir']], fn:'PR · DE'},
+    {id:'exploit', index:'04', name:'Exploração', short:'A falha é usada', line:'anomaly_detected_04…', signal:'Processos inesperados, falhas repetidas ou comportamento fora do padrão.', threat:'Uma vulnerabilidade é usada para executar uma ação que não deveria existir. A possibilidade vira comportamento concreto.', defenses:[['PR','Menor privilégio e segmentação'],['DE','Detecção de comportamento anômalo em endpoints'],['ID','Desenvolvimento seguro no ciclo de vida']], fn:'PR · DE · ID'},
+    {id:'install', index:'05', name:'Instalação', short:'Persistência', line:'persistence_attempt_05…', signal:'Tarefas agendadas novas, serviços desconhecidos ou contas criadas fora do processo.', threat:'O acesso procura sobreviver. Persistência muda um evento pontual em presença prolongada.', defenses:[['DE','Monitoramento de integridade de arquivos e processos'],['PR','Autenticação multifator'],['RS','Plano para isolar rapidamente hosts comprometidos']], fn:'DE · PR · RS'},
+    {id:'c2', index:'06', name:'Comando e controle', short:'Canal de saída', line:'outbound_channel_06…', signal:'Tráfego de saída incomum ou conexões para domínios recentes e de baixa reputação.', threat:'O sistema comprometido busca um canal externo para receber instruções. A partir daqui, o controle pode continuar sem nova ação da vítima.', defenses:[['DE','Monitoramento de saída e consultas DNS'],['PR','Política de rede com destinos permitidos'],['RS','Conter, revogar acessos e registrar']], fn:'DE · PR · RS'},
+    {id:'objectives', index:'07', name:'Ações sobre os objetivos', short:'O objetivo é cumprido', line:'objective_reached_07…', signal:'O impacto já é visível: disponibilidade alterada, dados comprometidos ou operação interrompida.', threat:'O objetivo final aparece: exfiltração, indisponibilidade ou outro impacto. A partir daqui, a organização já está pagando o custo do atraso.', defenses:[['RC','Backup testado e comprovadamente restaurável'],['RS','Comunicação de incidente e obrigações previstas'],['GV','Revisão pós-incidente para fechar a lacuna']], fn:'RC · RS · GV'}
+  ];
 
-   Escrito em React puro (React.createElement, sem JSX e sem etapa de build)
-   para poder rodar como arquivo estático, igual ao restante do projeto.
-   React e ReactDOM são carregados localmente a partir de vendor/ — não há
-   chamada a CDN nem a qualquer serviço externo. Nada aqui coleta dados,
-   envia telemetria ou representa um ataque real: os cenários são fictícios
-   e servem só para estudo, inspirados no Cyber Kill Chain (Lockheed Martin)
-   e nas seis funções do NIST Cybersecurity Framework 2.0. */
+  const scene = document.getElementById('attack-scene');
+  const panel = document.getElementById('attack-panel');
+  const rail = document.getElementById('attack-rail-list');
+  const deepGrid = document.getElementById('deep-grid');
+  const decisionGrid = document.getElementById('decision-grid');
+  const breakChain = document.getElementById('break-chain');
+  const progressBar = document.getElementById('attack-progress-bar');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let active = 0;
+  let mode = 'threat';
 
-const h = React.createElement;
+  if (!scene || !panel) return;
 
-// Sete elos do Cyber Kill Chain, com uma leitura do ataque, um sinal
-// observável educativo e mediações de proteção mapeadas às funções do
-// NIST CSF 2.0 (GV = Governança, ID = Identificar, PR = Proteger,
-// DE = Detectar, RS = Responder, RC = Recuperar).
-const STAGES = [
-  {
-    id: "recon",
-    index: "01",
-    name: "Reconhecimento",
-    short: "Coleta de informação",
-    attacker:
-      "O invasor estuda o alvo antes de tocar em qualquer sistema: perfis públicos, tecnologias expostas, e-mails vazados e fornecedores conectados. É a etapa mais barata e mais difícil de perceber.",
-    signal: "Muitas tentativas de login, varreduras incomuns ou pedidos de informação fora do padrão.",
-    mediations: [
-      { fn: "GV", text: "Política sobre o que a organização publica sobre si mesma" },
-      { fn: "ID", text: "Inventário atualizado de ativos e da superfície de ataque" },
-      { fn: "PR", text: "Treinamento para reduzir dados sensíveis em canais públicos" }
-    ]
-  },
-  {
-    id: "weapon",
-    index: "02",
-    name: "Armamento",
-    short: "Preparo do ataque",
-    attacker:
-      "Com a falha encontrada, o invasor prepara um arquivo, link ou dependência capaz de explorá-la. Essa etapa costuma ser invisível para a futura vítima — ela só aparece na entrega.",
-    signal: "Normalmente não observável do lado de quem será atacado; aparece de forma indireta depois.",
-    mediations: [
-      { fn: "ID", text: "Gestão de vulnerabilidades e acompanhamento de CVEs conhecidas" },
-      { fn: "PR", text: "Atualizações e patches de segurança em dia" },
-      { fn: "PR", text: "Verificação de integridade de dependências de terceiros" }
-    ]
-  },
-  {
-    id: "delivery",
-    index: "03",
-    name: "Entrega",
-    short: "O conteúdo chega ao alvo",
-    attacker:
-      "O conteúdo preparado chega até a vítima por e-mail, mensagem, site falso ou uma dependência comprometida. É o mesmo tipo de sinal treinado no Laboratório de decisões.",
-    signal: "Urgência incomum, remetente inesperado ou link fora do padrão de comunicação oficial.",
-    mediations: [
-      { fn: "PR", text: "Filtro de e-mail e verificação de domínio" },
-      { fn: "DE", text: "Sandbox e análise automatizada de anexos" },
-      { fn: "PR", text: "Protocolo de três segundos: pausar, verificar, agir" }
-    ]
-  },
-  {
-    id: "exploit",
-    index: "04",
-    name: "Exploração",
-    short: "A falha é usada",
-    attacker:
-      "A vulnerabilidade é usada para executar código ou obter um acesso que não deveria existir. É o momento em que a teoria da etapa anterior vira uma ação concreta no sistema.",
-    signal: "Processos inesperados, falhas repetidas de aplicação ou comportamento fora do padrão.",
-    mediations: [
-      { fn: "PR", text: "Menor privilégio e segmentação de rede" },
-      { fn: "DE", text: "Detecção de comportamento anômalo em endpoints" },
-      { fn: "ID", text: "Checklist de desenvolvimento seguro no ciclo de vida do software" }
-    ]
-  },
-  {
-    id: "install",
-    index: "05",
-    name: "Instalação",
-    short: "Persistência",
-    attacker:
-      "O invasor garante persistência: um acesso que sobrevive a reinícios, atualizações simples e trocas isoladas de senha. É aqui que um incidente pontual pode virar uma presença de longo prazo.",
-    signal: "Tarefas agendadas novas, serviços desconhecidos ou contas criadas fora do processo padrão.",
-    mediations: [
-      { fn: "DE", text: "Monitoramento de integridade de arquivos e processos" },
-      { fn: "PR", text: "Autenticação multifator, reduzindo o valor de uma credencial isolada" },
-      { fn: "RS", text: "Plano de resposta pronto para isolar hosts comprometidos" }
-    ]
-  },
-  {
-    id: "c2",
-    index: "06",
-    name: "Comando e controle",
-    short: "Canal de saída",
-    attacker:
-      "O sistema comprometido abre um canal de saída para receber instruções do invasor à distância. A partir daqui, o controle deixa de depender de uma ação nova da vítima.",
-    signal: "Tráfego de saída incomum ou conexões para domínios recentes e de baixa reputação.",
-    mediations: [
-      { fn: "DE", text: "Monitoramento de tráfego de saída e de consultas DNS" },
-      { fn: "PR", text: "Política de rede com lista de destinos permitidos" },
-      { fn: "RS", text: "Plano de contenção: isolar, revogar acessos e registrar" }
-    ]
-  },
-  {
-    id: "objectives",
-    index: "07",
-    name: "Ações sobre os objetivos",
-    short: "O objetivo é cumprido",
-    attacker:
-      "O invasor cumpre a meta final: exfiltra dados, criptografa arquivos para extorsão ou interrompe um serviço. A partir deste ponto, o impacto já é visível para a organização.",
-    signal: "Nesta altura o impacto já apareceu — por isso os elos anteriores valem tanto.",
-    mediations: [
-      { fn: "RC", text: "Backup testado e comprovadamente restaurável" },
-      { fn: "RS", text: "Comunicação de incidente e obrigações previstas na LGPD" },
-      { fn: "GV", text: "Revisão pós-incidente para fechar o elo que falhou" }
-    ]
-  }
-];
-
-// ---------- Hero: corrente animada usada como arte de fundo ----------
-
-const ChainHero = () => {
-  const [weak, setWeak] = React.useState(0);
-
-  React.useEffect(() => {
-    const id = setInterval(() => {
-      setWeak((w) => (w + 1) % STAGES.length);
-    }, 2200);
-    return () => clearInterval(id);
-  }, []);
-
-  const row = [];
-  STAGES.forEach((s, i) => {
-    row.push(
-      h(
-        "div",
-        {
-          key: s.id,
-          className: "chain-hero-link" + (i === weak ? " is-current" : ""),
-          title: s.name
-        },
-        s.index
-      )
-    );
-    if (i < STAGES.length - 1) {
-      row.push(
-        h("div", {
-          key: "c-" + s.id,
-          className: "chain-hero-connector" + (i === weak ? " is-broken" : "")
-        })
-      );
-    }
-  });
-
-  return h(
-    "div",
-    { className: "chain-hero" },
-    h("div", { className: "chain-hero-row" }, row),
-    h(
-      "p",
-      { className: "chain-hero-label" },
-      "ELO EM FOCO: ",
-      h("b", null, STAGES[weak].index + " · " + STAGES[weak].name)
-    )
-  );
-};
-
-// ---------- Explorador: escolher um elo e alternar Atacante / Defesa ----------
-
-const ChainExplorer = () => {
-  const [activeIndex, setActiveIndex] = React.useState(0);
-  const [tab, setTab] = React.useState("attacker");
-  const stage = STAGES[activeIndex];
-
-  const rail = STAGES.map((s, i) =>
-    h(
-      "button",
-      {
-        key: s.id,
-        type: "button",
-        role: "tab",
-        "aria-selected": i === activeIndex,
-        className: "chain-stage-btn" + (i === activeIndex ? " is-active" : ""),
-        onClick: () => setActiveIndex(i)
-      },
-      h("span", { className: "chain-stage-index" }, s.index),
-      h("span", null, h("b", null, s.name), h("small", null, s.short))
-    )
-  );
-
-  const detailBody =
-    tab === "attacker"
-      ? h(
-          React.Fragment,
-          null,
-          h("h3", null, stage.name),
-          h("p", null, stage.attacker),
-          h(
-            "div",
-            { className: "chain-signal" },
-            h("b", null, "SINAL OBSERVÁVEL"),
-            stage.signal
-          )
-        )
-      : h(
-          React.Fragment,
-          null,
-          h("h3", null, "Mediações de proteção"),
-          h(
-            "p",
-            null,
-            "Controles que, aplicados neste elo, reduzem a chance de o ataque avançar para a etapa seguinte."
-          ),
-          h(
-            "ul",
-            { className: "chain-mediation-list" },
-            stage.mediations.map((m, i) =>
-              h(
-                "li",
-                { key: i },
-                h("span", { className: "chain-fn-tag" }, m.fn),
-                h("span", null, m.text)
-              )
-            )
-          )
-        );
-
-  return h(
-    "div",
-    { className: "chain-layout" },
-    h(
-      "div",
-      { className: "chain-stage-rail", role: "tablist", "aria-label": "Elos da cadeia de ataque" },
-      rail
-    ),
-    h(
-      "article",
-      { className: "chain-detail", "aria-live": "polite" },
-      h(
-        "div",
-        { className: "chain-detail-top" },
-        h("span", null, stage.index + " / " + stage.name.toUpperCase()),
-        h(
-          "div",
-          { className: "chain-tabs" },
-          h(
-            "button",
-            {
-              type: "button",
-              "data-tab": "attacker",
-              className: "chain-tab" + (tab === "attacker" ? " is-active" : ""),
-              onClick: () => setTab("attacker")
-            },
-            "ATACANTE"
-          ),
-          h(
-            "button",
-            {
-              type: "button",
-              "data-tab": "defense",
-              className: "chain-tab" + (tab === "defense" ? " is-active" : ""),
-              onClick: () => setTab("defense")
-            },
-            "DEFESA"
-          )
-        )
-      ),
-      detailBody
-    )
-  );
-};
-
-// ---------- Simulador: "quebre a corrente" ----------
-
-const ChainSimulator = () => {
-  const [currentIndex, setCurrentIndex] = React.useState(0);
-  const [status, setStatus] = React.useState("idle"); // idle | running | blocked | breached
-
-  const start = () => {
-    setCurrentIndex(0);
-    setStatus("running");
-  };
-  const defend = () => setStatus("blocked");
-  const letThrough = () => {
-    if (currentIndex >= STAGES.length - 1) {
-      setStatus("breached");
-    } else {
-      setCurrentIndex(currentIndex + 1);
-    }
-  };
-  const reset = () => {
-    setCurrentIndex(0);
-    setStatus("idle");
+  const els = {
+    railStatus: document.getElementById('rail-status'), sceneCounter: document.getElementById('scene-counter'), sceneName: document.getElementById('scene-name'), sceneSignal: document.getElementById('scene-signal'),
+    terminal: document.getElementById('terminal-line'), sceneLabel: document.getElementById('scene-progress-label'), sceneFill: document.getElementById('scene-progress-fill'),
+    panelType: document.getElementById('panel-type'), panelStage: document.getElementById('panel-stage'), panelTitle: document.getElementById('panel-title'), panelCopy: document.getElementById('panel-copy'),
+    panelSignal: document.getElementById('panel-signal-text'), panelDefense: document.getElementById('panel-defense'), nextHint: document.getElementById('panel-next-hint'), nextName: document.getElementById('panel-next-name'), result: document.getElementById('decision-result'),
+    resultLabel: document.getElementById('decision-result-label'), resultTitle: document.getElementById('decision-result-title'), resultCopy: document.getElementById('decision-result-copy')
   };
 
-  const stage = STAGES[currentIndex];
-  const track = [];
-
-  STAGES.forEach((s, i) => {
-    let nodeCls = "chain-sim-node";
-    if (status === "breached" || i < currentIndex) nodeCls += " is-cleared";
-    else if (i === currentIndex && status === "blocked") nodeCls += " is-blocked";
-    else if (i === currentIndex && status === "running") nodeCls += " is-current";
-    track.push(h("div", { key: s.id, className: nodeCls, title: s.name }, s.index));
-
-    if (i < STAGES.length - 1) {
-      let edgeCls = "chain-sim-edge";
-      if (status === "breached" || i < currentIndex) edgeCls += " is-cleared";
-      else if (i === currentIndex && status === "blocked") edgeCls += " is-blocked";
-      track.push(h("div", { key: "e-" + s.id, className: edgeCls }));
-    }
-  });
-
-  let panel;
-  if (status === "idle") {
-    panel = h(
-      "div",
-      { className: "chain-sim-console" },
-      h("p", { className: "chain-sim-score" }, "SIMULAÇÃO LOCAL · DADOS FICTÍCIOS"),
-      h("h3", null, "Pronto para testar sete decisões?"),
-      h(
-        "p",
-        null,
-        "A cada elo, diga se essa mediação de proteção já existe na sua rotina. O objetivo não é acertar tudo — é enxergar onde falta uma camada."
-      ),
-      h(
-        "div",
-        { className: "chain-sim-actions" },
-        h(
-          "button",
-          { type: "button", className: "button is-defend", onClick: start },
-          "Iniciar simulação"
-        )
-      )
-    );
-  } else if (status === "running") {
-    panel = h(
-      "div",
-      { className: "chain-sim-console" },
-      h(
-        "p",
-        { className: "chain-sim-score" },
-        "ELO " + stage.index + " / 07 · " + stage.name.toUpperCase()
-      ),
-      h("h3", null, "Essa mediação já existe?"),
-      h("p", null, stage.mediations[0].text + "."),
-      h(
-        "div",
-        { className: "chain-sim-actions" },
-        h(
-          "button",
-          { type: "button", className: "button is-defend", onClick: defend },
-          "Sim, essa defesa existe"
-        ),
-        h(
-          "button",
-          { type: "button", className: "button is-skip", onClick: letThrough },
-          "Ainda não"
-        )
-      )
-    );
-  } else if (status === "blocked") {
-    panel = h(
-      "div",
-      { className: "chain-sim-console is-win" },
-      h("p", { className: "chain-sim-score" }, "CORRENTE QUEBRADA NO ELO " + stage.index),
-      h("h3", null, "Ataque interrompido em " + stage.name + "."),
-      h(
-        "p",
-        null,
-        "Quanto mais cedo uma mediação intercepta a cadeia, menor tende a ser o custo do incidente — a lógica por trás da defesa em profundidade."
-      ),
-      h(
-        "div",
-        { className: "chain-sim-actions" },
-        h(
-          "button",
-          { type: "button", className: "button is-defend", onClick: reset },
-          "Simular de novo"
-        )
-      )
-    );
-  } else {
-    panel = h(
-      "div",
-      { className: "chain-sim-console" },
-      h("p", { className: "chain-sim-score" }, "SEM INTERRUPÇÃO EM 07 / 07"),
-      h("h3", null, "Ações sobre os objetivos concluídas."),
-      h(
-        "p",
-        null,
-        "Sem mediação pronta em nenhum elo, o cenário fictício termina com o invasor atingindo o objetivo: dado, acesso ou disponibilidade perdidos. Nenhuma etapa usou um ataque real."
-      ),
-      h(
-        "div",
-        { className: "chain-sim-actions" },
-        h(
-          "button",
-          { type: "button", className: "button is-defend", onClick: reset },
-          "Simular de novo"
-        ),
-        h("a", { className: "button", href: "playbook.html" }, "Abrir o Playbook")
-      )
-    );
+  function startViewTransition(fn) {
+    if (document.startViewTransition && !reduce) document.startViewTransition(fn);
+    else fn();
   }
 
-  return h(
-    "div",
-    { className: "chain-sim" },
-    h("div", { className: "chain-sim-track", "aria-label": "Trilha da simulação" }, track),
-    panel
-  );
-};
+  function animateScene() {
+    if (reduce) return;
+    scene.animate([
+      {transform:'translate3d(0, 0, 0) scale(.985)', opacity:.72, filter:'blur(2px)'},
+      {transform:'translate3d(0, -6px, 0) scale(1)', opacity:1, filter:'blur(0)'}
+    ], {duration:680, easing:'cubic-bezier(.22,.8,.2,1)'});
+    panel.animate([
+      {opacity:.55, transform:'translateY(12px)'},
+      {opacity:1, transform:'translateY(0)'}
+    ], {duration:480, easing:'cubic-bezier(.22,.8,.2,1)'});
+  }
 
-// ---------- Montagem ----------
+  function renderRail() {
+    rail.innerHTML = stages.map((s,i) => `<li><button type="button" data-index="${i}" class="rail-btn ${i===active?'is-active':''}" aria-current="${i===active?'step':'false'}"><span>${s.index}</span><b>${s.name}</b><small>${s.short}</small></button></li>`).join('');
+    rail.querySelectorAll('button').forEach(btn => btn.addEventListener('click', () => setActive(Number(btn.dataset.index), true)));
+  }
 
-const mount = (id, Component) => {
-  const el = document.getElementById(id);
-  if (!el) return;
-  ReactDOM.createRoot(el).render(h(Component));
-};
+  function renderDeep() {
+    deepGrid.innerHTML = stages.map((s,i) => `<article class="deep-card ${i===active?'is-active':''}" data-deep-index="${i}"><div class="deep-card-top"><span>${s.index}</span><em>${s.fn}</em></div><h3>${s.name}</h3><p>${s.short}</p><div class="deep-card-bar"><i style="--w:${((i+2)/stages.length)*100}%"></i></div></article>`).join('');
+    deepGrid.querySelectorAll('.deep-card').forEach(card => card.addEventListener('click', () => setActive(Number(card.dataset.deepIndex), true)));
+  }
 
-document.addEventListener("DOMContentLoaded", () => {
-  mount("chain-hero-root", ChainHero);
-  mount("chain-explorer-root", ChainExplorer);
-  mount("chain-sim-root", ChainSimulator);
-});
+  function renderDecisions() {
+    decisionGrid.innerHTML = stages.map((s,i) => `<button type="button" class="decision-chip" data-decision="${i}"><span>${s.index}</span><b>${s.name}</b></button>`).join('');
+    decisionGrid.querySelectorAll('button').forEach(btn => btn.addEventListener('click', () => decide(Number(btn.dataset.decision))));
+  }
+
+  function renderBreakChain(selected = null) {
+    breakChain.innerHTML = stages.map((s,i) => `<div class="break-node ${i<=(selected??-1)?'is-passed':''} ${i===selected?'is-selected':''}"><span>${s.index}</span><small>${s.name}</small></div>${i<stages.length-1?'<i class="break-link"></i>':''}`).join('');
+  }
+
+  function setActive(index, move = false) {
+    active = Math.max(0, Math.min(stages.length-1, index));
+    mode = 'threat';
+    const s = stages[active];
+    const next = stages[Math.min(stages.length-1, active+1)];
+    startViewTransition(() => {
+      scene.dataset.stage = s.id;
+      els.railStatus.textContent = active===stages.length-1 ? 'OBJETIVO VISÍVEL' : `ELO ${s.index} EM FOCO`;
+      els.sceneCounter.textContent = s.index;
+      els.sceneName.textContent = s.name.toUpperCase();
+      els.sceneSignal.textContent = s.short.toUpperCase();
+      els.terminal.textContent = s.line;
+      els.sceneLabel.textContent = `${s.index} / ${String(stages.length).padStart(2,'0')}`;
+      els.sceneFill.style.width = `${((active+1)/stages.length)*100}%`;
+      els.panelType.textContent = 'SINAL';
+      els.panelStage.textContent = `${s.index} / ${String(stages.length).padStart(2,'0')}`;
+      els.panelTitle.textContent = s.name;
+      els.panelCopy.textContent = s.threat;
+      els.panelSignal.textContent = s.signal;
+      els.panelNextName.textContent = active===stages.length-1 ? 'Encerrar a sequência →' : `${next.name} →`;
+      els.nextHint.textContent = active===stages.length-1 ? 'Próxima jornada' : 'Próximo elo';
+      els.panelDefense.hidden = true;
+      els.panelDefense.innerHTML = '';
+      panel.querySelectorAll('.panel-switch button').forEach((b,i)=>{const on=i===0;b.classList.toggle('is-active',on);b.setAttribute('aria-selected',String(on));});
+      renderRail(); renderDeep(); animateScene();
+    });
+    if (move) scene.scrollIntoView({behavior:reduce?'auto':'smooth', block:'center'});
+  }
+
+  panel.querySelectorAll('.panel-switch button').forEach(btn => btn.addEventListener('click', () => {
+    mode = btn.dataset.mode;
+    const s = stages[active];
+    panel.querySelectorAll('.panel-switch button').forEach(b=>{const on=b===btn;b.classList.toggle('is-active',on);b.setAttribute('aria-selected',String(on));});
+    startViewTransition(() => {
+      if (mode==='defense') {
+        els.panelType.textContent = 'MEDIAÇÃO';
+        els.panelDefense.hidden = false;
+        els.panelDefense.innerHTML = `<p>O ponto de interrupção mais útil aqui é uma combinação de:</p><ul>${s.defenses.map(([fn,text])=>`<li><span>${fn}</span><b>${text}</b></li>`).join('')}</ul>`;
+      } else {
+        els.panelType.textContent = 'SINAL';
+        els.panelDefense.hidden = true;
+        els.panelDefense.innerHTML = '';
+      }
+    });
+  }));
+
+  document.getElementById('prev-stage')?.addEventListener('click', () => setActive(active-1, false));
+  document.getElementById('next-stage')?.addEventListener('click', () => setActive(active+1, false));
+  document.addEventListener('keydown', e => {
+    if (['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName)) return;
+    if (e.key==='ArrowRight') setActive(active+1, false);
+    if (e.key==='ArrowLeft') setActive(active-1, false);
+    if (/^[1-7]$/.test(e.key)) setActive(Number(e.key)-1, true);
+  });
+
+  function decide(index) {
+    const stage = stages[index];
+    const late = stages.length-1-index;
+    const efficacy = Math.max(18, 100 - late*12);
+    decisionGrid.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('is-selected',i===index));
+    renderBreakChain(index);
+    els.result.dataset.state = index <= 2 ? 'early' : index <= 4 ? 'mid' : 'late';
+    els.resultLabel.textContent = index <= 2 ? 'INTERRUPÇÃO ANTECIPADA' : index <= 4 ? 'CONTENÇÃO TARDIA' : 'RESPOSTA NO IMPACTO';
+    els.resultTitle.textContent = index <= 2 ? `Você colocou fricção em ${stage.name}.` : index <= 4 ? `Você conteve a sequência em ${stage.name}.` : `Você chegou ao impacto em ${stage.name}.`;
+    els.resultCopy.textContent = `Índice educativo de interrupção: ${efficacy}%. Quanto mais cedo a organização consegue agir, mais opções permanecem abertas para conter, responder e recuperar.`;
+  }
+
+  const stageSections = document.querySelectorAll('[data-stage-section]');
+  if (stageSections.length) {
+    const io = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) setActive(Number(entry.target.dataset.stageSection), false); }), {rootMargin:'-38% 0px -38% 0px', threshold:0.01});
+    stageSections.forEach(el=>io.observe(el));
+  }
+
+  const theaterObserver = new IntersectionObserver(entries => entries.forEach(entry => scene.classList.toggle('is-in-view', entry.isIntersecting)), {threshold:.15});
+  theaterObserver.observe(document.getElementById('theater'));
+
+  const progressObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+    const ratio = Math.max(0, Math.min(1, entry.intersectionRatio));
+    if (progressBar) progressBar.style.transform = `scaleX(${ratio})`;
+  }), {threshold:[0,.25,.5,.75,1]});
+  progressObserver.observe(document.querySelector('main'));
+
+  const parallaxZone = document.querySelector('[data-parallax-zone]');
+  if (parallaxZone && !reduce) {
+    parallaxZone.addEventListener('pointermove', e => {
+      const r = parallaxZone.getBoundingClientRect();
+      const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+      parallaxZone.style.setProperty('--px', `${x*18}px`);
+      parallaxZone.style.setProperty('--py', `${y*14}px`);
+    }, {passive:true});
+    parallaxZone.addEventListener('pointerleave', () => {parallaxZone.style.setProperty('--px','0px');parallaxZone.style.setProperty('--py','0px');},{passive:true});
+  }
+
+  document.querySelectorAll('.signal-card').forEach(card => card.addEventListener('mouseenter', () => {
+    if (reduce) return;
+    card.animate([{transform:'translateY(0)'},{transform:'translateY(-5px)'},{transform:'translateY(0)'}],{duration:420,easing:'ease-out'});
+  }));
+
+  renderDecisions();
+  renderBreakChain();
+  setActive(0, false);
+})();

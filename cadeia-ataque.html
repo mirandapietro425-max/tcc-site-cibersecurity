@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#07111b" />
-  <meta name="description" content="Explorador interativo da cadeia de ataque: o que acontece em cada elo e quais mediações de proteção o interrompem, do reconhecimento à resposta." />
+  <meta name="theme-color" content="#06111c" />
+  <meta name="description" content="Experiência interativa da cadeia de ataque: acompanhe os sete elos, perceba os sinais e descubra onde a defesa pode interromper a sequência." />
   <title>Cadeia de ataque — CyberShield</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="pages.css" />
-  <link rel="stylesheet" href="immersive.css" />
-  <link rel="stylesheet" href="ux-polish.css" />
+    <link rel="stylesheet" href="ux-polish.css" />
   <link rel="stylesheet" href="cadeia-ataque.css" />
-  <link rel="stylesheet" href="experience-v7.css" />
+  <link rel="stylesheet" href="ux-audit-v38.css?v=38">
 </head>
 <body class="immersive-page attack-page">
+  <div class="attack-progress" aria-hidden="true"><span id="attack-progress-bar"></span></div>
   <div class="container">
-    <header class="page-header">
+    <header class="page-header attack-header">
       <a class="brand" href="index.html#inicio"><span class="brand-mark">◇</span><span>CYBER<span class="brand-slash">/</span>SHIELD</span></a>
       <nav class="immersive-nav" aria-label="Navegação da experiência">
         <a href="radar.html">Radar</a>
@@ -30,44 +30,139 @@
     </header>
 
     <main>
-      <section class="immersive-hero">
-        <div class="immersive-hero-copy">
+      <section class="attack-hero" data-parallax-zone>
+        <div class="attack-hero-copy">
           <p class="eyebrow">05 / CADEIA DE ATAQUE</p>
-          <h1>Um ataque não é um evento.<br /><em>É uma sequência.</em></h1>
-          <p class="lede">Sete elos separam o primeiro clique do objetivo do invasor. Este painel mostra o que costuma acontecer em cada elo e qual mediação de proteção quebra a corrente — sem simular um ataque real e sem coletar dados.</p>
-          <div class="hero-pills"><span>RECONHECIMENTO → OBJETIVOS</span><span>NIST CSF 2.0</span><span>SEM TELEMETRIA REAL</span></div>
+          <p class="hero-overline">UMA COISA RARAMENTE CHEGA SOZINHA.</p>
+          <h1>O ataque começa<br /><em>antes do impacto.</em></h1>
+          <p class="attack-hero-lede">Siga uma sequência fictícia em sete movimentos. O ponto não é assistir ao ataque acontecer — é perceber onde a organização consegue mudar a história.</p>
+          <div class="attack-hero-meta">
+            <span><b>07</b> elos</span>
+            <span><b>06</b> funções NIST CSF 2.0</span>
+            <span><b>0</b> dados reais</span>
+          </div>
+          <a class="attack-begin" href="#journey"><span>Entrar na sequência</span><i>↓</i></a>
         </div>
-        <div class="chain-art" aria-label="Prévia animada da cadeia de ataque">
-          <div id="chain-hero-root"></div>
+
+        <div class="attack-hero-stage" id="hero-stage">
+          <div class="hero-haze hero-haze-a"></div>
+          <div class="hero-haze hero-haze-b"></div>
+          <div class="hero-orbit orbit-one"></div>
+          <div class="hero-orbit orbit-two"></div>
+          <img class="hero-visual hero-visual-main" src="assets/protect/cybershield_hero_scene.png" alt="Ambiente futurista do CyberShield" />
+          <img class="hero-visual hero-visual-hacker" src="assets/protect/cybershield_hacker.png" alt="Especialista observando sinais de segurança" />
+          <span class="hero-chip chip-a">SURFACE / PUBLIC</span>
+          <span class="hero-chip chip-b">SIGNAL / 01</span>
+          <span class="hero-chip chip-c">DEFENSE / READY</span>
+          <div class="hero-scanline"></div>
         </div>
       </section>
 
-      <section class="chain-section" id="explorar">
-        <div class="section-head">
-          <div><p class="eyebrow">EXPLORAR OS ELOS</p><h2>Escolha um elo.<br /><span>Veja os dois lados.</span></h2></div>
-          <p>Cada elo tem uma leitura do ataque e uma leitura da defesa. Alterne entre elas para entender onde a mediação certa entra em ação.</p>
+      <section class="attack-intro" id="journey">
+        <div class="attack-intro-number">01</div>
+        <div>
+          <p class="eyebrow">A lógica da experiência</p>
+          <h2>Não procure o momento do ataque.<br /><span>Procure a oportunidade de interrompê-lo.</span></h2>
         </div>
-        <div id="chain-explorer-root"></div>
+        <p>O mesmo incidente pode parecer inevitável no fim e completamente evitável no começo. Por isso esta página troca o mapa estático por uma travessia: cada elo altera o ambiente, revela um sinal e abre uma decisão de defesa.</p>
       </section>
 
-      <section class="chain-section" id="simular">
-        <div class="section-head">
-          <div><p class="eyebrow">SIMULAÇÃO LOCAL</p><h2>Quebre a corrente<br /><span>antes do último elo.</span></h2></div>
-          <p>A simulação roda inteiramente neste navegador com dados fictícios. Ela não representa um ataque real nem envia nada para fora da página.</p>
+      <section class="attack-theater" aria-labelledby="attack-theater-title" id="theater" aria-label="Teatro interativo da cadeia de ataque">
+        <aside class="attack-rail" aria-label="Etapas da cadeia">
+          <div class="rail-label"><span>CHAIN STATUS</span><b id="rail-status">SEQUÊNCIA EM ABERTO</b></div>
+          <ol id="attack-rail-list"></ol>
+          <div class="rail-footer"><span>07 / 07</span><small>Reconhecimento → Objetivos</small></div>
+        </aside>
+
+        <div class="attack-scene-wrap">
+          <div class="attack-scene" id="attack-scene" data-stage="recon">
+            <div class="scene-grid"></div>
+            <div class="scene-noise"></div>
+            <div class="scene-aura"></div>
+            <div class="scene-object object-hacker"><img src="assets/protect/cybershield_hacker.png" alt="" aria-hidden="true" /></div>
+            <div class="scene-object object-phone"><img src="assets/protect/cybershield_old_phone.png" alt="" aria-hidden="true" /></div>
+            <div class="scene-object object-router"><img src="assets/protect/cybershield_router.png" alt="" aria-hidden="true" /></div>
+            <div class="scene-object object-robot"><img src="assets/protect/cybershield_robot.png" alt="" aria-hidden="true" /></div>
+            <div class="scene-workstation"><img src="assets/protect-characters/neutral_cybersecurity_robot_workstation_scene.png" alt="" aria-hidden="true" /></div>
+            <div class="scene-vault" aria-hidden="true"><span>VAULT</span><b>••••</b></div>
+            <div class="scene-pulse pulse-a"></div><div class="scene-pulse pulse-b"></div><div class="scene-pulse pulse-c"></div>
+            <div class="scene-terminal" aria-hidden="true"><span>LOCAL / SIMULATION</span><b id="terminal-line">observing_surface_01…</b></div>
+            <div class="scene-caption"><span id="scene-counter">01</span><b id="scene-name">RECONHECIMENTO</b><small id="scene-signal">COLETA DE INFORMAÇÃO</small></div>
+          </div>
+
+          <div class="scene-controls" role="group" aria-label="Controles da sequência">
+            <button type="button" class="scene-control" id="prev-stage" aria-label="Etapa anterior">←</button>
+            <div class="scene-control-center"><span id="scene-progress-label">01 / 07</span><i><b id="scene-progress-fill"></b></i></div>
+            <button type="button" class="scene-control" id="next-stage" aria-label="Próxima etapa">→</button>
+          </div>
         </div>
-        <div id="chain-sim-root"></div>
+
+        <article class="attack-panel" id="attack-panel" aria-live="polite">
+          <div class="panel-topline"><span id="panel-type">SINAL</span><span id="panel-stage">01 / 07</span></div>
+          <h2 id="panel-title">Reconhecimento</h2>
+          <p id="panel-copy"></p>
+          <div class="panel-signal"><span>SINAL QUE PODE APARECER</span><b id="panel-signal-text"></b></div>
+          <div class="panel-switch" role="tablist" aria-label="Leitura da etapa">
+            <button class="is-active" type="button" data-mode="threat" role="tab" aria-selected="true">O movimento</button>
+            <button type="button" data-mode="defense" role="tab" aria-selected="false">A interrupção</button>
+          </div>
+          <div class="panel-defense" id="panel-defense" hidden></div>
+          <div class="panel-foot"><span id="panel-next-hint">Próximo elo</span><b id="panel-next-name">Armamento →</b></div>
+        </article>
       </section>
 
-      <section class="chain-section">
+      <section class="break-section" id="break-section">
+        <div class="section-head break-head">
+          <div><p class="eyebrow">A EXPERIÊNCIA MUDA AQUI</p><h2>A corrente não precisa chegar<br /><span>ao fim para ser quebrada.</span></h2></div>
+          <p>Escolha onde você quer colocar a barreira. O cenário responde, a cadeia se desvia e você vê a diferença entre <strong>deixar acontecer</strong> e <strong>governar a sequência</strong>.</p>
+        </div>
+
+        <div class="break-lab" id="break-lab">
+          <div class="break-chain" id="break-chain"></div>
+          <div class="break-decision">
+            <div class="decision-kicker">LOCAL DEFENSE ENGINE</div>
+            <h3>Onde você interromperia a cadeia?</h3>
+            <p>Escolha um elo. A simulação é local e fictícia; o objetivo é comparar o custo cognitivo de interromper cedo ou reagir tarde.</p>
+            <div class="decision-grid" id="decision-grid"></div>
+            <div class="decision-result" id="decision-result" data-state="idle">
+              <span id="decision-result-label">AGUARDANDO DECISÃO</span>
+              <b id="decision-result-title">A melhor defesa começa antes do objetivo.</b>
+              <p id="decision-result-copy">Selecione um ponto de interrupção para ver como a narrativa muda.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="deep-section">
         <div class="section-head">
-          <div><p class="eyebrow">DA CADEIA AO PLANO</p><h2>Framework é ponto de partida.<br /><span>Playbook é rotina.</span></h2></div>
+          <div><p class="eyebrow">LEITURA PROFUNDA</p><h2>Sete elos.<br /><span>Uma arquitetura de defesa.</span></h2></div>
+          <p>As etapas são inspiradas no conceito de Cyber Kill Chain e conectadas às funções do NIST CSF 2.0 para mostrar que proteção não é um controle único: é uma conversa contínua entre governança, identificação, proteção, detecção, resposta e recuperação.</p>
         </div>
-        <div class="principles">
-          <article class="principle"><strong>01</strong><b>Reduza a superfície</b><p>Menos exposição, menos privilégio e menos dependência não revisada tiram elos disponíveis do invasor.</p></article>
-          <article class="principle"><strong>02</strong><b>Detecte cedo</b><p>Um sinal identificado nos elos iniciais custa muito menos do que uma resposta depois da exfiltração.</p></article>
-          <article class="principle"><strong>03</strong><b>Governe o processo</b><p>O NIST CSF 2.0 acrescentou a função Governança: papéis, política e revisão sustentam as demais camadas.</p></article>
+        <div class="deep-grid" id="deep-grid"></div>
+      </section>
+
+      <section class="signal-gallery">
+        <div class="signal-gallery-header">
+          <div><p class="eyebrow">SENSORIAL / SINAIS</p><h2>Perceba a cadeia<br /><span>antes de nomeá-la.</span></h2></div>
+          <p>Uma boa experiência de segurança não começa com jargão. Começa com sinais que uma pessoa consegue reconhecer.</p>
         </div>
-        <a class="button button-secondary chain-cta" href="playbook.html">Voltar ao Playbook <span>↗</span></a>
+        <div class="signal-cards">
+          <article class="signal-card" data-signal="identity"><span>01</span><b>Identidade</b><p>Pedido incomum. Urgência. Credencial fora do contexto.</p></article>
+          <article class="signal-card" data-signal="endpoint"><span>02</span><b>Endpoint</b><p>Processo novo. Serviço estranho. Persistência sem justificativa.</p></article>
+          <article class="signal-card" data-signal="network"><span>03</span><b>Rede</b><p>Destino novo. DNS estranho. Fluxo que não combina com a rotina.</p></article>
+          <article class="signal-card" data-signal="impact"><span>04</span><b>Impacto</b><p>Disponibilidade muda. Dados somem. A operação precisa reagir.</p></article>
+        </div>
+      </section>
+
+      <section class="final-attack-cta">
+        <div class="final-glow"></div>
+        <p class="eyebrow">DA CADEIA AO PLANO</p>
+        <h2>Agora transforme o que você viu<br /><span>em rotina de defesa.</span></h2>
+        <p>Use o Playbook para transformar sinais e mediações em ações que podem ser repetidas, revisadas e governadas.</p>
+        <div class="final-actions">
+          <a class="button button-primary" href="playbook.html">Abrir o Playbook ↗</a>
+          <a class="button button-secondary" href="laboratorio.html">Ir ao Laboratório →</a>
+        </div>
       </section>
 
       <section class="sources-strip">
@@ -75,13 +170,14 @@
         <a href="https://lockheedmartin.com/en-us/capabilities/cyber/cyber-kill-chain.html" target="_blank" rel="noopener noreferrer">Cyber Kill Chain ↗</a>
         <a href="https://attack.mitre.org/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK ↗</a>
         <a href="https://www.nist.gov/cyberframework" target="_blank" rel="noopener noreferrer">NIST CSF 2.0 ↗</a>
+        <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Scroll-driven_animations" target="_blank" rel="noopener noreferrer">Scroll-driven Animations ↗</a>
+        <a href="https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API" target="_blank" rel="noopener noreferrer">View Transition API ↗</a>
       </section>
     </main>
 
-    <footer class="page-footer"><span>CyberShield · simulação educativa local, sem coleta de dados</span><a href="privacidade.html">← Voltar à Privacidade</a></footer>
+    <footer class="page-footer attack-footer"><span>CyberShield · experiência educativa local, sem coleta de dados</span><a href="privacidade.html">Privacidade →</a></footer>
   </div>
-  <script src="vendor/react.production.min.js"></script>
-  <script src="vendor/react-dom.production.min.js"></script>
-  <script src="cadeia-ataque.js"></script>
+  <script src="cadeia-ataque.js" defer></script>
+<script src="ux-audit-v38.js?v=38" defer></script>
 </body>
 </html>

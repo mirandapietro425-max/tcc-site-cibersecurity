@@ -1,25 +1,86 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#06111c"><meta name="description" content="Radar educativo de ameaças do CyberShield.">
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#03080d"><meta name="description" content="Radar educativo CyberShield — uma experiência interativa de percepção, correlação e resposta a sinais de segurança.">
 <title>Radar — CyberShield</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="pages.css"><link rel="stylesheet" href="ux-polish.css">  <link rel="stylesheet" href="experience-v7.css" />
+<link rel="stylesheet" href="radar.css">
+<style>@view-transition{navigation:auto}.story__marker{height:20vh;position:relative;scroll-margin-top:25vh}.story__track .story__marker:first-child{height:5vh}.story__track .story__marker:last-child{height:10vh}.topbar .brand span{color:#70e7f7}</style>
+  <link rel="stylesheet" href="ux-audit-v38.css?v=38">
 </head>
-<body class="immersive-page"><div class="container">
-<header class="page-header"><a class="brand" href="index.html#inicio"><span class="brand-mark">◇</span><span>CYBER<span class="brand-slash">/</span>SHIELD</span></a>
-<nav class="immersive-nav"><a class="is-current" href="radar.html">Radar</a><a href="playbook.html">Playbook</a><a href="laboratorio.html">Laboratório</a><a href="privacidade.html">Privacidade</a><a href="cadeia-ataque.html">Cadeia de ataque</a><a href="index.html#inicio">Início</a></nav></header>
+<body class="radar-page">
+<header class="topbar">
+  <a class="brand" href="index.html">CYBER<span>/</span>SHIELD</a>
+  <nav aria-label="Navegação principal"><a class="active" href="radar.html">Radar</a><a href="playbook.html">Playbook</a><a href="laboratorio.html">Laboratório</a><a href="privacidade.html">Privacidade</a><a href="cadeia-ataque.html">Cadeia de ataque</a></nav>
+  <button class="sound" aria-pressed="false">SOM · OFF</button>
+</header>
 <main>
-<section class="immersive-hero"><div class="immersive-hero-copy"><p class="eyebrow">01 / RADAR DE AMEAÇAS</p><h1>Veja o risco como<br><em>um mapa.</em></h1><p class="lede">Uma leitura rápida das ameaças trabalhadas no TCC: o que elas exploram, quais sinais aparecem e qual primeira ação reduz o risco.</p><div class="hero-pills"><span>MALWARE</span><span>ENGENHARIA SOCIAL</span><span>DEFESA</span></div></div>
-<div class="signal-art"><svg viewBox="0 0 520 360" width="100%" height="100%" aria-label="Radar educativo"><defs><radialGradient id="g"><stop stop-color="#8cffb5" stop-opacity=".16"/><stop offset="1" stop-color="#8cffb5" stop-opacity="0"/></radialGradient></defs><circle cx="260" cy="180" r="150" fill="url(#g)" stroke="#70e7f7" stroke-opacity=".35"/><circle cx="260" cy="180" r="106" fill="none" stroke="#a995ff" stroke-opacity=".24"/><circle cx="260" cy="180" r="62" fill="none" stroke="#8cffb5" stroke-opacity=".3"/><path d="M260 180 393 105" stroke="#70e7f7" stroke-width="2"/><g fill="#fff"><circle cx="336" cy="136" r="5"/><circle cx="174" cy="105" r="4"/><circle cx="388" cy="226" r="5"/><circle cx="132" cy="232" r="4"/></g><text x="260" y="187" fill="#8cffb5" font-family="Space Mono" font-size="12" text-anchor="middle">POSTURA</text></svg></div></section>
-<section class="section"><div class="section-head"><div><span class="eyebrow">SINAIS</span><h2>Do padrão para a decisão.</h2></div><p>O objetivo do radar não é prever um ataque. É ajudar a reconhecer sinais e escolher uma resposta coerente.</p></div>
-<div class="tcc-insight-grid">
-<article class="tcc-insight"><span class="tcc-tag">RANSOMWARE</span><h3>Impacto operacional</h3><p>Priorize backups testados, atualizações, segmentação, privilégio mínimo e resposta a incidentes.</p></article>
-<article class="tcc-insight"><span class="tcc-tag">TROJAN</span><h3>Software disfarçado</h3><p>Controle origem, integridade e privilégios de execução; evite instalar arquivos de procedência duvidosa.</p></article>
-<article class="tcc-insight"><span class="tcc-tag">WORM</span><h3>Propagação</h3><p>Corrija vulnerabilidades e segmente redes para dificultar a movimentação automática entre hosts.</p></article>
-<article class="tcc-insight"><span class="tcc-tag">PHISHING</span><h3>Pressão por clique</h3><p>Pause, confira domínio e contexto e confirme por um canal independente.</p></article>
-<article class="tcc-insight"><span class="tcc-tag">VISHING</span><h3>Autoridade por voz</h3><p>Encerre a chamada e retorne usando um telefone oficial, sem fornecer códigos ou credenciais.</p></article>
-<article class="tcc-insight"><span class="tcc-tag">SMISHING</span><h3>Urgência por mensagem</h3><p>Ignore links inesperados e abra o serviço por um caminho conhecido.</p></article>
-</div></section></main>
-<footer class="page-footer"><p>Conteúdo educativo alinhado ao TCC e às referências institucionais usadas pelo projeto. Sem monitoramento real ou coleta de dados.</p></footer>
-</div></body></html>
+<section class="hero">
+  <div class="hero__grid"></div><div class="hero__glow"></div>
+  <div class="hero__content">
+    <div>
+      <div class="eyebrow">01 / RADAR DE AMEAÇAS</div>
+      <h1>Aprenda a <em>perceber</em><br>antes de reagir.</h1>
+      <p>O Radar transforma sinais de segurança em uma história interativa: observar, correlacionar, decidir e recuperar o controle. É uma simulação educativa — não um monitoramento real.</p>
+      <div class="hero__meta"><span class="chip">NARRATIVA INTERATIVA</span><span class="chip">5 ESTADOS</span><span class="chip">SIMULAÇÃO</span><span class="chip">SEM DADOS REAIS</span></div>
+      <div class="hero__scroll">ROLE PARA INICIAR A ESCUTA · SETAS PARA NAVEGAR</div>
+    </div>
+    <div class="characters">
+      <img class="char char--main" src="assets/protect-characters/female_cybersecurity_specialist_walk_left_right.png" alt="Especialista de cibersegurança em movimento">
+      <img class="char char--robot" src="assets/protect-characters/neutral_cybersecurity_humanoid_robot_walk_left_right.png" alt="Robô humanoide de cibersegurança">
+      <img class="char char--guardian" src="assets/protect-characters/cybersecurity_guardian_walk_forward.png" alt="Guardião de cibersegurança">
+      <div class="character-label"><b>CYBERSHIELD · WATCH</b><span>o sistema ainda está quieto</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="story" aria-label="Simulação narrativa do Radar">
+  <div class="story__track">
+    <div class="story__marker" data-scene="0"></div><div class="story__marker" data-scene="1"></div><div class="story__marker" data-scene="2"></div><div class="story__marker" data-scene="3"></div><div class="story__marker" data-scene="4"></div>
+    <div class="story__stage">
+      <div class="story__ambient"></div><div class="story__mesh"></div>
+      <div class="story__content">
+        <aside class="story__copy">
+          <div class="story__step" data-step>01 / 05 · VIGÍLIA</div>
+          <h2 data-copy-title>A rede parece <em>quieta</em>.</h2>
+          <p data-copy-body>O Radar começa sem respostas prontas. Você observa o ambiente, identifica padrões e acompanha a leitura sem transformar ruído em alarme.</p>
+          <div class="story__hint"><b data-status>AMBIENTE ESTÁVEL</b> · <span>clique em um ponto do radar para abrir uma leitura</span></div>
+          <div style="margin-top:22px;font:700 10px 'Space Mono';color:#677f8b;letter-spacing:.14em">SINAIS ATIVOS · <span data-counter style="color:#e8f5fa">00</span></div>
+        </aside>
+        <div class="stage-right">
+          <div class="radar-wrap">
+            <div class="radar">
+              <div class="crosshair"></div><div class="sweep"></div>
+              <button class="node node--1" aria-label="Sinal 1" data-severity="low"></button>
+              <button class="node node--2" aria-label="Sinal 2" data-severity="medium"></button>
+              <button class="node node--3" aria-label="Sinal 3" data-severity="high"></button>
+              <button class="node node--4" aria-label="Sinal 4" data-severity="medium"></button>
+              <button class="node node--5" aria-label="Sinal 5" data-severity="low"></button>
+              <div class="radar-readout"><small>POSTURA</small><strong>ATENTA</strong><span data-readout>LIVE / SIMULAÇÃO</span></div>
+            </div>
+            <div class="hud"><div class="hud__item"><span class="hud__dot"></span> SENSOR EDUCACIONAL</div><div class="hud__item">RAIO 360° · ONLINE</div></div>
+          </div>
+          <div class="threat-card"><div class="threat-card__tag" data-card-tag>SINAL</div><h3 data-card-title>DOMÍNIO SUSPEITO</h3><p data-card-body>A primeira leitura indica um desvio. Antes de clicar, confirme remetente, domínio, urgência e canal.</p></div>
+        </div>
+      </div>
+      <div class="chapters" aria-label="Capítulos"><button class="chapter-dot is-current" type="button" title="Vigília" aria-label="Ir para o capítulo Vigília"></button><button class="chapter-dot" type="button" title="Sinal" aria-label="Ir para o capítulo Sinal"></button><button class="chapter-dot" type="button" title="Correlação" aria-label="Ir para o capítulo Correlação"></button><button class="chapter-dot" type="button" title="Decisão" aria-label="Ir para o capítulo Decisão"></button><button class="chapter-dot" type="button" title="Containment" aria-label="Ir para o capítulo Containment"></button></div>
+      <div class="outcome" aria-live="polite"></div>
+      <div class="action-dock"><div class="actions"><button class="action" data-action="investigate">INVESTIGAR</button><button class="action primary" data-action="contain">CONTER</button><button class="action" data-action="monitor">MONITORAR</button></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="after">
+  <div class="after__grid">
+    <div><div class="eyebrow">SISTEMA DE LEITURA</div><h2>O Radar não adivinha.<br>Ele <em style="font-style:normal;color:#70e7f7">ensina a notar.</em></h2><p>Os sinais desta experiência foram construídos a partir dos conteúdos educativos do CyberShield: engenharia social, malware, credenciais e comportamento anômalo. A intenção é desenvolver percepção e tomada de decisão, não reproduzir um centro operacional real.</p></div>
+    <div style="display:grid;gap:12px"><article class="insight"><b>01 · SINAL</b><h3>Observe sem precipitar</h3><p>Um evento isolado pode ser apenas ruído. Contexto, origem e repetição pesam na leitura.</p></article><article class="insight"><b>02 · CORRELAÇÃO</b><h3>Conecte evidências</h3><p>Quando pequenas anomalias se conectam, o cenário muda. A decisão fica mais informada.</p></article><article class="insight"><b>03 · RESPOSTA</b><h3>Escolha o próximo passo</h3><p>Investigar, conter ou monitorar são atitudes diferentes. A boa resposta depende do risco.</p></article></div>
+  </div>
+  <div style="max-width:1200px;margin:70px auto 0;display:flex;gap:10px;align-items:center"><button class="action replay" style="flex:0 0 auto">REINICIAR EXPERIÊNCIA</button><a class="action" href="laboratorio.html" style="text-decoration:none;display:inline-flex;align-items:center">IR AO LABORATÓRIO ↗</a></div>
+</section>
+</main>
+<footer class="footer">CyberShield Radar · experiência educativa · sem monitoramento real, sem coleta de dados · 2026</footer>
+<script src="radar.js" defer></script>
+<script src="ux-audit-v38.js?v=38" defer></script>
+</body></html>
