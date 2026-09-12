@@ -17,3 +17,13 @@
 - 6 páginas principais: index, radar, playbook, laboratorio, privacidade, cadeia-ataque.
 - Sem imagem inglesa da Cadeia no pacote.
 - Mapa de sete estágios continua exclusivamente em português.
+
+## V54 / IMMERSIVE REWORK NOTES
+
+A rodada V54 adiciona uma camada persistente de interação para desktop e mobile, com objetos em movimento, partículas, resposta ao cursor e reforço de estados visuais. O Cadeia de Ataque deixa de receber a seção de arte estática injetada pelo superexperience-v42 e passa a utilizar uma entrada dedicada com sonda tecnológica percorrendo os sete elos.
+
+A abordagem foi alinhada com referências contemporâneas de storytelling imersivo e WebGL/Canvas, especialmente trabalhos catalogados pelo CSS Design Awards e Awwwards que combinam movimento espacial, cursor, scroll e narrativa: Peryton Film (CSSDA), Playful Ground (CSSDA), Interactive 3D Sections (Awwwards) e o estudo CyberFiction. O princípio aplicado foi: movimento deve carregar significado narrativo, não apenas decorar a tela.
+
+Áudio: cada página tenta iniciar seu ambiente sonoro automaticamente. Como navegadores podem bloquear autoplay com som, o sistema mantém uma segunda tentativa no primeiro gesto/tecla. O botão de áudio continua sendo a autoridade visual de ligar/desligar.
+
+Observação técnica: o Chromium headless deste ambiente não conseguiu completar uma captura visual estável das páginas animadas; por isso a validação final combina análise estática, sintaxe, referências locais e servidor HTTP local. A validação em dispositivos reais continua recomendada.

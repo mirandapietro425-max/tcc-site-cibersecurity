@@ -351,6 +351,7 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
           model.rotation.x = -Math.PI / 2;
           model.userData.character=true;
           model.userData.baseRotationY = cfg.rot[1] || 0;
+          model.userData.baseY = model.position.y;
         }
         model.userData.topic=chapter.dataset.topic || 'cid';
 
@@ -415,6 +416,7 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
           // Rotacionamos 90° no X para colocá-los realmente em pé, mantendo a rotação Y para a volta.
           model.rotation.set(-Math.PI / 2, cfg.rotY, 0);
           model.userData.introSpin = cfg.speed;
+          model.userData.baseY = model.position.y;
           model.userData.topic=chapter.dataset.topic || 'cid';
           model.userData.satelliteIndex=index;
 
@@ -478,12 +480,19 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
       const local = world.mouse;
       const cfg=configs[kind] || configs.intro;
       if (cfg.character && model) {
-        // Os cinco personagens ficam estáveis como elementos de cenário, sem responder ao mouse.
-        // Só existe uma rotação própria bem lenta para revelar o rosto e o corpo.
+        // V54: os personagens ficam vivos mesmo em desktop: rotação + respiração vertical.
         group.rotation.set(0,0,0);
         model.rotation.x = -Math.PI / 2;
-        model.rotation.y = (model.userData.baseRotationY || 0) + t * 0.22;
-        model.rotation.z = 0;
+        const satellite = model.userData.satelliteIndex ?? -1;
+        const baseY = model.userData.baseY ?? model.position.y;
+        if (satellite >= 0) {
+          model.rotation.y = (model.userData.baseRotationY || 0) + t * (0.22 + (model.userData.introSpin || 0.08));
+          model.position.y = baseY + Math.sin(t * 0.9 + satellite * 0.8) * 0.07;
+        } else {
+          model.rotation.y = (model.userData.baseRotationY || 0) + t * 0.34;
+          model.position.y = baseY + Math.sin(t * 0.75) * 0.045;
+        }
+        model.rotation.z = Math.sin(t * 0.55 + Math.max(0,satellite) * .4) * 0.018;
       } else {
         group.rotation.y += .001;
         group.rotation.y += local.x*.00055;
