@@ -18,3 +18,6 @@
 @media (max-width:640px){.lab46-chamber{margin-top:8px}.lab46-top{padding:78px 18px 22px}.lab46-intro{padding:0 18px 24px}.lab46-intro h2{font-size:clamp(3rem,16vw,4.9rem)}.lab46-floor{padding:8px 18px 66px}.lab46-node{min-height:82px;padding:13px}.lab46-node b{font-size:17px}.lab46-core{width:min(88vw,430px)}.lab46-detail{padding:0 18px 72px}.lab46-evidence,.lab46-audio{padding:18px}.lab46-footnote{padding:0 18px 70px}.lab46-art{background-position:63% center}}
 @media (prefers-reduced-motion:reduce){.lab46-art{transform:none}.lab46-core-glow,.lab46-scan,.lab46-live i,.lab46-spectrum i{animation:none}.lab46-node{transition:none}}
 @media (pointer:coarse){.lab46-node{min-height:92px}.lab46-audio button{min-height:46px}}
+.lab46-footnote { align-items:center; flex-wrap:wrap; }
+.lab46-continue { margin-left:auto; }
+@media (max-width:640px){ .lab46-continue{margin-left:0;width:100%;} }

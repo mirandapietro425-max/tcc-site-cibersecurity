@@ -21,3 +21,12 @@ Controladores específicos:
 Assets da superprodução em assets/superproduction-v41/
 
 Esta pasta é um pacote de deploy do site inteiro. Não é necessário juntar outros ZIPs.
+
+
+## Revisão de produção V50
+
+- Cadeia de Ataque: hero simplificado para um único artwork canônico (`cybershield-cadeia.jpg`), removendo sobreposição de imagens.
+- Cadeia: removidas camadas CSS legadas específicas que não eram mais usadas no hero.
+- Cadeia: mantido apenas o mapa canônico em português no Atlas.
+- Laboratório: corrigidos atributos `style` duplicados no espectro.
+- Todas as seis páginas principais: 0 IDs duplicados e 0 referências locais quebradas na auditoria estática.

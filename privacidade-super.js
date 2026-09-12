@@ -5,29 +5,52 @@
   const $$ = (s, el = root) => [...el.querySelectorAll(s)];
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Scroll progress + active scene
+  // Progress is driven by the actual narrative sections, so inserted chapters cannot desynchronize the rail.
   const dots = $$('.ps-progress button');
-  const scenes = $$('.ps-scene');
-  const activateScene = (i) => {
-    scenes.forEach((s, n) => s.classList.toggle('is-visible', n === i));
-    dots.forEach((d, n) => d.classList.toggle('is-active', n === i));
+  const chapterSections = $$('#ps-hero, #ps-collect, #ps-lifecycle, #ps-quiet, #ps-protect, #ps-close');
+  const sceneSections = $$('.ps-scene');
+  const activateChapter = (section) => {
+    const targetId = section?.id ? `#${section.id}` : '';
+    dots.forEach(d => {
+      const active = d.dataset.target === targetId;
+      d.classList.toggle('is-active', active);
+      if (active) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current');
+    });
   };
-  new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) activateScene(Number(e.target.dataset.scene)); });
-  }, { threshold: .55 }).observe(scenes[0]);
+  const chapterObserver = new IntersectionObserver((entries) => {
+    entries.filter(e => e.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio).slice(0,1)
+      .forEach(e => activateChapter(e.target));
+  }, { threshold: [.2,.45,.7], rootMargin: '-10% 0px -10% 0px' });
+  chapterSections.forEach(section => chapterObserver.observe(section));
   const sceneObserver = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) activateScene(Number(e.target.dataset.scene)); });
-  }, { threshold: .45 });
-  scenes.forEach(s => sceneObserver.observe(s));
-  dots.forEach(d => d.addEventListener('click', () => $(d.dataset.target)?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' })));
+    entries.filter(e => e.isIntersecting).forEach(e => e.target.classList.add('is-visible'));
+    entries.filter(e => !e.isIntersecting).forEach(e => e.target.classList.remove('is-visible'));
+  }, { threshold: .35, rootMargin: '-8% 0px -8% 0px' });
+  sceneSections.forEach(scene => sceneObserver.observe(scene));
+  dots.forEach(d => d.addEventListener('click', () => document.querySelector(d.dataset.target)?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })));
 
   // Lifecycle cards: the selected phase becomes the active question.
-  $$('.ps-life').forEach(card => card.addEventListener('click', () => {
+  $$('.ps-life').forEach(card => {
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    const choose = () => {
     $$('.ps-life').forEach(c => c.classList.remove('is-active'));
     card.classList.add('is-active');
     const target = document.querySelector(card.dataset.target);
-    target?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
-  }));
+    target?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    };
+    card.addEventListener('click', choose);
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(); } });
+  });
+
+  const dataCore = $('.ps-data-core');
+  dataCore?.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      const first = $('.ps-data-bubble');
+      first?.focus();
+    }
+  });
 
   // Practice lab
   const evidence = $$('.ps-evidence button');

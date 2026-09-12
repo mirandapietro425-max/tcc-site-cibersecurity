@@ -173,7 +173,8 @@
 
   qsa('.lab-scenario').forEach(btn => btn.addEventListener('click', () => renderScenario(Number(btn.dataset.scenario))));
   els.feedbackNext.addEventListener('click', nextScenario);
-  qs('#start-lab')?.addEventListener('click', () => qs('#simulacao')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' }));
+  qs('#start-lab')?.addEventListener('click', () => qs('#incident-chamber')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }));
+  qs('#lab46-continue')?.addEventListener('click', () => qs('#simulacao')?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }));
   qs('#replay-lab')?.addEventListener('click', resetLab);
   qs('#sound-toggle')?.addEventListener('click', () => {
     soundOn = !soundOn;

@@ -11,6 +11,8 @@
   const progress = $('#topbar-progress-fill');
   let ticking=false;
   const intro = document.querySelector('.hero-3d');
+  // V21 is the authoritative controller. This layer becomes inert once it has loaded.
+  const primaryLoaded = () => window.__cyberShieldExperienceLoaded === true;
 
   const animateText = chapter => {
     if (!chapter) return;
@@ -24,6 +26,7 @@
 
   const update = () => {
     ticking=false;
+    if (primaryLoaded()) return;
     const center=innerHeight*.44;
     let active=0,best=Infinity;
     chapters.forEach((chapter,i)=>{
@@ -60,9 +63,8 @@
     }
   };
 
-  addEventListener('scroll',()=>{
-    if(!ticking){ requestAnimationFrame(update); ticking=true; }
-  },{passive:true});
+  const onScroll = () => { if(!ticking){ requestAnimationFrame(update); ticking=true; } };
+  addEventListener('scroll',onScroll,{passive:true});
   addEventListener('resize',update);
   addEventListener('load',()=>setTimeout(update,40));
 
