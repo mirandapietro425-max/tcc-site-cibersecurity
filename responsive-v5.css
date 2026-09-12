@@ -1,0 +1,148 @@
+/* CyberShield Responsive Architecture v5
+   One final containment layer loaded after every other stylesheet.
+   Goal: no accidental overflow, calmer proportions, stable touch layouts. */
+:root{
+  --container-width: 960px;
+  --gutter: clamp(12px, 2vw, 24px);
+  --section-space: clamp(52px, 6vw, 84px);
+}
+
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+body{min-width:0}
+*,*::before,*::after{box-sizing:border-box;min-width:0;max-width:100%}
+img,svg,video,canvas,iframe{display:block;max-width:100%;height:auto}
+button,input,textarea,select{max-width:100%}
+
+.container,.immersive-page .container{
+  width:min(var(--container-width),calc(100% - (var(--gutter) * 2)));
+  max-width:var(--container-width);
+  margin-inline:auto;
+}
+
+/* Never let a full-width visual escape its section. */
+.section,.section-wrap,.hero,.immersive-hero,.page-header,.page-footer,.signal-strip,
+main,header,footer{max-width:100%;min-width:0}
+.section{padding-block:var(--section-space)}
+
+/* Desktop: intentionally narrower than before. */
+@media (min-width:1181px){
+  .nav{min-height:70px}
+  .hero{grid-template-columns:minmax(0,1fr) minmax(300px,.72fr);gap:30px;padding-block:70px 58px}
+  .hero h1{font-size:clamp(2.8rem,4.7vw,5rem);max-width:680px}
+  .hero-visual{min-height:360px}
+  .orbit{width:min(360px,100%)}
+  .focus-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+  .threat-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .data-track{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .reference-list{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+
+/* Tablet / Chromebook: content-first, two columns only where they remain useful. */
+@media (max-width:1180px){
+  :root{--container-width:900px}
+  .nav{gap:10px}
+  .nav-links{gap:2px}
+  .nav-links a{padding-inline:8px}
+  .hero{grid-template-columns:minmax(0,1fr) minmax(260px,.78fr);gap:28px;padding-block:60px 50px}
+  .hero h1{font-size:clamp(2.7rem,5.7vw,4.6rem)}
+  .hero-visual{min-height:320px}
+  .orbit{width:min(330px,100%)}
+  .focus-grid,.tcc-insight-grid,.security-notes,.reference-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .threat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .data-track{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .social-flow{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pillar-layout{grid-template-columns:220px minmax(0,1fr)}
+  .dev-workbench{grid-template-columns:210px minmax(0,1fr)}
+}
+
+/* Collapse before the layout starts feeling squeezed. */
+@media (max-width:900px){
+  :root{--container-width:720px}
+  .nav-button{display:none}
+  .menu-toggle{display:block;margin-left:auto}
+  .nav-links{display:none}
+  .nav-links.is-open{
+    display:grid;
+    position:absolute;
+    top:calc(100% + 8px);left:var(--gutter);right:var(--gutter);
+    max-height:calc(100svh - 84px);
+    overflow:auto;
+    padding:10px;
+    gap:4px;
+    background:rgba(6,17,28,.98);
+    border:1px solid var(--line);
+    border-radius:16px;
+    box-shadow:0 18px 55px rgba(0,0,0,.35);
+  }
+  .nav-links.is-open a{padding:13px 12px;font-size:.72rem}
+  .nav{position:relative}
+
+  .hero{grid-template-columns:1fr;gap:20px;padding-block:48px 36px}
+  .hero-copy{max-width:680px}
+  .hero-visual{min-height:300px}
+  .hero-proof{max-width:680px}
+  .section-heading{display:grid;grid-template-columns:1fr;gap:10px;align-items:start}
+  .section-heading>div:last-child{max-width:none}
+  .section-heading p{max-width:680px}
+  .pillar-layout,.dev-workbench,.scenario-panel,.final-cta-grid,.lgpd-callout,.immersive-hero{grid-template-columns:1fr}
+  .pillar-menu{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .dev-tabs{grid-template-columns:repeat(3,minmax(0,1fr));display:grid}
+  .dev-tab{text-align:center}
+  .final-cta-grid{gap:18px}
+}
+
+/* Phones. */
+@media (max-width:640px){
+  :root{--container-width:560px;--gutter:12px;--section-space:54px}
+  .container,.immersive-page .container{width:calc(100% - 24px)}
+  .site-header{background:rgba(6,17,28,.9)}
+  .brand{font-size:.68rem}
+  .brand-mark{width:30px;height:30px}
+  .hero{padding-top:38px;gap:8px}
+  .hero h1{font-size:clamp(2.2rem,11.5vw,3.4rem);line-height:.95}
+  .hero-lead{font-size:.93rem}
+  .hero-actions{display:grid;grid-template-columns:1fr;gap:8px}
+  .hero-actions .button{width:100%}
+  .hero-proof{grid-template-columns:1fr;gap:6px;margin-top:20px}
+  .hero-proof>div{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:11px 13px}
+  .hero-proof span{margin:0}
+  .hero-visual{min-height:250px;margin-top:4px}
+  .orbit{width:min(250px,78vw)}
+  .orbit-tag{font-size:.47rem;padding:5px 6px}
+  .tag-company,.tag-code{display:none}
+  .visual-label,.visual-footer{font-size:.5rem!important}
+  .section-heading h2{font-size:clamp(1.8rem,8.5vw,2.7rem)}
+  .pillar-menu{grid-template-columns:1fr}
+  .pillar-panel{padding:20px;min-height:0}
+  .panel-question{font-size:clamp(1.5rem,7vw,2.2rem)}
+  .focus-grid,.threat-grid,.social-flow,.tcc-insight-grid,.data-track,.security-notes,.reference-list{grid-template-columns:1fr}
+  .threat-detail,.response-console,.diagnostic-card,.dev-panel,.password-card{padding:18px}
+  .scenario-action{width:100%;white-space:normal;text-align:left}
+  .pause-rule{grid-template-columns:1fr;gap:12px}
+  .pause-icon{width:48px;height:48px}
+  .data-step{padding:18px}
+  .page-header{align-items:flex-start}
+  .immersive-nav{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;max-width:100%;padding-bottom:3px}
+  .immersive-nav a{white-space:nowrap}
+  .signal-strip-inner{overflow-x:auto;white-space:nowrap;padding-bottom:4px;scrollbar-width:none}
+  .signal-strip-inner::-webkit-scrollbar{display:none}
+}
+
+/* Narrow phones. */
+@media (max-width:380px){
+  .hero h1{font-size:2.16rem}
+  .orbit{width:220px}
+  .shield-core{width:64px;height:64px;font-size:.78rem}
+  .orbit-tag{font-size:.42rem}
+}
+
+/* Stable, optional motion only after the element is in the viewport. */
+html:not(.js) .reveal{opacity:1!important;transform:none!important}
+html.js .reveal{opacity:0;transform:translate3d(0,12px,0)}
+html.js .reveal.is-visible{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal,.reveal.is-visible{opacity:1!important;transform:none!important}
+}

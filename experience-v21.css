@@ -1,0 +1,31 @@
+/* CyberShield V21 — tangible asset presentation */
+.chapter .webgl{z-index:0;mix-blend-mode:normal;filter:saturate(1.08) contrast(1.02);}
+.chapter .layer{z-index:5;}
+.chapter .chapter-content,.chapter .intro-copy{background:radial-gradient(circle at 50% 50%,rgba(3,8,15,.18),rgba(3,8,15,0) 70%);}
+.chapter .story-copy,.chapter .interactive-card,.chapter .attack-node,.chapter .defense-stack,.chapter .data-flow,.chapter .code-window,.chapter .final-actions{
+  text-shadow:0 2px 18px rgba(0,0,0,.45);
+}
+.chapter .interactive-card,.chapter .code-window,.chapter .attack-node{
+  background:rgba(5,10,18,.82)!important;
+  border-color:rgba(110,231,247,.18)!important;
+}
+
+/* V23 — novos personagens 3D na capa: pequenos, estáveis e atmosféricos. */
+.chapter-intro .webgl{
+  opacity:.78;
+}
+.chapter-intro .model-status{
+  opacity:.72;
+  transform:scale(.88);
+}
+@media (max-width:900px){
+  .chapter-intro .webgl{opacity:.66;}
+}
+
+/* V25 — a primeira página usa somente os cinco personagens novos; sem status/asset de personagem nas etapas restantes. */
+.chapter.no-character .model-status{display:none!important;}
+/* Os cinco personagens ficam discretos e não invadem a área textual. */
+.chapter .webgl{opacity:.72;}
+.chapter.chapter-user .webgl,.chapter.chapter-attack .webgl,.chapter.chapter-defense .webgl{opacity:.68;}
+@media (max-width:900px){.chapter .webgl{opacity:.56;}}
+@media (max-width:600px){.chapter .webgl{opacity:.46;}}

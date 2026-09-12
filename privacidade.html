@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#07111b" />
+  <meta name="description" content="Jornada visual de dados, LGPD, Privacy by Design e proteção em ambientes BYOD." />
+  <title>Jornada de privacidade — CyberShield</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="pages.css" />
+  <link rel="stylesheet" href="immersive.css" />
+  <link rel="stylesheet" href="ux-polish.css" />
+  <link rel="stylesheet" href="experience-v7.css" />
+</head>
+<body class="immersive-page privacy-page">
+  <div class="container">
+    <header class="page-header">
+      <a class="brand" href="index.html#inicio"><span class="brand-mark">◇</span><span>CYBER<span class="brand-slash">/</span>SHIELD</span></a>
+      <nav class="immersive-nav" aria-label="Navegação da experiência">
+        <a href="radar.html">Radar</a>
+        <a href="laboratorio.html">Laboratório</a>
+        <a class="is-current" href="privacidade.html">Privacidade</a>
+        <a href="cadeia-ataque.html">Cadeia de ataque</a>
+        <a href="index.html#inicio">Início</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="immersive-hero">
+        <div class="immersive-hero-copy">
+          <p class="eyebrow">04 / JORNADA DE PRIVACIDADE</p>
+          <h1>Todo dado tem<br /><em>uma jornada.</em></h1>
+          <p class="lede">Use a LGPD como uma lente de projeto: pergunte por que o dado existe, quem precisa dele, como será protegido e quando deve deixar de ser guardado.</p>
+          <div class="hero-pills"><span>NECESSIDADE</span><span>TRANSPARÊNCIA</span><span>CONTROLE</span></div>
+        </div>
+        <div class="data-art" aria-label="Arte generativa do ciclo de vida de dados">
+          <svg viewBox="0 0 420 360" role="img" aria-labelledby="data-art-title">
+            <title id="data-art-title">Ciclo de dados em quatro etapas</title>
+            <defs><linearGradient id="dataLine" x1="0" x2="1"><stop stop-color="#ffad70" /><stop offset="1" stop-color="#b7a4ff" /></linearGradient></defs>
+            <circle class="data-orbit-line" cx="210" cy="170" r="122" /><circle class="data-orbit-line dashed" cx="210" cy="170" r="76" />
+            <path class="data-route" d="M210 48A122 122 0 0 1 332 170M332 170A122 122 0 0 1 210 292M210 292A122 122 0 0 1 88 170M88 170A122 122 0 0 1 210 48" />
+            <g class="data-point"><circle cx="210" cy="48" r="20" /><text x="210" y="52">01</text><text class="point-label" x="210" y="18">COLETAR</text></g>
+            <g class="data-point"><circle cx="332" cy="170" r="20" /><text x="332" y="174">02</text><text class="point-label" x="371" y="175">USAR</text></g>
+            <g class="data-point"><circle cx="210" cy="292" r="20" /><text x="210" y="296">03</text><text class="point-label" x="210" y="335">PROTEGER</text></g>
+            <g class="data-point"><circle cx="88" cy="170" r="20" /><text x="88" y="174">04</text><text class="point-label" x="46" y="175">DESCARTAR</text></g>
+            <g class="data-core"><circle cx="210" cy="170" r="39" /><path d="M210 145c-14 8-22 10-22 10v16c0 13 9.7 24 22 29 12.3-5 22-16 22-29v-16s-8-2-22-10Z" /><path d="m199 169 8 8 15-17" /></g>
+          </svg>
+          <span class="art-stamp">PRIVACY BY DESIGN · PADRÃO</span>
+        </div>
+      </section>
+
+      <section class="journey-section">
+        <div class="section-head">
+          <div><p class="eyebrow">MAPA DO CICLO</p><h2>Escolha uma fase.<br /><span>Faça a pergunta certa.</span></h2></div>
+          <p>A proteção não começa no banco de dados. Ela começa na decisão de coletar e acompanha o dado até a eliminação ou anonimização.</p>
+        </div>
+        <div class="journey-layout">
+          <div class="journey-tabs" role="tablist" aria-label="Fases da jornada de dados">
+            <button class="journey-tab is-active" role="tab" aria-selected="true" data-journey="collect"><span>01</span><b>Coletar</b><small>necessidade</small></button>
+            <button class="journey-tab" role="tab" aria-selected="false" data-journey="use"><span>02</span><b>Usar</b><small>transparência</small></button>
+            <button class="journey-tab" role="tab" aria-selected="false" data-journey="protect"><span>03</span><b>Proteger</b><small>controle</small></button>
+            <button class="journey-tab" role="tab" aria-selected="false" data-journey="delete"><span>04</span><b>Descartar</b><small>retenção</small></button>
+          </div>
+          <article class="journey-panel" aria-live="polite">
+            <p class="console-label" id="journey-kicker">FASE 01 / NECESSIDADE</p>
+            <h3 id="journey-title">Eu realmente preciso deste dado?</h3>
+            <p id="journey-copy">Defina finalidade, necessidade e base legal antes de criar um campo, uma API ou uma tabela. Se não há uma finalidade clara, o melhor dado é o que não foi coletado.</p>
+            <div class="control-tags" id="journey-tags"><span>minimização</span><span>finalidade</span><span>consentimento</span></div>
+            <div class="journey-prompt"><span>↳</span><b id="journey-prompt-copy">Qual é a menor quantidade de informação que resolve o problema?</b></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="classification-section">
+        <div class="section-head">
+          <div><p class="eyebrow">CLASSIFICAÇÃO DA INFORMAÇÃO</p><h2>Quanto maior o impacto,<br /><span>mais forte o controle.</span></h2></div>
+          <p>Classificar não é burocratizar. É aplicar proteção proporcional à utilidade, ao contexto e ao risco de exposição.</p>
+        </div>
+        <div class="classification-grid" role="tablist" aria-label="Níveis de classificação">
+          <button class="classification-card is-active" role="tab" aria-selected="true" data-classification="public"><span>01</span><b>Público</b><small>pode ser divulgado</small></button>
+          <button class="classification-card" role="tab" aria-selected="false" data-classification="internal"><span>02</span><b>Interno</b><small>uso da organização</small></button>
+          <button class="classification-card" role="tab" aria-selected="false" data-classification="confidential"><span>03</span><b>Confidencial</b><small>acesso restrito</small></button>
+          <button class="classification-card" role="tab" aria-selected="false" data-classification="sensitive"><span>04</span><b>Pessoal sensível</b><small>impacto elevado</small></button>
+        </div>
+        <article class="classification-detail" id="classification-detail" aria-live="polite">
+          <div><p class="console-label">CONTROLE PROPORCIONAL</p><h3 id="classification-title">Público</h3><p id="classification-copy">Pode ser compartilhado com transparência, mantendo autenticidade e integridade para evitar desinformação.</p></div>
+          <div class="classification-controls" id="classification-controls"><span>fonte identificada</span><span>revisão editorial</span></div>
+        </article>
+      </section>
+
+      <section class="byod-section">
+        <div class="byod-copy"><p class="eyebrow">PONTO DE ATENÇÃO / BYOD</p><h2>O dispositivo pessoal<br /><span>também entra no mapa.</span></h2><p>Trabalho remoto e equipamentos pessoais ampliam a superfície de ataque. Use este checkpoint para transformar a ideia de “confiança” em controles verificáveis.</p><a class="text-button" href="playbook.html">Levar para o playbook →</a></div>
+        <div class="byod-checklist" id="byod-checklist">
+          <label><input type="checkbox" data-byod /><span><b>Separar acesso pessoal e corporativo</b><small>Perfis, contas e recursos não devem compartilhar permissões sem necessidade.</small></span></label>
+          <label><input type="checkbox" data-byod /><span><b>Ativar MFA e bloqueio automático</b><small>Uma sessão aberta em equipamento perdido não pode virar acesso permanente.</small></span></label>
+          <label><input type="checkbox" data-byod /><span><b>Atualizar e registrar dispositivos</b><small>Inventário, patches e canal de suporte tornam o risco visível.</small></span></label>
+          <div class="byod-progress"><span>CONTROLES MARCADOS</span><b id="byod-count">0 / 3</b><i><em id="byod-bar"></em></i></div>
+        </div>
+      </section>
+
+      <section class="parker-section">
+        <div class="section-head">
+          <div><p class="eyebrow">HEXAGRAMA PARKERIANO</p><h2>Proteger não é só<br /><span>esconder o dado.</span></h2></div>
+          <p>Confidencialidade, integridade e disponibilidade são essenciais. Posse, autenticidade e utilidade ajudam a enxergar o sistema inteiro.</p>
+        </div>
+        <div class="hex-layout">
+          <div class="hex-art" role="tablist" aria-label="Dimensões do hexagrama">
+            <button class="hex-node hex-top is-active" data-hex="confidentiality">C<span>Confidencialidade</span></button>
+            <button class="hex-node hex-right-top" data-hex="possession">P<span>Posse / controle</span></button>
+            <button class="hex-node hex-right-bottom" data-hex="utility">U<span>Utilidade</span></button>
+            <button class="hex-node hex-bottom" data-hex="availability">D<span>Disponibilidade</span></button>
+            <button class="hex-node hex-left-bottom" data-hex="authenticity">A<span>Autenticidade</span></button>
+            <button class="hex-node hex-left-top" data-hex="integrity">I<span>Integridade</span></button>
+            <div class="hex-core">PARKER<br /><b>6</b></div>
+          </div>
+          <article class="hex-detail"><p class="console-label">DIMENSÃO 01</p><h3 id="hex-title">Confidencialidade</h3><p id="hex-copy">Somente pessoas e processos autorizados devem acessar a informação. MFA, criptografia e menor privilégio transformam esse princípio em controle.</p><span id="hex-control">CONTROLE · acesso mínimo</span></article>
+        </div>
+      </section>
+
+      <section class="sources-strip"><p class="eyebrow">REFERÊNCIAS PARA APROFUNDAR</p><a href="https://www.gov.br/anpd/pt-br" target="_blank" rel="noopener noreferrer">ANPD ↗</a><a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm" target="_blank" rel="noopener noreferrer">LGPD ↗</a><a href="https://www.cisa.gov/topics/cybersecurity-best-practices" target="_blank" rel="noopener noreferrer">CISA ↗</a></section>
+    </main>
+
+    <footer class="page-footer"><span>CyberShield · jornada educativa local</span><a href="cadeia-ataque.html">Próxima experiência: Cadeia de ataque →</a></footer>
+  </div>
+  <script src="privacidade.js"></script>
+</body>
+</html>

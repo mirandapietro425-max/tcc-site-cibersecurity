@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#07111b" />
+  <meta name="description" content="Explorador interativo da cadeia de ataque: o que acontece em cada elo e quais mediações de proteção o interrompem, do reconhecimento à resposta." />
+  <title>Cadeia de ataque — CyberShield</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="pages.css" />
+  <link rel="stylesheet" href="immersive.css" />
+  <link rel="stylesheet" href="ux-polish.css" />
+  <link rel="stylesheet" href="cadeia-ataque.css" />
+  <link rel="stylesheet" href="experience-v7.css" />
+</head>
+<body class="immersive-page attack-page">
+  <div class="container">
+    <header class="page-header">
+      <a class="brand" href="index.html#inicio"><span class="brand-mark">◇</span><span>CYBER<span class="brand-slash">/</span>SHIELD</span></a>
+      <nav class="immersive-nav" aria-label="Navegação da experiência">
+        <a href="radar.html">Radar</a>
+        <a href="playbook.html">Playbook</a>
+        <a href="laboratorio.html">Laboratório</a>
+        <a href="privacidade.html">Privacidade</a>
+        <a class="is-current" href="cadeia-ataque.html">Cadeia de ataque</a>
+        <a href="index.html#inicio">Início</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="immersive-hero">
+        <div class="immersive-hero-copy">
+          <p class="eyebrow">05 / CADEIA DE ATAQUE</p>
+          <h1>Um ataque não é um evento.<br /><em>É uma sequência.</em></h1>
+          <p class="lede">Sete elos separam o primeiro clique do objetivo do invasor. Este painel mostra o que costuma acontecer em cada elo e qual mediação de proteção quebra a corrente — sem simular um ataque real e sem coletar dados.</p>
+          <div class="hero-pills"><span>RECONHECIMENTO → OBJETIVOS</span><span>NIST CSF 2.0</span><span>SEM TELEMETRIA REAL</span></div>
+        </div>
+        <div class="chain-art" aria-label="Prévia animada da cadeia de ataque">
+          <div id="chain-hero-root"></div>
+        </div>
+      </section>
+
+      <section class="chain-section" id="explorar">
+        <div class="section-head">
+          <div><p class="eyebrow">EXPLORAR OS ELOS</p><h2>Escolha um elo.<br /><span>Veja os dois lados.</span></h2></div>
+          <p>Cada elo tem uma leitura do ataque e uma leitura da defesa. Alterne entre elas para entender onde a mediação certa entra em ação.</p>
+        </div>
+        <div id="chain-explorer-root"></div>
+      </section>
+
+      <section class="chain-section" id="simular">
+        <div class="section-head">
+          <div><p class="eyebrow">SIMULAÇÃO LOCAL</p><h2>Quebre a corrente<br /><span>antes do último elo.</span></h2></div>
+          <p>A simulação roda inteiramente neste navegador com dados fictícios. Ela não representa um ataque real nem envia nada para fora da página.</p>
+        </div>
+        <div id="chain-sim-root"></div>
+      </section>
+
+      <section class="chain-section">
+        <div class="section-head">
+          <div><p class="eyebrow">DA CADEIA AO PLANO</p><h2>Framework é ponto de partida.<br /><span>Playbook é rotina.</span></h2></div>
+        </div>
+        <div class="principles">
+          <article class="principle"><strong>01</strong><b>Reduza a superfície</b><p>Menos exposição, menos privilégio e menos dependência não revisada tiram elos disponíveis do invasor.</p></article>
+          <article class="principle"><strong>02</strong><b>Detecte cedo</b><p>Um sinal identificado nos elos iniciais custa muito menos do que uma resposta depois da exfiltração.</p></article>
+          <article class="principle"><strong>03</strong><b>Governe o processo</b><p>O NIST CSF 2.0 acrescentou a função Governança: papéis, política e revisão sustentam as demais camadas.</p></article>
+        </div>
+        <a class="button button-secondary chain-cta" href="playbook.html">Voltar ao Playbook <span>↗</span></a>
+      </section>
+
+      <section class="sources-strip">
+        <p class="eyebrow">REFERÊNCIAS PARA APROFUNDAR</p>
+        <a href="https://lockheedmartin.com/en-us/capabilities/cyber/cyber-kill-chain.html" target="_blank" rel="noopener noreferrer">Cyber Kill Chain ↗</a>
+        <a href="https://attack.mitre.org/" target="_blank" rel="noopener noreferrer">MITRE ATT&amp;CK ↗</a>
+        <a href="https://www.nist.gov/cyberframework" target="_blank" rel="noopener noreferrer">NIST CSF 2.0 ↗</a>
+      </section>
+    </main>
+
+    <footer class="page-footer"><span>CyberShield · simulação educativa local, sem coleta de dados</span><a href="privacidade.html">← Voltar à Privacidade</a></footer>
+  </div>
+  <script src="vendor/react.production.min.js"></script>
+  <script src="vendor/react-dom.production.min.js"></script>
+  <script src="cadeia-ataque.js"></script>
+</body>
+</html>

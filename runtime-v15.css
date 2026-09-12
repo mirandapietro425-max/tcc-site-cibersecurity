@@ -1,0 +1,14 @@
+/* CyberShield V15 runtime safety layer */
+html,body{overflow-x:hidden;width:100%;max-width:100%;}
+#experience{display:block;width:100%;max-width:100%;}
+.chapter{width:100%;max-width:100%;contain:layout paint style;}
+.webgl{pointer-events:auto;touch-action:pan-y;}
+.boot{pointer-events:auto;}
+.boot.is-done{pointer-events:none;}
+@media (max-width:900px){.chapter-content{max-width:100%;}.webgl{position:absolute;inset:0;}}
+
+/* V16 entrance choreography */
+.experience-started .chapter-intro .intro-copy{animation:heroIn 1.15s cubic-bezier(.2,.8,.2,1) both;}
+.experience-started .topbar{animation:topbarIn .9s .25s cubic-bezier(.2,.8,.2,1) both;}
+@keyframes heroIn{from{opacity:0;transform:translateY(26px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes topbarIn{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#07111b" />
+  <meta name="description" content="Laboratório interativo de decisões contra phishing, vishing e smishing." />
+  <title>Laboratório — CyberShield</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="pages.css" />
+  <link rel="stylesheet" href="immersive.css" />
+  <link rel="stylesheet" href="ux-polish.css" />
+  <link rel="stylesheet" href="experience-v7.css" />
+</head>
+<body class="immersive-page lab-page">
+  <div class="container">
+    <header class="page-header">
+      <a class="brand" href="index.html#inicio"><span class="brand-mark">◇</span><span>CYBER<span class="brand-slash">/</span>SHIELD</span></a>
+      <nav class="immersive-nav" aria-label="Navegação da experiência">
+        <a href="radar.html">Radar</a>
+        <a class="is-current" href="laboratorio.html">Laboratório</a>
+        <a href="privacidade.html">Privacidade</a>
+        <a href="cadeia-ataque.html">Cadeia de ataque</a>
+        <a href="index.html#inicio">Início</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="immersive-hero">
+        <div class="immersive-hero-copy">
+          <p class="eyebrow">03 / LABORATÓRIO DE DECISÕES</p>
+          <h1>O golpe acelera.<br /><em>A defesa verifica.</em></h1>
+          <p class="lede">Treine a pausa que separa uma mensagem convincente de uma ação arriscada. Escolha como responder a três situações fictícias — sem links reais, sem coleta de dados.</p>
+          <div class="hero-pills"><span>PHISHING</span><span>VISHING</span><span>SMISHING</span></div>
+        </div>
+        <div class="signal-art" aria-label="Arte generativa de sinais de comunicação">
+          <svg viewBox="0 0 420 360" role="img" aria-labelledby="lab-art-title">
+            <title id="lab-art-title">Rede de sinais com um alerta interceptado</title>
+            <defs>
+              <linearGradient id="labLine" x1="0" x2="1"><stop stop-color="#93f5b0" /><stop offset="1" stop-color="#83e6ed" stop-opacity="0" /></linearGradient>
+              <filter id="labGlow"><feGaussianBlur stdDeviation="5" result="blur" /><feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+            </defs>
+            <g class="art-grid"><path d="M0 40h420M0 100h420M0 160h420M0 220h420M0 280h420M60 0v360M120 0v360M180 0v360M240 0v360M300 0v360M360 0v360" /></g>
+            <g class="art-connection"><path d="M55 285 144 175 224 255 320 83 385 137" /><path d="M34 95 144 175 280 184 385 137" /></g>
+            <g class="art-node"><circle cx="55" cy="285" r="5" /><circle cx="144" cy="175" r="7" /><circle cx="224" cy="255" r="5" /><circle cx="320" cy="83" r="9" /><circle cx="385" cy="137" r="5" /></g>
+            <g class="art-alert" filter="url(#labGlow)"><circle cx="320" cy="83" r="25" /><path d="M320 68v18M320 94v3" /></g>
+            <text x="28" y="328">PAUSE / VERIFY / ACT</text>
+          </svg>
+          <span class="art-stamp">LOCAL ONLY · 0 DADOS ENVIADOS</span>
+        </div>
+      </section>
+
+      <section class="mission-section">
+        <div class="section-head">
+          <div><p class="eyebrow">MISSÃO 01</p><h2>Leia o padrão<br /><span>antes do pedido.</span></h2></div>
+          <p>Os cenários não testam sua memória. Eles treinam uma sequência: observar o canal, interromper a urgência e confirmar por uma fonte independente.</p>
+        </div>
+        <div class="lab-workspace">
+          <div class="scenario-rail" role="tablist" aria-label="Cenários do laboratório">
+            <button class="scenario-card is-active" role="tab" aria-selected="true" data-lab-scenario="email"><span>01</span><b>E-mail de acesso</b><small>PHISHING</small></button>
+            <button class="scenario-card" role="tab" aria-selected="false" data-lab-scenario="call"><span>02</span><b>Ligação do banco</b><small>VISHING</small></button>
+            <button class="scenario-card" role="tab" aria-selected="false" data-lab-scenario="delivery"><span>03</span><b>Entrega pendente</b><small>SMISHING</small></button>
+          </div>
+          <article class="mission-console" aria-live="polite">
+            <div class="console-top"><span><i></i> SINAL INTERCEPTADO</span><b id="lab-progress">01 / 03</b></div>
+            <div class="message-window" id="message-window">
+              <div class="message-meta"><span class="message-avatar" id="message-avatar">M</span><div><b id="message-from">micros0ft-support.com</b><small id="message-channel">e-mail · agora</small></div><span class="message-flag">URGENTE</span></div>
+              <h3 id="message-title">Seu acesso será suspenso em 10 minutos.</h3>
+              <p id="message-copy">Detectamos atividade incomum. Confirme sua senha imediatamente para evitar o bloqueio da conta.</p>
+              <span class="fake-link" id="message-link">confirmar-acesso.example</span>
+            </div>
+            <div class="decision-block">
+              <p class="console-label">QUAL É A PRIMEIRA DECISÃO?</p>
+              <div class="decision-options" id="decision-options"></div>
+            </div>
+            <div class="feedback-box" id="feedback-box" hidden>
+              <span class="feedback-mark" id="feedback-mark">✓</span>
+              <div><b id="feedback-title">Boa defesa.</b><p id="feedback-copy"></p></div>
+              <button type="button" class="text-button" id="next-scenario">próximo sinal →</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="protocol-section">
+        <div class="section-head">
+          <div><p class="eyebrow">PROTOCOLO DE 03 SEGUNDOS</p><h2>Uma pausa curta<br /><span>muda o resultado.</span></h2></div>
+          <p>Em vez de tentar reconhecer todas as fraudes do mundo, use um ritual que continue funcionando quando o canal e a história mudarem.</p>
+        </div>
+        <div class="protocol-grid">
+          <article><strong>01</strong><span>PAUSE</span><h3>Interrompa o impulso.</h3><p>Urgência, medo e recompensa são sinais para reduzir a velocidade — não motivos para clicar.</p></article>
+          <article><strong>02</strong><span>VERIFY</span><h3>Troque o canal.</h3><p>Abra o aplicativo oficial, digite o endereço por conta própria ou ligue para um número conhecido.</p></article>
+          <article><strong>03</strong><span>ACT</span><h3>Registre e denuncie.</h3><p>Bloqueie, avise o canal responsável e preserve o contexto para que outras pessoas não recebam o mesmo golpe.</p></article>
+        </div>
+      </section>
+
+      <section class="lab-score-section">
+        <div class="score-orbit"><span id="lab-score">0</span><small>pontos de<br />verificação</small></div>
+        <div><p class="eyebrow">LEITURA DO TREINO</p><h2>Acertar é bom.<br /><span>Explicar é melhor.</span></h2><p id="score-copy">Complete os sinais para receber uma leitura educativa da sua postura. O resultado fica somente nesta sessão.</p></div>
+        <a class="button button-secondary" href="playbook.html">Abrir o playbook <span>↗</span></a>
+      </section>
+    </main>
+
+    <footer class="page-footer"><span>CyberShield · laboratório educativo local</span><a href="index.html#inicio">← Voltar ao início</a></footer>
+  </div>
+  <script src="laboratorio.js"></script>
+</body>
+</html>

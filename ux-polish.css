@@ -1,0 +1,14 @@
+
+/* UX polish: focus, selection, micro-interactions, consistent translucency. */
+::selection{background:rgba(112,231,247,.24);color:#fff}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.card-link,.button,.nav-button,.immersive-nav a,.reference-list a,.threat-card,.focus-card{will-change:transform}
+.card-link:hover{color:var(--cyan)}
+.status-dot,.pulse-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(140,255,181,.08),0 0 16px rgba(140,255,181,.5)}
+.callout-green{border-color:rgba(140,255,181,.22)!important}
+
+
+/* Playbook layout guardrails */
+body.immersive-page{overflow-x:hidden}
+.pb-protect,.protect-reference{width:100%;max-width:100%;contain:layout paint}
+.pb-protect-stage,.pb-protect-canvas{max-width:100vw}

@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#05070b" />
+<meta name="description" content="CyberShield — uma experiência interativa sobre cibersegurança baseada no TCC Métodos de segurança na internet." />
+<title>CyberShield — Cibersegurança</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="experience-v8.css">
+<link rel="stylesheet" href="experience-v20.css">
+<link rel="stylesheet" href="runtime-v15.css">
+<link rel="stylesheet" href="experience-v21.css">
+<link rel="stylesheet" href="gateway-v22.css">
+
+<script>
+(function(){
+  var released=false;
+  function release(reason){
+    if(released) return; released=true;
+    var boot=document.getElementById('boot');
+    var bar=document.getElementById('boot-progress');
+    var pct=document.getElementById('boot-percent');
+    var status=document.getElementById('boot-status');
+    var start=document.getElementById('boot-start');
+    if(bar) bar.style.width='100%';
+    if(pct) pct.textContent='100%';
+    if(status) status.textContent=reason || 'AMBIENTE PRONTO';
+    if(start){ start.disabled=false; start.dataset.released='1'; start.removeAttribute('aria-disabled'); }
+  }
+  // Independent recovery path: if a CDN/module/audio blocks, the experience must never stay at 0%.
+  window.__cyberShieldBootRelease=release;
+  var i=0; var timer=setInterval(function(){
+    i=Math.min(100,i+Math.round(100/18));
+    var bar=document.getElementById('boot-progress');
+    var pct=document.getElementById('boot-percent');
+    var status=document.getElementById('boot-status');
+    if(bar) bar.style.width=i+'%';
+    if(pct) pct.textContent=String(i).padStart(2,'0')+'%';
+    if(status && i<100) status.textContent=i<50?'PREPARANDO EXPERIÊNCIA':i<85?'PREPARANDO CENAS':'QUASE PRONTO';
+    if(i>=100){clearInterval(timer); release('AMBIENTE PRONTO');}
+  },160);
+  setTimeout(function(){release('AMBIENTE PRONTO');},3200);
+  // Fallback interaction that does not depend on Three.js/module loading.
+  document.addEventListener('DOMContentLoaded', function(){
+    var btn=document.getElementById('boot-start');
+    var boot=document.getElementById('boot');
+    var hud=document.getElementById('audio-hud');
+    if(!btn) return;
+    btn.addEventListener('click', function(){
+      if(btn.dataset.entered==='1') return;
+      btn.dataset.entered='1';
+      btn.disabled=false;
+      if(hud) hud.hidden=false;
+      if(boot){
+        boot.classList.add('is-done');
+        setTimeout(function(){ boot.remove(); }, 1050);
+      }
+      try{
+        var ambient=document.getElementById('ambient');
+        if(ambient){ ambient.volume=0.16; ambient.play().catch(function(){}); }
+        var tr=document.getElementById('sfx-transition');
+        if(tr){ tr.currentTime=0; tr.volume=.22; tr.play().catch(function(){}); }
+      }catch(e){}
+    }, {once:false});
+  });
+})();
+</script>
+</head>
+<body>
+<div id="boot" class="boot" aria-hidden="false">
+  <div class="boot-grid"></div>
+  <div class="boot-center">
+    <div class="boot-mark"><span></span><span></span><span></span></div>
+    <div class="boot-label">CYBER<span>/</span>SHIELD</div>
+    <div class="boot-title">INICIALIZANDO EXPERIÊNCIA</div>
+    <div class="boot-progress"><i id="boot-progress"></i></div>
+    <div class="boot-meta"><span id="boot-status">CARREGANDO AMBIENTE</span><span id="boot-percent">00%</span></div>
+    <button id="boot-start" class="boot-start" disabled>ENTRAR NA EXPERIÊNCIA</button>
+    <p>O áudio começa após sua interação para respeitar as políticas do navegador.</p>
+  </div>
+</div>
+
+<div id="audio-hud" class="audio-hud" hidden>
+  <button id="audio-toggle" aria-label="Ativar ou desativar áudio"><span class="bars"><i></i><i></i><i></i><i></i></span><span id="audio-label">ÁUDIO</span></button>
+</div>
+<div class="progress-dots" id="scene-dots" aria-hidden="true"></div>
+<div id="cursor" class="cursor" aria-hidden="true"></div>
+
+<header class="topbar">
+  <a href="#intro" class="wordmark">CYBER<span>/</span>SHIELD</a>
+  <div class="topbar-right">
+    <span class="scene-counter"><b id="scene-number">01</b> / 09</span>
+    <a class="top-link" href="radar.html">RADAR ↗</a>
+  </div>
+</header>
+
+<main id="experience">
+  <section class="chapter chapter-intro" id="intro" data-model="cybershield_human_man.glb" data-topic="cid" data-scene="01">
+    <canvas class="webgl" id="scene-intro" aria-hidden="true"></canvas>
+    <div class="chapter-noise"></div>
+    <div class="model-status"><span class="model-state">3D LOADING</span><span class="model-title">SATÉLITES 3D</span></div>
+    <div class="intro-copy layer">
+      <p class="eyebrow">TCC · MÉTODOS DE SEGURANÇA NA INTERNET</p>
+      <h1 class="hero-3d" data-text="CIBERSEGURANÇA">CIBERSEGURANÇA</h1>
+      <p class="intro-sub">Uma experiência visual sobre ameaças, pessoas, dados, software e proteção.</p>
+      <span class="scroll-cue">ROLE PARA ENTRAR <b>↓</b></span>
+    </div>
+  </section>
+
+  <section class="chapter chapter-user" id="user" data-model="cybershield_human_woman.glb" data-topic="phishing" data-object="NOTEBOOK" data-scene="02">
+    <canvas class="webgl" id="scene-user" aria-hidden="true"></canvas>
+    <div class="model-status"><span class="model-state">3D LOADING</span><span class="model-title">OBJETO</span></div>
+    <div class="chapter-content split layer">
+      <div class="story-copy">
+        <p class="eyebrow">02 · O USUÁRIO</p>
+        <h2>O primeiro<br><em>vetor</em><br>é humano.</h2>
+        <p>Phishing, vishing e smishing exploram urgência, confiança e distração. A engenharia social aparece antes do código.</p>
+        <button class="scene-action" data-sfx="click" data-reveal="phishing">INVESTIGAR SINAL <span>+</span></button>
+      </div>
+      <div class="interactive-card glass" id="phishing-card" hidden>
+        <span class="mini-label">SIMULAÇÃO</span>
+        <div class="fake-mail"><small>seguranca@conta-verificada.example</small><strong>Sua conta será bloqueada em 15 minutos.</strong><button class="fake-link">VERIFICAR AGORA</button></div>
+        <p>O senso de urgência é um gatilho clássico de engenharia social.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter chapter-threat" id="threats" data-model="cybershield_robot_woman.glb" data-topic="malware" data-object="ROBÔ ATACANTE" data-scene="03">
+    <canvas class="webgl" id="scene-threat" aria-hidden="true"></canvas>
+    <div class="model-status"><span class="model-state">3D LOADING</span><span class="model-title">OBJETO</span></div>
+    <div class="chapter-content centered layer">
+      <p class="eyebrow">03 · A AMEAÇA</p>
+      <h2>Quando o sinal vira<br><em>incidente</em>.</h2>
+      <div class="threat-orbit" aria-label="Ameaças principais">
+        <button class="threat-chip" data-threat="phishing">PHISHING</button>
+        <button class="threat-chip" data-threat="malware">MALWARE</button>
+        <button class="threat-chip" data-threat="ransomware">RANSOMWARE</button>
+        <button class="threat-chip" data-threat="spyware">SPYWARE</button>
+        <button class="threat-chip" data-threat="trojan">TROJAN</button>
+        <button class="threat-chip" data-threat="worm">WORM</button>
+      </div>
+      <p class="threat-caption" id="threat-caption">Toque em uma ameaça para iluminar a cena.</p>
+    </div>
+  </section>
+
+  <section class="chapter chapter-attack" id="attack" data-model="cybershield_robot_normal.glb" data-topic="api" data-object="SERVIDOR" data-scene="04">
+    <canvas class="webgl" id="scene-attack" aria-hidden="true"></canvas>
+    <div class="model-status"><span class="model-state">3D LOADING</span><span class="model-title">OBJETO</span></div>
+    <div class="chapter-content layer">
+      <p class="eyebrow">04 · CADEIA DE ATAQUE</p>
+      <div class="attack-title"><h2>O ataque atravessa<br><em>camadas.</em></h2><p>Role e observe o caminho: credencial → aplicação → API → dados.</p></div>
+      <div class="attack-path" aria-label="Etapas de um ataque">
+        <div class="attack-node"><span>01</span><b>CREDENCIAL</b></div>
+        <div class="attack-line"></div>
+        <div class="attack-node"><span>02</span><b>APLICAÇÃO</b></div>
+        <div class="attack-line"></div>
+        <div class="attack-node"><span>03</span><b>API</b></div>
+        <div class="attack-line"></div>
+        <div class="attack-node"><span>04</span><b>DADOS</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter chapter-defense" id="defense" data-model="cybershield_robot_boy.glb" data-topic="defense-depth" data-object="COFRE DIGITAL" data-scene="05">
+    <canvas class="webgl" id="scene-defense" aria-hidden="true"></canvas>
+    <div class="model-status"><span class="model-state">3D LOADING</span><span class="model-title">OBJETO</span></div>
+    <div class="chapter-content centered layer">
+      <p class="eyebrow">05 · DEFESA EM PROFUNDIDADE</p>
+      <h2>Uma barreira sozinha<br><em>não basta.</em></h2>
+      <div class="defense-stack" id="defense-stack">
+        <div data-layer="1">AUTENTICAÇÃO</div>
+        <div data-layer="2">VALIDAÇÃO</div>
+        <div data-layer="3">PRIVILÉGIO MÍNIMO</div>
+        <div data-layer="4">CRIPTOGRAFIA</div>
+        <div data-layer="5">MONITORAMENTO</div>
+      </div>
+      <p class="defense-note">A falha de uma camada precisa encontrar outra barreira.</p>
+    </div>
+  </section>
+
+  <section class="chapter chapter-privacy" id="privacy" data-model="" data-topic="lgpd" data-object="DADO PROTEGIDO" data-scene="06">
+    <canvas class="webgl" id="scene-privacy" aria-hidden="true"></canvas>
+    <div class="model-status"><span class="model-state">3D LOADING</span><span class="model-title">OBJETO</span></div>
+    <div class="chapter-content split reverse layer">
+      <div class="story-copy">
+        <p class="eyebrow">06 · LGPD & PRIVACIDADE</p>
+        <h2>Proteja o dado<br><em>antes</em> de usá-lo.</h2>
+        <p>Privacy by Design, Privacy by Default, classificação da informação e accountability entram na arquitetura desde a concepção.</p>
+      </div>
+      <div class="data-flow glass">
+        <div><span>01</span> COLETA</div><div><span>02</span> TRATAMENTO</div><div><span>03</span> PROTEÇÃO</div><div><span>04</span> RETENÇÃO</div><div><span>05</span> DESCARTE</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter chapter-dev" id="dev" data-model="" data-topic="sast" data-object="INFRAESTRUTURA" data-scene="07">
+    <canvas class="webgl" id="scene-dev" aria-hidden="true"></canvas>
+    <div class="model-status"><span class="model-state">3D LOADING</span><span class="model-title">OBJETO</span></div>
+    <div class="chapter-content split layer">
+      <div class="story-copy">
+        <p class="eyebrow">07 · DESENVOLVIMENTO SEGURO</p>
+        <h2>Segurança também<br><em>é código.</em></h2>
+        <p>SAST, secrets, validação no servidor, proteção de rotas, logs, Source Maps e revisão de código reduzem a superfície de ataque.</p>
+      </div>
+      <div class="code-window glass">
+        <div class="window-bar"><i></i><i></i><i></i><span>server.js</span></div>
+        <pre><code>validate(input)
+rateLimit(request)
+authorize(user)
+logSecurityEvent(event)
+return safeResponse()</code></pre>
+        <div class="code-scan">SECURITY CHECK <b>PASS</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter chapter-final" id="response" data-model="" data-topic="recovery" data-object="USUÁRIO" data-scene="08">
+    <canvas class="webgl" id="scene-final" aria-hidden="true"></canvas>
+    <div class="model-status"><span class="model-state">3D LOADING</span><span class="model-title">OBJETO</span></div>
+    <div class="chapter-content centered layer">
+      <p class="eyebrow">08 · RESPOSTA</p>
+      <h2>A segurança não é<br><em>uma camada.</em></h2>
+      <p class="final-lead">É um sistema vivo de pessoas, processos, código, dados e decisões.</p>
+      <div class="final-actions">
+        <a href="radar.html" class="cta">Explorar o Radar ↗</a>
+        <a href="playbook.html" class="ghost">Abrir Playbook</a>
+        <a href="laboratorio.html" class="ghost">Entrar no Laboratório</a>
+      </div>
+      <p class="final-credit">CYBERSHIELD · TCC 2026 · PIETRO DE MORAES MIRANDA</p>
+    </div>
+  </section>
+
+
+  <section class="gateway-section" id="gateway" aria-label="Escolha seu caminho">
+    <div class="gateway-choice-wrap">
+      <div class="gateway-choice-head">
+        <p class="eyebrow">PRÓXIMO DESTINO</p>
+        <h2>Escolha seu<br><em>caminho.</em></h2>
+      </div>
+
+      <div class="gateway-doors" aria-label="Escolha seu caminho">
+        <button class="gateway-door gateway-door--investigate" data-target="investigate" type="button">
+          <span class="door-number">01</span>
+          <strong>INVESTIGAR</strong>
+          <small>Radar · Laboratório · Cadeia de ataque</small>
+          <span class="door-cta">ENTRAR <b>↗</b></span>
+        </button>
+        <button class="gateway-door gateway-door--protect" data-target="protect" type="button">
+          <span class="door-number">02</span>
+          <strong>PROTEGER</strong>
+          <small>Playbook · Privacidade · Dev seguro</small>
+          <span class="door-cta">ENTRAR <b>↗</b></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="gateway-sequence" id="gateway-sequence" aria-hidden="true">
+      <div class="gateway-sequence-shot is-current"><img data-src="assets/gateway/cybersecurity_sequence_01_arrival.png" alt=""></div>
+      <div class="gateway-sequence-shot"><img data-src="assets/gateway/cybersecurity_sequence_02_decision_point.png" alt=""></div>
+      <div class="gateway-sequence-shot"><img data-src="assets/gateway/cybersecurity_sequence_03_turning_left.png" alt=""></div>
+      <div class="gateway-sequence-shot"><img data-src="assets/gateway/cybersecurity_sequence_04_approach_investigate.png" alt=""></div>
+      <div class="gateway-sequence-vignette"></div>
+      <div class="gateway-sequence-label">CYBERSHIELD · ACESSANDO</div>
+    </div>
+  </section>
+
+</main>
+
+<audio id="ambient" preload="auto" loop src="assets/audio/cybershield-ambient-hazy-after-hours.mp3"></audio>
+<audio id="sfx-detect" preload="auto" src="assets/audio/detect.wav"></audio>
+<audio id="sfx-transition" preload="auto" src="assets/audio/transition.wav"></audio>
+<audio id="sfx-alert" preload="auto" src="assets/audio/alert.wav"></audio>
+<audio id="sfx-success" preload="auto" src="assets/audio/success.wav"></audio>
+<audio id="sfx-click" preload="auto" src="assets/audio/click.wav"></audio>
+<audio id="sfx-whoosh" preload="auto" src="assets/audio/whoosh.wav"></audio>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script src="experience-v18-fallback.js"></script>
+<script type="module" src="experience-v21.js"></script>
+<script src="gateway-v22.js"></script>
+</body>
+</html>

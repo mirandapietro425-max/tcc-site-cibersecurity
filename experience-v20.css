@@ -1,0 +1,111 @@
+
+/* CyberShield V18 — scroll storytelling + interaction layer */
+.chapter{
+  --scroll-progress:0;
+}
+.chapter-content,
+.intro-copy{
+  will-change:transform,opacity;
+}
+.chapter-content > *,
+.intro-copy > *{
+  transition:filter .18s linear, opacity .18s linear;
+}
+.chapter:not(.is-active) .chapter-content{
+  opacity:.72;
+}
+.hero-3d{
+  transform-style:preserve-3d;
+  will-change:transform,filter,letter-spacing;
+  text-shadow:0 0 18px rgba(110,231,247,.10),0 14px 45px rgba(110,231,247,.12);
+}
+.hero-3d::after{
+  transition:transform .2s ease-out, opacity .2s ease-out;
+}
+.scene-action,
+.threat-chip,
+.interactive-card,
+.final-actions .cta,
+.final-actions .ghost{
+  will-change:transform,box-shadow,border-color,filter;
+}
+.scene-action:active,
+.threat-chip:active,
+.cta:active,
+.ghost:active{
+  transform:translateY(1px) scale(.985);
+}
+.scene-action.is-pulse,
+.threat-chip.is-pulse{
+  animation:cyberPulse .55s cubic-bezier(.2,.8,.2,1);
+}
+.interactive-card{
+  transition:transform .55s cubic-bezier(.2,.8,.2,1), border-color .3s ease, box-shadow .45s ease, opacity .4s ease;
+}
+.interactive-card:not([hidden]):hover{
+  transform:translate3d(0,-6px,0);
+  border-color:rgba(110,231,247,.38);
+  box-shadow:0 32px 100px rgba(0,0,0,.45), 0 0 45px rgba(110,231,247,.08);
+}
+.panel-open .chapter-content{
+  filter:blur(1.5px);
+}
+.threat-chip{
+  box-shadow:0 0 0 rgba(0,0,0,0);
+}
+.threat-chip.is-hot{
+  transform-origin:center;
+  filter:brightness(1.2);
+  box-shadow:0 0 36px rgba(140,255,181,.18);
+}
+.model-status{
+  pointer-events:none;
+}
+.webgl{
+  cursor:crosshair;
+}
+@keyframes cyberPulse{
+  0%{transform:scale(1)}
+  45%{transform:scale(1.045);box-shadow:0 0 28px rgba(110,231,247,.16)}
+  100%{transform:scale(1)}
+}
+@media (max-width:900px){
+  .chapter-content{width:min(100%,calc(100% - 28px))}
+  .story-copy h2,.chapter-content h2{font-size:clamp(2.7rem,10.5vw,5.4rem)}
+  .hero-3d{font-size:clamp(3.2rem,16vw,8rem)}
+}
+@media (max-width:600px){
+  .progress-dots{right:10px}
+  .model-status{font-size:.52rem}
+  .chapter-content{padding-top:76px;padding-bottom:76px}
+  .threat-orbit{transform:scale(.78)}
+}
+
+/* V19 visual hierarchy: the 3D world is atmospheric; content stays readable above it. */
+.chapter{position:relative;isolation:isolate;overflow:clip;}
+.chapter .webgl{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block;opacity:.92;pointer-events:none;mix-blend-mode:normal;}
+.chapter .chapter-noise{position:absolute;inset:0;z-index:1;pointer-events:none;}
+.chapter .layer,.chapter .intro-copy{position:relative;z-index:3;isolation:isolate;}
+.chapter .model-status,.chapter .progress-dots{z-index:4;}
+.chapter-content,.intro-copy{transition:none !important;will-change:transform,opacity;}
+.story-copy,.interactive-card,.attack-node,.defense-stack,.data-flow,.code-window,.final-actions,.threat-orbit{position:relative;z-index:4;}
+.hero-3d,.chapter-content h2,.story-copy p,.eyebrow{position:relative;z-index:5;text-shadow:0 8px 36px rgba(2,8,18,.82);}
+.interactive-card,.glass{background:rgba(6,12,20,.78)!important;backdrop-filter:blur(18px) saturate(120%);}
+.scene-action,.threat-chip,.cta,.ghost,.fake-link{position:relative;z-index:7;}
+@media (max-width:900px){.chapter .webgl{opacity:.82}.chapter-content,.intro-copy{padding-left:18px;padding-right:18px}.interactive-card{max-width:min(100%,560px)}}
+
+
+/* V20 — coherent tangible-object art direction */
+.chapter .webgl{opacity:.90;}
+.chapter-content,.intro-copy{isolation:isolate;}
+.chapter-content::before,.intro-copy::before{
+  content:"";position:absolute;inset:-8% -6%;z-index:-1;pointer-events:none;
+  background:radial-gradient(circle at 50% 45%,rgba(4,10,18,.34),rgba(4,10,18,0) 64%);
+}
+.chapter-intro .webgl,.chapter-threat .webgl{opacity:.94;}
+.chapter-user .webgl,.chapter-attack .webgl,.chapter-defense .webgl,.chapter-privacy .webgl,.chapter-dev .webgl,.chapter-final .webgl{opacity:.84;}
+.model-status{background:rgba(3,8,13,.58);border:1px solid rgba(110,231,247,.12);backdrop-filter:blur(10px);padding:.45rem .7rem;border-radius:999px;}
+.interactive-card,.glass{box-shadow:0 24px 70px rgba(0,0,0,.35),0 0 28px rgba(110,231,247,.05);}
+.scene-action:hover,.threat-chip:hover,.cta:hover,.ghost:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.28),0 0 24px rgba(110,231,247,.10);}
+.scene-action:focus-visible,.threat-chip:focus-visible,.cta:focus-visible,.ghost:focus-visible{outline:2px solid rgba(110,231,247,.75);outline-offset:3px;}
+@media (max-width:700px){.chapter .webgl{opacity:.76}.chapter-content::before,.intro-copy::before{inset:-2% -10%;}.model-status{font-size:.48rem}}

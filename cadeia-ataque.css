@@ -1,0 +1,422 @@
+/* cadeia-ataque.css
+   Estilos exclusivos da experiência "Cadeia de Ataque".
+   Reaproveita as variáveis definidas em pages.css (--ink, --panel, --line,
+   --text, --muted, --dim, --mint, --cyan, --orange, --red, --purple,
+   --sans, --display, --mono) para manter o mesmo sistema visual do
+   restante do site. Nenhuma cor, fonte ou espaçamento novo é introduzido
+   fora desse sistema. */
+
+.attack-page {
+  --accent: var(--mint);
+  --attack: var(--red);
+}
+
+/* ---------- Hero: mini visualização da corrente ---------- */
+
+.chain-art {
+  position: relative;
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  background-image:
+    linear-gradient(rgba(147, 245, 176, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(147, 245, 176, 0.06) 1px, transparent 1px);
+  background-size: 34px 34px;
+  padding: 20px;
+}
+
+.chain-hero {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  align-items: center;
+}
+
+.chain-hero-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+}
+
+.chain-hero-link {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  border: 1px solid rgba(147, 245, 176, 0.4);
+  background: rgba(147, 245, 176, 0.08);
+  color: var(--accent);
+  font: 700 0.62rem var(--mono);
+  transition: 0.3s;
+}
+
+.chain-hero-link.is-current {
+  border-color: var(--attack);
+  color: var(--attack);
+  background: rgba(255, 119, 119, 0.12);
+  box-shadow: 0 0 18px rgba(255, 119, 119, 0.35);
+  animation: chain-pulse 1.6s ease-in-out infinite;
+}
+
+.chain-hero-connector {
+  flex: 1 1 auto;
+  height: 2px;
+  min-width: 10px;
+  background: linear-gradient(90deg, rgba(147, 245, 176, 0.5), rgba(131, 230, 237, 0.15));
+}
+
+.chain-hero-connector.is-broken {
+  background: repeating-linear-gradient(
+    90deg,
+    var(--attack),
+    var(--attack) 6px,
+    transparent 6px,
+    transparent 12px
+  );
+}
+
+.chain-hero-label {
+  color: var(--muted);
+  font: 700 0.62rem var(--mono);
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.chain-hero-label b {
+  color: var(--accent);
+}
+
+@keyframes chain-pulse {
+  50% {
+    transform: scale(1.18);
+  }
+}
+
+/* ---------- Seções gerais ---------- */
+
+.chain-section {
+  padding: 60px 0;
+}
+
+/* ---------- Explorador de elos ---------- */
+
+.chain-layout {
+  display: grid;
+  grid-template-columns: 0.34fr 1fr;
+  gap: 10px;
+}
+
+.chain-stage-rail {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.chain-stage-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  background: rgba(16, 35, 50, 0.45);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.chain-stage-btn:hover,
+.chain-stage-btn.is-active {
+  border-color: var(--accent);
+  background: rgba(147, 245, 176, 0.07);
+  transform: translateX(4px);
+}
+
+.chain-stage-btn span.chain-stage-index {
+  display: grid;
+  place-items: center;
+  flex: 0 0 28px;
+  height: 28px;
+  border: 1px solid currentColor;
+  color: var(--accent);
+  font: 700 0.65rem var(--mono);
+}
+
+.chain-stage-btn b {
+  display: block;
+  font: 500 0.92rem var(--display);
+}
+
+.chain-stage-btn small {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.chain-detail {
+  padding: 26px;
+  border: 1px solid rgba(147, 245, 176, 0.24);
+  background: linear-gradient(145deg, rgba(147, 245, 176, 0.08), rgba(16, 35, 50, 0.55));
+  min-height: 420px;
+}
+
+.chain-detail-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  color: var(--accent);
+  font: 700 0.62rem var(--mono);
+  letter-spacing: 0.08em;
+}
+
+.chain-tabs {
+  display: flex;
+  gap: 6px;
+}
+
+.chain-tab {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  font: 700 0.62rem var(--mono);
+  letter-spacing: 0.05em;
+  cursor: pointer;
+}
+
+.chain-tab.is-active[data-tab="attacker"] {
+  border-color: var(--attack);
+  color: var(--attack);
+  background: rgba(255, 119, 119, 0.08);
+}
+
+.chain-tab.is-active[data-tab="defense"] {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(147, 245, 176, 0.08);
+}
+
+.chain-detail h3 {
+  margin: 28px 0 10px;
+  font: 500 clamp(1.6rem, 3vw, 2.4rem)/1.05 var(--display);
+}
+
+.chain-detail > p {
+  max-width: 620px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.chain-signal {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border: 1px dashed rgba(131, 230, 237, 0.4);
+  color: var(--cyan);
+  font-size: 0.78rem;
+}
+
+.chain-signal b {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--cyan);
+  font: 700 0.6rem var(--mono);
+  letter-spacing: 0.06em;
+}
+
+.chain-mediation-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 0;
+  list-style: none;
+}
+
+.chain-mediation-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  background: rgba(16, 35, 50, 0.4);
+  font-size: 0.82rem;
+}
+
+.chain-fn-tag {
+  flex: 0 0 auto;
+  padding: 3px 6px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font: 700 0.6rem var(--mono);
+}
+
+/* ---------- Simulador ---------- */
+
+.chain-sim {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.chain-sim-track {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 22px 18px;
+  border: 1px solid var(--line);
+  background: rgba(16, 35, 50, 0.4);
+  overflow-x: auto;
+}
+
+.chain-sim-node {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  color: var(--dim);
+  font: 700 0.6rem var(--mono);
+}
+
+.chain-sim-node.is-current {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  box-shadow: 0 0 14px rgba(131, 230, 237, 0.4);
+}
+
+.chain-sim-node.is-cleared {
+  border-color: var(--attack);
+  color: var(--attack);
+  background: rgba(255, 119, 119, 0.1);
+}
+
+.chain-sim-node.is-blocked {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(147, 245, 176, 0.12);
+}
+
+.chain-sim-edge {
+  flex: 1 1 auto;
+  min-width: 14px;
+  height: 2px;
+  background: var(--line);
+}
+
+.chain-sim-edge.is-cleared {
+  background: rgba(255, 119, 119, 0.55);
+}
+
+.chain-sim-edge.is-blocked {
+  background: repeating-linear-gradient(
+    90deg,
+    var(--accent),
+    var(--accent) 5px,
+    transparent 5px,
+    transparent 10px
+  );
+}
+
+.chain-sim-console {
+  padding: 26px;
+  border: 1px solid rgba(255, 119, 119, 0.22);
+  background: linear-gradient(145deg, rgba(255, 119, 119, 0.06), rgba(16, 35, 50, 0.55));
+  min-height: 230px;
+}
+
+.chain-sim-console.is-win {
+  border-color: rgba(147, 245, 176, 0.3);
+  background: linear-gradient(145deg, rgba(147, 245, 176, 0.09), rgba(16, 35, 50, 0.55));
+}
+
+.chain-sim-console h3 {
+  margin: 10px 0 10px;
+  font: 500 clamp(1.5rem, 3vw, 2.1rem)/1.1 var(--display);
+}
+
+.chain-sim-console p {
+  max-width: 640px;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.chain-sim-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.chain-sim-actions .button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  font: 700 0.66rem var(--mono);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.chain-sim-actions .is-defend:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(147, 245, 176, 0.07);
+}
+
+.chain-sim-actions .is-skip:hover {
+  border-color: var(--attack);
+  color: var(--attack);
+  background: rgba(255, 119, 119, 0.07);
+}
+
+.chain-sim-score {
+  color: var(--accent);
+  font: 700 0.66rem var(--mono);
+  letter-spacing: 0.06em;
+}
+
+.chain-cta {
+  margin-top: 28px;
+}
+
+@media (max-width: 850px) {
+  .chain-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .chain-stage-rail {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .chain-hero-link {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 560px) {
+  .chain-stage-rail {
+    grid-template-columns: 1fr;
+  }
+
+  .chain-art {
+    min-height: 260px;
+  }
+
+  .chain-sim-track {
+    padding: 16px 10px;
+  }
+}
