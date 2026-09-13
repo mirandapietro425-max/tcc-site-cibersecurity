@@ -63,19 +63,11 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
   });
 
   /* ---------- scene / text animation ---------- */
-  const animateScene = (chapter, direction = 1) => {
+  const animateScene = (chapter) => {
     if (!chapter) return;
+    // Scene transitions are now driven by the existing scroll/WebGL system.
+    // Do not animate the whole content block here; that caused headings to reveal early.
     chapter.classList.add('is-active');
-    $$('.chapter-content > *, .story-copy > *, .model-status, .interactive-card, .threat-chip, .attack-node, .defense-stack > div, .data-flow > div, .code-window, .final-actions > *', chapter)
-      .forEach((el, i) => {
-        el.animate(
-          [
-            { opacity: 0, transform: `translate3d(${direction > 0 ? 0 : 10}px, ${direction > 0 ? 34 : -22}px, 0) scale(.985)` },
-            { opacity: 1, transform: 'translate3d(0,0,0) scale(1)' }
-          ],
-          { duration: 720, delay: Math.min(i * 44, 280), easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'both' }
-        );
-      });
   };
 
   const openTopic = key => {
@@ -666,6 +658,7 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
     if(hud) hud.hidden=false;
     playSfx('transition',.22);
     document.body.classList.add('experience-started');
+    document.dispatchEvent(new CustomEvent('cybershield:started'));
     if(boot){
       boot.classList.add('is-done');
       setTimeout(()=>boot.remove(),1200);

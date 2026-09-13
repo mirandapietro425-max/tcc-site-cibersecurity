@@ -3,7 +3,9 @@ html,body{overflow-x:hidden;}
 .chapter-intro{overflow:hidden;position:relative;}
 .chapter-intro .webgl{opacity:.80!important;visibility:visible!important;pointer-events:none!important;z-index:0!important;}
 .chapter-intro .intro-copy{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:clamp(18px,4vw,48px);}
-.chapter-intro .hero-3d{opacity:1!important;visibility:visible!important;transform:none!important;filter:none!important;animation:none!important;font-size:clamp(3.6rem,11vw,9.5rem);line-height:.88;letter-spacing:-.055em;margin:0;}
+.chapter-intro .hero-3d{opacity:1!important;visibility:visible!important;transform:none!important;filter:none!important;animation:none!important;font-size:clamp(3.6rem,11vw,9.5rem);line-height:.88;letter-spacing:-.055em;margin:0;white-space:nowrap;}
+.chapter-intro .hero-3d .v70-letter{white-space:pre;opacity:0;transform:translate3d(0,18px,0) scale(.98);filter:blur(4px);will-change:opacity,transform,filter;}
+.chapter-intro .hero-3d .v70-letter.is-visible{opacity:1;transform:none;filter:none;transition:opacity .50s cubic-bezier(.2,.8,.2,1),transform .64s cubic-bezier(.2,.8,.2,1),filter .64s cubic-bezier(.2,.8,.2,1);transition-delay:var(--v70-delay,0ms);}
 .chapter-intro .intro-sub{max-width:720px;margin:22px auto 0;}
 .chapter-intro .scroll-cue{margin-top:26px;}
 .chapter-intro .model-status{display:none!important;}
@@ -15,7 +17,7 @@ html,body{overflow-x:hidden;}
 .threat-chip:hover,.threat-chip:focus-visible,.threat-chip.is-hot{transform:translateY(-3px) scale(1.035)!important;}
 @media(max-width:700px){
  .chapter-intro .webgl{opacity:.58!important;}
- .chapter-intro .hero-3d{font-size:clamp(3.1rem,16vw,6.2rem);}
+ .chapter-intro .hero-3d{font-size:clamp(3.1rem,16vw,6.2rem);white-space:nowrap;}
  .chapter-intro .intro-sub{max-width:92vw;}
  .threat-orbit{width:min(100%,390px)!important;gap:8px!important;margin-top:28px!important;}
  .threat-chip,.threat-chip:nth-child(n){width:calc(50% - 4px)!important;min-width:0!important;padding:11px 8px!important;font-size:.55rem!important;}
@@ -39,4 +41,11 @@ html,body{overflow-x:hidden;}
 }
 @media(prefers-reduced-motion:reduce){
  .v70-letter{opacity:1!important;transform:none!important;filter:none!important;transition:none!important;}
+}
+
+/* Final mobile hardening: preserve the cinematic 3D composition without horizontal spill. */
+@media(max-width:700px){
+  .chapter-intro .intro-copy{overflow:hidden;}
+  .chapter-intro .hero-3d{max-width:100%;} 
+  .chapter-intro .hero-3d .v70-letter{will-change:opacity,transform;}
 }

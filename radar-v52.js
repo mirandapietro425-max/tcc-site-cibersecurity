@@ -220,15 +220,103 @@
 
   function setScan(on){ state.scan=on; scanBtn.setAttribute('aria-pressed',String(on)); scanBtn.textContent=`SCAN · ${on?'ON':'OFF'}`; if(on) startLoop(); else drawGrid(performance.now()); }
   scanBtn.addEventListener('click',()=>setScan(!state.scan));
-  resetBtn.addEventListener('click',()=>{ state.selected=null; updateRisk(0,'ATENTA'); title.textContent='Aguarde o primeiro retorno.'; body.textContent='O ambiente ainda está estável. O objetivo não é disparar alarmes, mas distinguir ruído de contexto.'; origin.textContent='—';impact.textContent='—';confidence.textContent='—';feedback.textContent='Escolha um alvo para começar.'; $$('.r43-signal-btn').forEach(b=>b.classList.remove('is-active')); addLog('Radar reiniciado · ambiente estável','safe'); dots.forEach(d=>d.lastSeen=-10); drawGrid(performance.now()); });
+  resetBtn.addEventListener('click',()=>{ state.selected=null; game.phase='select'; game.evidence=0; game.investigated.clear(); game.contained=false; game.steps=0; game.score=0; updateRisk(0,'ATENTA'); title.textContent='Aguarde o primeiro retorno.'; body.textContent='O ambiente ainda está estável. O objetivo não é disparar alarmes, mas distinguir ruído de contexto.'; origin.textContent='—';impact.textContent='—';confidence.textContent='—';feedback.textContent='Escolha um sinal para investigar. Construa evidência antes de conter.'; $$('.r43-signal-btn').forEach(b=>b.classList.remove('is-active')); addLog('Radar reiniciado · novo incidente simulado','safe'); dots.forEach(d=>d.lastSeen=-10); drawGrid(performance.now()); });
+
+  const game = {
+    phase: 'select',
+    evidence: 0,
+    investigated: new Set(),
+    contained: false,
+    steps: 0,
+    score: 0
+  };
+
+  function gameStatus(){
+    if(game.contained) return 'INCIDENTE CONTIDO';
+    if(game.evidence>=3) return 'PRONTO PARA CONTER';
+    if(game.evidence===2) return 'PADRÃO CONFIRMADO';
+    if(game.evidence===1) return 'EVIDÊNCIA EM FORMAÇÃO';
+    return 'ESCUTA INICIADA';
+  }
+
+  function gameFeedback(text, kind='info'){
+    feedback.textContent=text;
+    addLog(text, kind);
+    updateRisk(state.selected?.severity==='high' ? Math.max(18, 92-game.evidence*18) : state.risk, gameStatus());
+  }
+
+  function investigate(signal){
+    if(!signal) return;
+    if(game.investigated.has(signal.id)){
+      gameFeedback(`${signal.label} já foi investigado. Correlacione outro sinal antes de repetir a análise.`);
+      return;
+    }
+    game.investigated.add(signal.id);
+    game.steps++;
+
+    const findings = {
+      D: 'CREDENCIAL INVESTIGADA · tentativas sucessivas + origem incomum. Evidência forte de comprometimento.',
+      G: 'ORIGEM INVESTIGADA · o acesso vem de uma origem não habitual para este serviço. O contexto reforça o sinal.',
+      B: 'ANOMALIA INVESTIGADA · horário, frequência e autenticação fogem do padrão. Há correlação com a credencial.',
+      C: 'CORRELAÇÃO CONFIRMADA · rede + identidade apontam para o mesmo incidente. O risco agora é acionável.',
+      A: 'SINAL FRACO · não há evidência suficiente para elevar o incidente. Evite escalar sem contexto.',
+      E: 'RUÍDO CONFIRMADO · evento isolado. Tratar como incidente seria desproporcional.',
+      F: 'MALWARE INVESTIGADO · execução suspeita detectada no endpoint. Isolamento é uma resposta plausível.'
+    };
+
+    const strong = ['D','G','B','C','F'].includes(signal.id);
+    if(strong) game.evidence=Math.min(3,game.evidence+1);
+    const kind = strong ? (signal.severity==='high'?'danger':'info') : 'safe';
+    gameFeedback(findings[signal.id] || `${signal.label} investigado.`,kind);
+    playFx(strong?'detect':'click');
+  }
+
+  function contain(signal){
+    if(!signal) return;
+    if(signal.id==='D' && game.evidence>=2){
+      game.contained=true;
+      game.score=Math.max(0,100-(game.steps-3)*8);
+      updateRisk(8,'CONTIDO');
+      feedback.textContent=`INCIDENTE CONTIDO · credencial revogada antes da propagação. Pontuação ${game.score}/100.`;
+      addLog(`Resposta correta · credencial revogada com ${game.evidence} evidências`,'safe');
+      playFx('success');
+      const dot=dots.find(d=>d.id==='D'); if(dot) dot.lastSeen=state.elapsed;
+      return;
+    }
+    if(signal.id==='A' || signal.id==='E'){
+      updateRisk(18,'PROPORCIONAL');
+      gameFeedback(`${signal.label} ainda é ruído. Conter agora criaria impacto sem evidência suficiente.`, 'safe');
+    } else {
+      updateRisk(Math.min(92,state.risk+10),'PREMATURO');
+      gameFeedback(`CONTENÇÃO PREMATURA · ainda falta correlacionar evidências antes de interromper este caminho.`, 'danger');
+    }
+    playFx('click');
+  }
+
+  function monitor(signal){
+    if(!signal) return;
+    if(signal.id==='A' || signal.id==='E'){
+      game.score=Math.min(100,game.score+8);
+      updateRisk(12,'PROPORCIONAL');
+      gameFeedback(`${signal.label} permanece em monitoramento. Decisão proporcional ao baixo grau de evidência.`,'safe');
+    } else if(signal.id==='D' && game.evidence<2){
+      updateRisk(Math.min(92,state.risk+8),'RISCO ABERTO');
+      gameFeedback('MONITORAR CREDENCIAL AGORA É ARRISCADO · o sinal é forte e o tempo favorece o atacante. Investigue e correlacione.','danger');
+    } else {
+      updateRisk(Math.max(18,state.risk-4),'MONITORAMENTO');
+      gameFeedback(`${signal.label} continua sob observação enquanto o contexto é correlacionado.`);
+    }
+    playFx('click');
+  }
 
   $$('.r43-decision-btn').forEach(btn=>btn.addEventListener('click',()=>{
-    if(!state.selected){ feedback.textContent='Selecione um sinal antes de escolher a resposta.'; return; }
+    if(!state.selected){ feedback.textContent='Selecione um sinal no campo antes de decidir o próximo passo.'; return; }
+    if(game.contained){ feedback.textContent='Incidente encerrado. Use RESET para jogar novamente.'; return; }
+    const signal=state.selected;
     const act=btn.dataset.action;
-    if(act==='contain' && state.selected.severity==='high'){
-      updateRisk(12,'PROTEGIDO');feedback.textContent=`CONTENÇÃO CONFIRMADA · ${state.selected.label} isolado. O caminho de risco perdeu continuidade.`;addLog(`Contenção aplicada · ${state.selected.label}`,'safe');playFx('success');dots.find(d=>d.id===state.selected.id).lastSeen=state.elapsed;
-    } else if(act==='investigate'){ updateRisk(Math.max(15,state.risk-12),'INVESTIGAÇÃO');feedback.textContent=`INVESTIGAÇÃO ABERTA · contexto preservado para ${state.selected.label}.`;addLog(`Investigação aberta · ${state.selected.label}`);playFx('click'); }
-    else { updateRisk(Math.max(8,state.risk-4),'MONITORAMENTO');feedback.textContent=`MONITORAMENTO ATIVO · ${state.selected.label} continua sob observação.`;addLog(`Monitoramento ativado · ${state.selected.label}`);playFx('click'); }
+    if(act==='investigate') investigate(signal);
+    else if(act==='contain') contain(signal);
+    else monitor(signal);
   }));
 
   $('.r43-next')?.addEventListener('click',()=>document.querySelector('#radar-correlation')?.scrollIntoView({behavior:reduce?'auto':'smooth'}));
