@@ -25,6 +25,16 @@
   filter:none!important;
   transition:none!important;
 }
+/* Override the legacy V69 gate: both opening robots are visible immediately. */
+.chapter-intro:not(.intro-seq-complete) .webgl{
+  opacity:.58!important;
+  visibility:visible!important;
+  pointer-events:none!important;
+}
+.chapter-intro:not(.intro-seq-complete) *[data-model],
+.chapter-intro:not(.intro-seq-complete) .model-status{
+  visibility:visible!important;
+}
 
 /* Letter headlines only become visible after their chapter enters the viewport. */
 .scene-letter{
