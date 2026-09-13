@@ -1,0 +1,61 @@
+/* CyberShield V63 — mobile/desktop visual correction layer */
+
+/* HOME — keep the 3D scene visible instead of letting content drown it. */
+#experience .chapter .webgl{opacity:.94!important;filter:saturate(1.12) contrast(1.04) brightness(1.04)!important}
+#experience .chapter-intro .webgl{opacity:1!important;}
+#experience .chapter-content,.experience .intro-copy,.intro-copy{background:linear-gradient(90deg,rgba(3,8,15,.46),rgba(3,8,15,.10) 58%,rgba(3,8,15,0))!important}
+#experience .chapter{min-height:100svh!important}
+@media(max-width:900px){
+  #experience .chapter .webgl{opacity:.96!important}
+  #experience .chapter-content,.intro-copy{padding-left:16px!important;padding-right:16px!important}
+  #experience .chapter-content::before,.intro-copy::before{background:linear-gradient(180deg,rgba(2,7,12,.50),rgba(2,7,12,.10) 48%,rgba(2,7,12,.34))!important}
+}
+@media(max-width:600px){
+  #experience .chapter .webgl{opacity:1!important}
+  #experience .chapter-intro .webgl{transform:scale(1.03)!important}
+  #experience .chapter{min-height:92svh!important}
+}
+
+/* PLAYBOOK — the five agents must remain entirely visible in the opening frame. */
+.protect-v32-opening{overflow:hidden}
+.protect-v32-team{left:0!important;right:0!important;bottom:-1%!important;height:72%!important;gap:clamp(0px,1.25vw,16px)!important}
+.protect-v32-team img{max-width:19%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;animation:protectWalk 7.5s ease-in-out infinite!important}
+.protect-v32-team .team-guardian{height:108%!important}
+.protect-v32-team .team-female{height:91%!important}
+.protect-v32-team .team-male{height:95%!important}
+.protect-v32-team .team-robot-f{height:95%!important}
+.protect-v32-team .team-robot{height:98%!important}
+
+/* Workstation artwork: preserve whole composition, never crop the woman/screen scene. */
+.protect-v32-file.wide img{object-fit:contain!important;object-position:center center!important;transform:none!important}
+
+/* Playbook lower knowledge area: prevent mobile overlap and keep each capsule readable. */
+@media(max-width:720px){
+  .protect-v32-opening{height:590px!important}
+  .protect-v32-opening-copy{max-width:calc(100% - 36px)!important}
+  .protect-v32-team{left:1%!important;right:1%!important;height:50%!important;bottom:7%!important;gap:0!important}
+  .protect-v32-team img{max-width:20%!important}
+  .protect-v32-team .team-guardian{height:105%!important}
+  .protect-v32-team .team-female,.protect-v32-team .team-male,.protect-v32-team .team-robot-f,.protect-v32-team .team-robot{height:84%!important}
+  .pb45-knowledge{padding-bottom:150px!important}
+  .pb45-flight{padding-bottom:0!important}
+  .pb45-capsule{position:relative!important;width:100%!important;left:auto!important;right:auto!important;top:auto!important;margin:8px 0!important;min-height:108px!important}
+  .pb45-dossier{bottom:72px!important;max-height:min(34svh,260px)!important}
+}
+
+/* PRIVACIDADE — reveal actual environment imagery behind copy on small screens. */
+@media(max-width:900px){
+  .ps-env{opacity:.68!important;filter:saturate(.68) contrast(1.05) brightness(.72)!important;transform:scale(1.03)!important}
+  .ps-scene::before{background:linear-gradient(180deg,rgba(5,8,13,.20),rgba(5,8,13,.52) 55%,rgba(5,8,13,.80))!important}
+  .ps-scene-inner{z-index:5!important}
+  .ps-art{z-index:3!important;opacity:.72!important;filter:drop-shadow(0 24px 48px rgba(0,0,0,.54))!important}
+  .ps-scene-a .ps-art,.ps-scene-b .ps-art,.ps-scene-c .ps-art,.ps-scene-d .ps-art{width:74vw!important;height:48%!important;right:-2%!important}
+}
+@media(max-width:600px){
+  .ps-env{opacity:.74!important;filter:saturate(.72) contrast(1.05) brightness(.70)!important}
+  .ps-scene::before{background:linear-gradient(180deg,rgba(5,8,13,.14),rgba(5,8,13,.42) 48%,rgba(5,8,13,.70) 100%)!important}
+  .ps-scene-inner{padding:64px 0 120px!important;gap:20px!important}
+  .ps-copy{max-width:92vw!important}
+  .ps-aside{background:rgba(3,6,10,.44)!important;backdrop-filter:blur(10px)!important}
+  .ps-art{opacity:.78!important;width:88vw!important;height:46%!important;right:-12%!important}
+}

@@ -14,13 +14,15 @@
       'assets/gateway/cybersecurity_sequence_01_arrival.png',
       'assets/gateway/cybersecurity_sequence_02_decision_point.png',
       'assets/gateway/cybersecurity_sequence_03_turning_left.png',
-      'assets/gateway/cybersecurity_sequence_04_approach_investigate.png'
+      'assets/gateway/cybersecurity_sequence_04_approach_investigate.png',
+      'assets/gateway/cybersecurity_sequence_05_enter_investigate.png'
     ],
     right:[
       'assets/gateway/cybersecurity_sequence_01_arrival.png',
       'assets/gateway/cybersecurity_sequence_02_decision_point.png',
       'assets/gateway/cybersecurity_sequence_03_turning_right.png',
-      'assets/gateway/cybersecurity_sequence_04_approach_investigate_right.png'
+      'assets/gateway/cybersecurity_sequence_04_approach_investigate_right.png',
+      'assets/gateway/cybersecurity_sequence_05_enter_investigate.png'
     ]
   };
 
@@ -69,8 +71,8 @@
 
     loadSequenceImages();
 
-    const frameCount=4;
-    const frameDelay=500;
+    const frameCount=5;
+    const frameDelay=620;
     for(let i=0;i<frameCount;i++){
       setTimeout(()=>{
         shots.forEach((shot,j)=>shot.classList.toggle('is-current',j===i));
@@ -80,7 +82,7 @@
     setTimeout(()=>setAudio('sfx-transition',.22),760);
     setTimeout(()=>{
       window.location.href=target==='investigate'?'radar.html':'playbook.html';
-    },2200);
+    },3200);
   }
 
   doors.forEach(btn=>{

@@ -165,6 +165,14 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
   const MODEL_BASE = 'assets/models/';
   // Primeira página: somente estes CINCO personagens novos.
   // Eles substituem os objetos/personagens grandes antigos nos cinco primeiros pontos visuais.
+  const introSatellites = [
+    {file:'cybershield_human_man.glb', target:2.75, pos:[-1.35,-.06,.15], rotY:.10, speed:.07},
+    {file:'cybershield_human_woman.glb', target:2.55, pos:[-.68,-.04,.10], rotY:-.08, speed:.09},
+    {file:'cybershield_robot_woman.glb', target:2.60, pos:[0.02,-.05,.08], rotY:.05, speed:.08},
+    {file:'cybershield_robot_normal.glb', target:2.55, pos:[.70,-.04,.12], rotY:-.06, speed:.10},
+    {file:'cybershield_robot_boy.glb', target:2.45, pos:[1.36,-.06,.10], rotY:.08, speed:.11}
+  ];
+
   const modelByKind = {
     intro:'cybershield_human_man.glb',
     user:'cybershield_human_woman.glb',
@@ -416,6 +424,7 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
           // Rotacionamos 90° no X para colocá-los realmente em pé, mantendo a rotação Y para a volta.
           model.rotation.set(-Math.PI / 2, cfg.rotY, 0);
           model.userData.introSpin = cfg.speed;
+          model.userData.baseRotationY = cfg.rotY || 0;
           model.userData.baseY = model.position.y;
           model.userData.topic=chapter.dataset.topic || 'cid';
           model.userData.satelliteIndex=index;
@@ -453,7 +462,10 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
 
     const file = modelByKind[world.kind] || null;
     chapter.dataset.model = file || '';
-    if (file) loadSingleModel(chapter,world,file);
+    if (world.kind === 'intro') {
+      chapter.dataset.model = '5-character-cast';
+      loadIntroSatellites(chapter, world);
+    } else if (file) loadSingleModel(chapter,world,file);
     else {
       chapter.classList.add('no-character');
       const state = chapter.querySelector('.model-state');
