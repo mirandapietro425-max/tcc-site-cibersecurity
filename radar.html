@@ -7,12 +7,10 @@
 <title>Radar — CyberShield</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="radar.css">
-<link rel="stylesheet" href="ux-audit-v38.css?v=38">
+<link rel="stylesheet" href="ux-audit-v38.css?v=38"><link rel="stylesheet" href="radar-v52.css?v=52">
   <link rel="stylesheet" href="responsive-v53-final.css?v=53" />
 <link rel="stylesheet" href="responsive-v55-final.css?v=55">
 <link rel="stylesheet" href="responsive-v56-final.css?v=56">
-<link rel="stylesheet" href="radar-v65-final.css?v=65">
 </head>
 <body class="radar-page" data-sp-page="radar">
 <header class="topbar">
@@ -46,19 +44,6 @@
       </aside>
       <div class="r43-panel r43-scope-panel">
         <div class="r43-scope-stage">
-          <div class="r53-game-overlay" data-r53-game-overlay aria-hidden="true">
-            <div class="r53-game-card">
-              <div class="r53-game-kicker">MISSÃO RADAR · EDU-360</div>
-              <h3 data-r53-overlay-title>ENCONTRE A ANOMALIA</h3>
-              <p data-r53-overlay-body>Observe o campo. Quando um sinal aparecer, selecione-o e escolha a resposta proporcional ao risco.</p>
-              <button type="button" class="r53-game-start" data-r53-start>INICIAR MISSÃO</button>
-            </div>
-          </div>
-          <div class="r53-game-hud" aria-live="polite">
-            <div><span>MISSÃO</span><strong data-r53-round>00/05</strong></div>
-            <div><span>PRECISÃO</span><strong data-r53-accuracy>—</strong></div>
-            <div><span>STATUS</span><strong data-r53-mission-status>AGUARDANDO</strong></div>
-          </div>
           <div class="r43-scope-art" aria-hidden="true"></div><canvas id="radarCanvas" class="r43-canvas" aria-label="Campo visual suplementar do radar com sinais simulados"></canvas>
           <div class="r43-scope-label" aria-hidden="true"></div>
           <div class="r43-scope-ui" aria-hidden="true"><div class="r43-scope-readout"><span>POSTURA</span><strong data-r43-posture>ATENTA</strong><small data-r43-clock>00:00</small></div><div class="r43-scope-corner tl"><b>AZIMUTE</b><span data-r43-azimuth>000°</span></div><div class="r43-scope-corner tr"><b>SETOR</b><span data-r43-sector>NORTE</span></div><div class="r43-scope-corner bl"><b>ALCANCE</b><span>360° / SIM</span></div><div class="r43-scope-corner br"><b>FONTE</b><span>EDU-SENSOR</span></div></div>
@@ -70,9 +55,7 @@
         <div class="r43-kicker">PROTOCOLO DE RESPOSTA</div><h3 id="decision-title">Um sinal não é uma sentença.</h3><p>Escolha um alvo. Depois escolha uma postura proporcional ao risco.</p>
         <div class="r43-risk"><div class="r43-risk-head"><span>RISCO ESTIMADO</span><b data-r43-risk-value>0%</b></div><div class="r43-risk-bar"><i data-r43-risk-bar></i></div></div>
         <div class="r43-decision-list" role="group" aria-label="Respostas possíveis"><button class="r43-decision-btn" type="button" data-action="investigate"><span>01</span><b>INVESTIGAR</b><small>abrir contexto e preservar evidências</small></button><button class="r43-decision-btn primary" type="button" data-action="contain"><span>02</span><b>CONTER</b><small>interromper o caminho quando o risco justificar</small></button><button class="r43-decision-btn" type="button" data-action="monitor"><span>03</span><b>MONITORAR</b><small>acompanhar sem transformar ruído em alarme</small></button></div>
-        <div class="r43-feedback" data-r43-feedback aria-live="polite">Inicie a missão para começar a escuta.</div>
-        <div class="r53-objective" data-r53-objective>OBJETIVO: neutralize 5 anomalias.</div>
-        <button class="r43-next" type="button">CONTINUAR A LEITURA →</button>
+        <div class="r43-feedback" data-r43-feedback aria-live="polite">Escolha um alvo para começar.</div><button class="r43-next" type="button">CONTINUAR A LEITURA →</button>
       </aside>
     </div>
   </div>
@@ -87,7 +70,7 @@
 </main>
 <audio data-r43-audio-file src="assets/superproduction-v41/cybershield-radar.mp3" loop preload="metadata" aria-hidden="true"></audio>
 <button class="r43-audio" type="button" data-r43-audio aria-pressed="false"><i></i><span>SOM DO UNIVERSO · OFF</span></button>
-<script src="radar-v65-final.js?v=65" defer></script><script src="ux-audit-v38.js?v=38" defer></script>
+<script src="radar-v52.js?v=52" defer></script><script src="ux-audit-v38.js?v=38" defer></script>
 <script src="site-v53-final.js?v=53" defer></script>
   
 <script src="experience-v55-desktop-mobile.js?v=55" defer></script>

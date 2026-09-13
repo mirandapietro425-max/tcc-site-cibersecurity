@@ -1,0 +1,42 @@
+/* CyberShield V70 Final UX — one final, scoped override layer. */
+html,body{overflow-x:hidden;}
+.chapter-intro{overflow:hidden;position:relative;}
+.chapter-intro .webgl{opacity:.80!important;visibility:visible!important;pointer-events:none!important;z-index:0!important;}
+.chapter-intro .intro-copy{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:clamp(18px,4vw,48px);}
+.chapter-intro .hero-3d{opacity:1!important;visibility:visible!important;transform:none!important;filter:none!important;animation:none!important;font-size:clamp(3.6rem,11vw,9.5rem);line-height:.88;letter-spacing:-.055em;margin:0;}
+.chapter-intro .intro-sub{max-width:720px;margin:22px auto 0;}
+.chapter-intro .scroll-cue{margin-top:26px;}
+.chapter-intro .model-status{display:none!important;}
+.v70-letter{display:inline-block;opacity:0;transform:translate3d(0,16px,0) scale(.985);filter:blur(3px);will-change:opacity,transform,filter;}
+.v70-letter.is-visible{opacity:1;transform:none;filter:none;transition:opacity .46s cubic-bezier(.2,.8,.2,1),transform .58s cubic-bezier(.2,.8,.2,1),filter .58s cubic-bezier(.2,.8,.2,1);transition-delay:var(--v70-delay,0ms);}
+.chapter-content h2 .v70-letter{white-space:pre;}
+.threat-orbit{width:min(100%,980px)!important;height:auto!important;display:flex!important;flex-wrap:wrap!important;justify-content:center!important;align-items:center!important;gap:12px!important;margin:38px auto 24px!important;transform:none!important;}
+.threat-chip,.threat-chip:nth-child(n){position:relative!important;inset:auto!important;transform:none!important;min-width:132px!important;flex:0 1 auto!important;}
+.threat-chip:hover,.threat-chip:focus-visible,.threat-chip.is-hot{transform:translateY(-3px) scale(1.035)!important;}
+@media(max-width:700px){
+ .chapter-intro .webgl{opacity:.58!important;}
+ .chapter-intro .hero-3d{font-size:clamp(3.1rem,16vw,6.2rem);}
+ .chapter-intro .intro-sub{max-width:92vw;}
+ .threat-orbit{width:min(100%,390px)!important;gap:8px!important;margin-top:28px!important;}
+ .threat-chip,.threat-chip:nth-child(n){width:calc(50% - 4px)!important;min-width:0!important;padding:11px 8px!important;font-size:.55rem!important;}
+ .chapter{overflow:hidden;}
+}
+@media(max-width:420px){
+ .threat-chip,.threat-chip:nth-child(n){width:100%!important;}
+}
+@media(max-width:720px){
+ .protect-v32-file-grid{display:grid!important;grid-template-columns:1fr!important;gap:10px!important;}
+ .protect-v32-file{width:100%!important;min-width:0!important;overflow:hidden!important;}
+ .protect-v32-file img{width:100%!important;height:auto!important;max-height:54vw!important;object-fit:contain!important;object-position:center!important;display:block!important;}
+ .protect-v32-story{display:flex!important;flex-direction:column!important;gap:18px!important;}
+ .protect-v32-story-copy,.protect-v32-art-wrap{width:100%!important;min-width:0!important;}
+ .protect-v32-label{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:5px!important;}
+ .protect-v32-label b,.protect-v32-label span{display:block!important;max-width:100%!important;white-space:normal!important;overflow-wrap:anywhere!important;}
+ .pb45-stage{width:100%!important;max-width:100%!important;overflow:hidden!important;}
+ .pb45-stage .pb45-node{max-width:calc(100% - 24px)!important;}
+ .pb45-knowledge{overflow:hidden!important;}
+ .pb45-capsule{box-sizing:border-box!important;}
+}
+@media(prefers-reduced-motion:reduce){
+ .v70-letter{opacity:1!important;transform:none!important;filter:none!important;transition:none!important;}
+}

@@ -17,7 +17,6 @@
 
 <script>
 (function(){
-  try{ history.scrollRestoration='manual'; }catch(e){}
   var released=false;
   function release(reason){
     if(released) return; released=true;
@@ -46,7 +45,6 @@
   setTimeout(function(){release('AMBIENTE PRONTO');},3200);
   // Fallback interaction that does not depend on Three.js/module loading.
   document.addEventListener('DOMContentLoaded', function(){
-    try{ if(!document.body.classList.contains('experience-started')) window.scrollTo(0,0); }catch(e){}
     var btn=document.getElementById('boot-start');
     var boot=document.getElementById('boot');
     var hud=document.getElementById('audio-hud');
@@ -60,6 +58,12 @@
         boot.classList.add('is-done');
         setTimeout(function(){ boot.remove(); }, 1050);
       }
+      try{
+        var ambient=document.getElementById('ambient');
+        if(ambient){ ambient.volume=0.16; ambient.play().catch(function(){}); }
+        var tr=document.getElementById('sfx-transition');
+        if(tr){ tr.currentTime=0; tr.volume=.22; tr.play().catch(function(){}); }
+      }catch(e){}
     }, {once:false});
   });
 })();
@@ -70,7 +74,7 @@
 <link rel="stylesheet" href="responsive-v55-final.css?v=55">
 <link rel="stylesheet" href="responsive-v56-final.css?v=56">
 <link rel="stylesheet" href="responsive-v63-final.css?v=63">
-  <link rel="stylesheet" href="final-v69-fix.css?v=69">
+<link rel="stylesheet" href="v70-final-ux.css?v=70final">
 </head>
 <body>
 <div id="boot" class="boot" aria-hidden="false">
@@ -104,7 +108,7 @@
   <section class="chapter chapter-intro" id="intro" data-model="intro-orbit" data-topic="cid" data-scene="01">
     <canvas class="webgl" id="scene-intro" aria-hidden="true"></canvas>
     <div class="chapter-noise"></div>
-    <div class="model-status"><span class="model-state">3D LOADING</span><span class="model-title">ATMOSFERA</span></div>
+    <div class="model-status"><span class="model-state">3D LOADING</span><span class="model-title">ABERTURA 3D</span></div>
     <div class="intro-copy layer">
       <p class="eyebrow">TCC · MÉTODOS DE SEGURANÇA NA INTERNET</p>
       <h1 class="hero-3d" data-text="SEGURANÇA">SEGURANÇA</h1>
@@ -292,6 +296,6 @@ return safeResponse()</code></pre>
   
 <script src="experience-v55-desktop-mobile.js?v=55" defer></script>
 <script src="experience-v56-always-on.js?v=62" defer></script>
+<script src="v70-final-ux.js?v=70final" defer></script>
 </body>
 </html>
-

@@ -1,0 +1,72 @@
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
+import {GLTFLoader} from 'https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/loaders/GLTFLoader.js';
+
+const BASE='assets/hexad/';
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const app=document.querySelector('.hx61-app');
+const panels=[...document.querySelectorAll('.hx61-panel')];
+const worlds=[
+{name:'Confidencialidade',tag:'RESTRIÇÃO DE ACESSO',failure:'EXPOSE',copy:'Somente quem deve ver a informação consegue alcançá-la.',model:'hexad-confidentiality.glb',track:'confidentiality'},
+{name:'Posse / Controle',tag:'DOMÍNIO DO ATIVO',failure:'STEAL',copy:'Não basta enxergar o dado; é preciso preservar quem o controla.',model:'hexad-possession.glb',track:'possession'},
+{name:'Integridade',tag:'COERÊNCIA DO CONTEÚDO',failure:'ALTER',copy:'A informação precisa chegar ao destino sem ser alterada pelo caminho.',model:'hexad-integrity.glb',track:'integrity'},
+{name:'Autenticidade',tag:'IDENTIDADE VERIFICADA',failure:'SPOOF',copy:'O sistema precisa saber de onde a informação realmente veio.',model:'hexad-authenticity.glb',track:'authenticity'},
+{name:'Disponibilidade',tag:'ACESSO QUANDO NECESSÁRIO',failure:'DISRUPT',copy:'Uma informação segura também precisa estar presente quando o sistema precisa dela.',model:'hexad-availability.glb',track:'availability'},
+{name:'Utilidade',tag:'VALOR EM CONTEXTO',failure:'CORRUPT',copy:'Informação protegida perde o sentido quando deixa de ser utilizável.',model:'hexad-utility.glb',track:'utility'}];
+const narr={genesis:'A informação nasce no centro. Parece única. Mas sua segurança nunca depende de uma única propriedade. Ela depende de seis forças.',entry:'Você não está entrando em um conjunto de conceitos. Está entrando em um sistema vivo. Cada força protege uma parte da mesma informação.',collapse:'Quando uma força cai, as outras sentem o impacto. Segurança não é uma parede. É uma arquitetura de relações.',restore:'Detectar. Isolar. Reparar. Verificar. Restaurar. Estabilizar.',synthesis:'Quando as seis forças permanecem coerentes, a informação preserva identidade, contexto e valor.'};
+const narrationTracks={genesis:'hexad-01-genesis.mp3',entry:'hexad-02-entry.mp3',confidentiality:'hexad-03-confidentiality.mp3',possession:'hexad-04-possession.mp3',integrity:'hexad-05-integrity.mp3',authenticity:'hexad-06-authenticity.mp3',availability:'hexad-07-availability.mp3',utility:'hexad-08-utility.mp3',collapse:'hexad-09-collapse.mp3',restore:'hexad-10-restoration.mp3',synthesis:'hexad-11-synthesis.mp3'};
+let narrationOn=false,narrationAudio=null; const narrationPanel=document.querySelector('#hx61-narration-panel'); const narrationText=document.querySelector('#hx61-narration-text');
+function say(text,track){ if(!narrationOn)return; narrationText.textContent=text; narrationPanel.hidden=false; if(track){const src=BASE+'audio/narration/'+narrationTracks[track]; if(!narrationAudio||!narrationAudio.src.endsWith(narrationTracks[track])){narrationAudio?.pause(); narrationAudio=new Audio(src); narrationAudio.volume=.92;} narrationAudio.currentTime=0; narrationAudio.play().catch(()=>{});} }
+function setNarration(v){narrationOn=v;document.querySelector('#hx61-narration').setAttribute('aria-pressed',String(v));if(!v){narrationPanel.hidden=true;narrationAudio?.pause();}else say(narr.genesis,'genesis');}
+const audio={enabled:false,main:null,ambience:new Map()};
+const ambNames=['confidentiality','possession','integrity','authenticity','availability','utility'];
+function setupAudio(){audio.main=new Audio(BASE+'audio/ambience/hexad-main.mp3');audio.main.loop=true;audio.main.volume=.14;ambNames.forEach(n=>{const a=new Audio(BASE+'audio/ambience/hexad-'+n+'.mp3');a.loop=true;a.volume=0;audio.ambience.set(n,a);});}
+function sfx(n){if(!audio.enabled)return;const a=new Audio(BASE+'audio/sfx/hexad-'+n+'.wav');a.volume=.3;a.play().catch(()=>{});} function enableAudio(){audio.enabled=true;audio.main?.play().catch(()=>{});sfx('enter');document.querySelector('#hx61-audio').textContent='Som ativo';}
+function disableAudio(){audio.enabled=false;audio.main?.pause();audio.ambience.forEach(a=>a.pause());document.querySelector('#hx61-audio').textContent='Som';}
+
+let sceneApi=null;
+function init3D(){
+ const canvas=document.querySelector('#hx61-canvas'); const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'high-performance'}); renderer.setPixelRatio(Math.min(devicePixelRatio,innerWidth<800?1.3:1.8)); renderer.outputColorSpace=THREE.SRGBColorSpace;
+ const scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x020308,.015);const camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,.1,120);camera.position.set(0,1.3,8);
+ scene.add(new THREE.AmbientLight(0x9dafca,1.05));const key=new THREE.PointLight(0xc8f7ff,25,34);key.position.set(0,3,4);scene.add(key);const rim=new THREE.PointLight(0x5d6bff,9,24);rim.position.set(-4,-1,-3);scene.add(rim);
+ const loader=new GLTFLoader(); const root=new THREE.Group();scene.add(root);const coreGroup=new THREE.Group();root.add(coreGroup);const worldGroup=new THREE.Group();root.add(worldGroup);const droneGroup=new THREE.Group();root.add(droneGroup);
+ const starPos=new Float32Array(3600);for(let i=0;i<starPos.length;i+=3){starPos[i]=(Math.random()-.5)*40;starPos[i+1]=(Math.random()-.5)*22;starPos[i+2]=(Math.random()-.5)*30;}const sg=new THREE.BufferGeometry();sg.setAttribute('position',new THREE.BufferAttribute(starPos,3));const stars=new THREE.Points(sg,new THREE.PointsMaterial({color:0xb8d5ff,size:.02,transparent:true,opacity:.55}));scene.add(stars);
+ let core=null,drone=null,fragment=null; const planets=[];let loaded=0;
+ function load(name,group,onLoaded){loader.load(BASE+'3d/'+name,g=>{const m=g.scene;m.traverse(o=>{if(o.isMesh){o.frustumCulled=true; if(o.material) {o.material.metalness=Math.min(1,(o.material.metalness??.5)+.12);o.material.roughness=Math.max(.18,(o.material.roughness??.45)-.08);}}});onLoaded(m);loaded++;},undefined,()=>{});}
+ load('hexad-data-core.glb',coreGroup,m=>{core=m;core.scale.setScalar(1.28);});load('hexad-drone.glb',droneGroup,m=>{drone=m;drone.scale.setScalar(.72);drone.position.set(0,1.7,1.4);});load('hexad-data-fragment.glb',root,m=>{fragment=m;fragment.scale.setScalar(.55);fragment.position.set(.5,.2,.5);});
+ worlds.forEach((w,i)=>load(w.model,worldGroup,m=>{m.userData.index=i;m.scale.setScalar(.72);m.position.set(Math.cos(i*Math.PI/3-Math.PI/2)*3.25,Math.sin(i*Math.PI/3-Math.PI/2)*1.18,Math.sin(i*Math.PI/3-Math.PI/2)*1.45);m.userData.baseY=m.position.y;planets[i]=m;}));
+ for(let i=0;i<6;i++)load('hexad-satellite.glb',root,m=>{m.scale.setScalar(.28);m.userData.phase=i;});
+ function resize(){const w=innerWidth,h=innerHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false);}addEventListener('resize',resize,{passive:true});resize();
+ return {renderer,scene,camera,root,core,drone,fragment,planets,stars,worldGroup};
+}
+try{sceneApi=init3D();app.classList.add('hx61-ready');}catch(e){console.warn(e);document.querySelector('#hx61-fallback').hidden=false;}
+
+const rail=document.querySelector('#hx61-world-rail');const worldIndex=document.querySelector('#hx61-world-index');const worldName=document.querySelector('#hx61-world-name');const worldTag=document.querySelector('#hx61-world-tag');const cardState=document.querySelector('#hx61-card-state');const cardCode=document.querySelector('#hx61-card-code');const cardTitle=document.querySelector('#hx61-card-title');const cardCopy=document.querySelector('#hx61-card-copy');let activeWorld=0;
+worlds.forEach((w,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.className=i===0?'is-active':'';b.innerHTML=`<b>0${i+1}</b><span>${w.name}</span>`;b.addEventListener('click',()=>focusWorld(i,true));rail.appendChild(b);});
+function focusWorld(i,voice=false){activeWorld=(i+6)%6;const w=worlds[activeWorld];rail.querySelectorAll('button').forEach((b,j)=>b.classList.toggle('is-active',j===activeWorld));worldIndex.textContent=String(activeWorld+1).padStart(2,'0');worldName.textContent=w.name;worldTag.textContent=w.tag;cardTitle.textContent=w.name;cardCopy.textContent=w.copy;cardCode.textContent=w.failure;cardState.textContent='ESTÁVEL';audio.ambience.forEach((a,n)=>{const on=n===w.track;a.volume=audio.enabled&&on?.09:0;if(audio.enabled&&on)a.play().catch(()=>{});});sfx('select');if(voice)say(`${w.name}. ${w.copy}`,w.track);}
+focusWorld(0,false);
+
+const attacks=[['EXPOSE','Confidencialidade'],['STEAL','Posse / Controle + Confidencialidade'],['ALTER','Integridade + Utilidade'],['SPOOF','Autenticidade'],['DISRUPT','Disponibilidade'],['CORRUPT','Integridade + Utilidade']];const attackWrap=document.querySelector('#hx61-attacks');let score=6;
+attacks.forEach(([c,l])=>{const b=document.createElement('button');b.innerHTML=`${c}<span>${l}</span>`;b.addEventListener('click',()=>triggerAttack(c));attackWrap.appendChild(b);});
+function triggerAttack(code){score=Math.max(0,score-1);document.querySelector('#hx61-score').textContent=String(score).padStart(2,'0')+' / 06';app.dataset.scene='incident';app.classList.add('hx61-incident');sfx('alert');say(narr.collapse,'collapse');const v=document.querySelector('#hx61-collapse');v.currentTime=0;v.play().catch(()=>{});cardState.textContent='COMPROMETIDO';cardCode.textContent=code;}
+const restoreSteps=['Detectar','Isolar','Reparar','Verificar','Restaurar','Estabilizar'];const restoreList=document.querySelector('#hx61-restore-steps');restoreSteps.forEach((s,i)=>{const li=document.createElement('li');li.innerHTML=`<span>0${i+1} · ${s.toUpperCase()}</span><span>AGUARDANDO</span>`;restoreList.appendChild(li);});
+async function restore(){app.dataset.scene='restore';app.classList.add('hx61-restore');sfx('restore');say(narr.restore,'restore');document.querySelector('#hx61-restore').play().catch(()=>{});for(let i=0;i<restoreList.children.length;i++){restoreList.children[i].classList.add('is-done');restoreList.children[i].lastElementChild.textContent='CONCLUÍDO';await new Promise(r=>setTimeout(r,reduced?80:420));}score=6;document.querySelector('#hx61-score').textContent='06 / 06';app.classList.remove('hx61-incident');cardState.textContent='ESTÁVEL';sfx('system-stable');}
+
+document.querySelector('#hx61-audio').addEventListener('click',()=>audio.enabled?disableAudio():enableAudio());
+const genesisVideo=document.querySelector('#hx61-genesis');
+genesisVideo?.play().catch(()=>{});
+const unlockHexadAudio=()=>{ if(!audio.enabled) enableAudio(); };
+window.addEventListener('pointerdown',unlockHexadAudio,{once:true,passive:true});
+window.addEventListener('keydown',unlockHexadAudio,{once:true});document.querySelector('#hx61-narration').addEventListener('click',()=>setNarration(!narrationOn));document.querySelector('#hx61-enter').addEventListener('click',()=>{enableAudio();say(narr.entry,'entry');document.querySelector('[data-chapter="orbit"]').scrollIntoView({behavior:reduced?'auto':'smooth'});});document.querySelector('#hx61-replay').addEventListener('click',()=>{const v=document.querySelector('#hx61-genesis');v.currentTime=0;v.play().catch(()=>{});say(narr.genesis,'genesis');});document.querySelector('#hx61-world-test').addEventListener('click',()=>triggerAttack(worlds[activeWorld].failure));document.querySelector('#hx61-restore-run').addEventListener('click',restore);setupAudio();
+
+const progressBar=document.querySelector('#hx61-progress-bar'),chapterIndex=document.querySelector('#hx61-chapter-index'),chapterName=document.querySelector('#hx61-chapter-name');
+const chapterMap=[['genesis','GÊNESE'],['orbit','ARQUITETURA'],['incident','COLAPSO'],['restore','RESTAURAÇÃO'],['synthesis','SÍNTESE']];let targetScene=0,displayScene=0,lastTime=performance.now();let seen=new Set();
+function updateStory(){const y=scrollY;const max=document.documentElement.scrollHeight-innerHeight;const p=max?y/max:0;progressBar.style.width=(p*100)+'%';let nearest=0,best=1e9;panels.forEach((el,i)=>{const d=Math.abs((el.offsetTop-innerHeight*.45)-y);if(d<best){best=d;nearest=i;}});targetScene=nearest;const meta=chapterMap[nearest]||chapterMap[0];chapterIndex.textContent=String(nearest+1).padStart(2,'0');chapterName.textContent=meta[1];const panel=panels[nearest]; if(!seen.has(meta[0]) && Math.abs(panel.getBoundingClientRect().top)<innerHeight*.55){seen.add(meta[0]);if(meta[0]==='orbit')say(narr.entry,'entry');if(meta[0]==='incident')say(narr.collapse,'collapse');if(meta[0]==='restore')say(narr.restore,'restore');if(meta[0]==='synthesis')say(narr.synthesis,'synthesis');}}
+addEventListener('scroll',updateStory,{passive:true});updateStory();
+function cinematicCamera(){if(!sceneApi)return;displayScene+=(targetScene-displayScene)*.035;const s=displayScene;const orbit=s<=1?Math.max(0,s):1;let wanted={x:0,y:1.4,z:8};if(s<1){wanted={x:Math.sin(s*.7)*.45,y:1.45+Math.sin(s*2)*.12,z:8-s*1.2};}else if(s<2){wanted={x:Math.sin((s-1)*1.4)*2.2,y:1.25,z:6.2-(s-1)*1.8};}else if(s<3){wanted={x:-2.7+(s-2)*5.4,y:1.6,z:5.0};}else if(s<4){wanted={x:2.6-(s-3)*5.2,y:1.8,z:5.2};}else{wanted={x:0,y:1.1,z:8};}
+ sceneApi.camera.position.x+=(wanted.x-sceneApi.camera.position.x)*.045;sceneApi.camera.position.y+=(wanted.y-sceneApi.camera.position.y)*.045;sceneApi.camera.position.z+=(wanted.z-sceneApi.camera.position.z)*.045;sceneApi.camera.lookAt(0,.5,0);
+ const now=performance.now();const dt=Math.min(.04,(now-lastTime)/1000);lastTime=now;if(reduced)return;
+ sceneApi.root.rotation.y+=dt*.045;sceneApi.stars.rotation.y-=dt*.006;if(sceneApi.core)sceneApi.core.rotation.y+=dt*.28; if(sceneApi.drone){sceneApi.drone.position.y=1.7+Math.sin(now*.0012)*.13;sceneApi.drone.rotation.y+=dt*.5;}if(sceneApi.fragment){sceneApi.fragment.rotation.y-=dt*.35;sceneApi.fragment.position.y=.2+Math.sin(now*.0018)*.18;}
+ sceneApi.planets.forEach((m,i)=>{if(!m)return;const focus=i===activeWorld&&s>=.8&&s<2.2;const k=focus?1.12:1; m.scale.lerp(new THREE.Vector3(.72*k,.72*k,.72*k),.08);m.rotation.y+=dt*(focus?.42:.12);m.position.y=m.userData.baseY+Math.sin(now*.0007+i)*.06+(focus?.08:0);});
+}
+function loop(){cinematicCamera();requestAnimationFrame(loop);}loop();
+window.__cyberShieldHexad={version:'61',focusWorld,triggerAttack,restore};

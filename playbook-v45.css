@@ -53,15 +53,3 @@
 @media(prefers-reduced-motion:reduce){.pb45-archive{min-height:auto}.pb45-sticky{position:relative;height:auto;min-height:760px}.pb45-archive-bg{position:absolute;height:100%}.pb45-archive-bg img{transform:none!important}.pb45-core:before,.pb45-core-pulse,.pb45-flight-beacon:before,.pb45-flight-beacon:after,.pb45-capsule{animation:none!important}.pb45-capsule{position:relative;left:auto!important;right:auto!important;top:auto!important;margin:10px 0}.pb45-flight{height:auto;padding:12px 0}.pb45-capsule:hover,.pb45-capsule:focus-visible,.pb45-capsule.is-selected{transform:none}.pb45-audio,.pb45-motion{position:fixed}}
 
 @media(max-width:720px){.pb45-dossier{bottom:76px;max-height:min(42vh,280px);overflow:auto;}}
-
-/* V70 FINAL — mobile containment for protocol nodes/capsules. */
-@media(max-width:720px){
-  .pb45-archive{overflow-x:hidden;}
-  .pb45-stage-wrap{width:100%;max-width:100%;overflow:visible;}
-  .pb45-stage{width:min(560px,calc(100vw - 36px));max-width:100%;overflow:visible;}
-  .pb45-node{width:min(122px,34vw);min-height:68px;padding:9px 10px;box-sizing:border-box;}
-  .pb45-node b{font-size:9px;line-height:1.08;white-space:normal;overflow-wrap:anywhere;}
-  .pb45-node small{font-size:7px;line-height:1.25;}
-  .pb45-flight{width:100%;max-width:100%;box-sizing:border-box;}
-  .pb45-capsule{box-sizing:border-box;max-width:100%;overflow-wrap:anywhere;word-break:normal;}
-}
