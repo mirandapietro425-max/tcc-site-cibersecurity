@@ -1,0 +1,71 @@
+/* CyberShield V56 — always-on motion and desktop-first interaction hardening */
+:root{--cs-v56-safe-bottom:max(14px,env(safe-area-inset-bottom));--cs-v56-safe-top:max(14px,env(safe-area-inset-top))}
+/* Never let a hover/focus state be the only trigger for visual motion. */
+.cs-v56-auto{animation-play-state:running!important}
+@media (hover:hover) and (pointer:fine){
+  .cs-v56-cursor-enhanced{transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+}
+
+/* HOME: the 3D world must be alive before any click. */
+#experience .webgl{display:block;visibility:visible;opacity:var(--cs-v56-webgl-opacity,.72);}
+#experience .chapter{isolation:isolate}
+#experience .chapter .webgl{animation:cs56SceneBreathe 9s ease-in-out infinite}
+#experience .chapter-intro .webgl{--cs-v56-webgl-opacity:.82}
+@keyframes cs56SceneBreathe{0%,100%{filter:saturate(1.05) contrast(1.02) brightness(.98)}50%{filter:saturate(1.12) contrast(1.04) brightness(1.03)}}
+
+/* RADAR: make the environment visibly alive even before pointer input. */
+.r43-hero-art,.r43-scope-art{animation:cs56RadarAmbient 11s ease-in-out infinite alternate!important}
+.r43-scope-stage::before{animation-duration:6.8s!important}
+@keyframes cs56RadarAmbient{0%{transform:scale(1.065) translate3d(-4px,2px,0);filter:saturate(.58) brightness(.55)}100%{transform:scale(1.105) translate3d(5px,-4px,0);filter:saturate(.72) brightness(.62)}}
+.r43-corr-ring{animation:cs56Ring 18s linear infinite}
+@keyframes cs56Ring{to{transform:rotate(360deg)}}
+
+/* PLAYBOOK: core/orbits run automatically; mobile capsules get a lightweight vertical drift. */
+.pb45-core{animation:cs56Core 6s ease-in-out infinite!important}
+.pb45-core::before{animation:pb45Spin 24s linear infinite!important}
+.pb45-core-pulse{animation:pb45Pulse 2.9s ease-in-out infinite!important}
+.pb45-orbit.o1{animation:cs56Orbit1 22s linear infinite}
+.pb45-orbit.o2{animation:cs56Orbit2 28s linear infinite}
+.pb45-orbit.o3{animation:cs56Orbit1 18s linear infinite reverse}
+@keyframes cs56Core{0%,100%{transform:translate(-50%,-50%) translate3d(0,0,0)}50%{transform:translate(-50%,-50%) translate3d(0,-7px,0)}}
+@keyframes cs56Orbit1{to{transform:translate(-50%,-50%) rotate(383deg)}}
+@keyframes cs56Orbit2{to{transform:translate(-50%,-50%) rotate(-378deg)}}
+@media (max-width:720px){
+  .pb45-capsule{animation:cs56CapsuleMobile 8s ease-in-out infinite!important;animation-play-state:running!important}
+  .pb45-capsule.c2{animation-delay:-1.3s!important}.pb45-capsule.c3{animation-delay:-2.6s!important}.pb45-capsule.c4{animation-delay:-3.9s!important}.pb45-capsule.c5{animation-delay:-5.2s!important}.pb45-capsule.c6{animation-delay:-6.5s!important}
+}
+@keyframes cs56CapsuleMobile{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-5px,0)}}
+
+/* LABORATORY: the chamber itself is a living instrument, independent of audio and input. */
+.lab46-core{animation:cs56LabCore 5.5s ease-in-out infinite!important}
+.lab46-core-glow{animation:lab46breathe 4.4s ease-in-out infinite!important}
+.lab46-scan{animation:lab46scan 5.8s linear infinite!important}
+.lab46-node{animation:cs56LabNode 5.4s ease-in-out infinite}
+.lab46-node:nth-child(2){animation-delay:-1.3s}.lab46-node:nth-child(3){animation-delay:-2.6s}.lab46-node:nth-child(4){animation-delay:-3.9s}
+.lab46-spectrum i{animation:lab46eq 1.4s ease-in-out infinite!important;animation-play-state:running!important}
+@keyframes cs56LabCore{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-5px) scale(1.012)}}
+@keyframes cs56LabNode{0%,100%{filter:brightness(1)}50%{filter:brightness(1.14);box-shadow:0 0 0 1px rgba(113,231,245,.2),0 0 22px rgba(113,231,245,.1)}}
+
+/* PRIVACY: autonomous data motion. */
+.ps-data-bubble{animation:psFloat 7s ease-in-out infinite!important}
+.ps-data-field::after{animation:psOrbit 28s linear infinite!important}
+.ps-data-core{animation:cs56PrivacyCore 8s ease-in-out infinite!important}
+.ps-rights-orbit{animation:cs56OrbitPrivacy 24s linear infinite!important}
+@keyframes cs56PrivacyCore{0%,100%{transform:translate3d(0,0,0) scale(.99)}50%{transform:translate3d(0,-6px,0) scale(1.015)}}
+@keyframes cs56OrbitPrivacy{to{transform:rotate(360deg)}}
+
+/* CHAIN: a real ambient machine, even without a cursor. */
+.attack-page .chain-hero-core{animation:cs56ChainCore 4.2s ease-in-out infinite!important}
+.attack-page .chain-hero-beam{animation:cs56ChainBeam 6.5s ease-in-out infinite!important}
+.attack-page .chain-hero-node{animation:cs56ChainNode 3.6s ease-in-out infinite;}
+.attack-page .chain-hero-node:nth-child(5){animation-delay:-.6s}.attack-page .chain-hero-node:nth-child(6){animation-delay:-1.2s}.attack-page .chain-hero-node:nth-child(7){animation-delay:-1.8s}.attack-page .chain-hero-node:nth-child(8){animation-delay:-2.4s}.attack-page .chain-hero-node:nth-child(9){animation-delay:-3s}.attack-page .chain-hero-node:nth-child(10){animation-delay:-3.6s}.attack-page .chain-hero-node:nth-child(11){animation-delay:-1.8s}
+@keyframes cs56ChainCore{0%,100%{transform:translate(-50%,-50%) scale(.96);opacity:.72}50%{transform:translate(-50%,-50%) scale(1.06);opacity:1}}
+@keyframes cs56ChainBeam{0%,100%{opacity:.35;transform:scaleX(.92) rotate(-2deg)}50%{opacity:.9;transform:scaleX(1.05) rotate(2deg)}}
+@keyframes cs56ChainNode{0%,100%{filter:brightness(.95);box-shadow:0 0 0 0 rgba(113,231,245,0)}50%{filter:brightness(1.2);box-shadow:0 0 0 6px rgba(113,231,245,.05),0 0 20px rgba(113,231,245,.18)}}
+
+/* Keep controls away from the device safe area. */
+.r43-audio,.pb45-audio,.pb45-motion,.chain-sound-hero,.ps-sound,[data-lab46-audio]{margin-bottom:var(--cs-v56-safe-bottom)}
+
+@media (prefers-reduced-motion:reduce){
+  #experience .chapter .webgl,.r43-hero-art,.r43-scope-art,.r43-corr-ring,.pb45-core,.pb45-core::before,.pb45-core-pulse,.pb45-orbit,.pb45-capsule,.lab46-core,.lab46-core-glow,.lab46-scan,.lab46-node,.lab46-spectrum i,.ps-data-bubble,.ps-data-field::after,.ps-data-core,.ps-rights-orbit,.attack-page .chain-hero-core,.attack-page .chain-hero-beam,.attack-page .chain-hero-node{animation:none!important}
+}

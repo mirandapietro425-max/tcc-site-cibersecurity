@@ -1,0 +1,109 @@
+/* CyberShield V55 — Mobile-first responsive + desktop motion hardening */
+:root{--cs-vh:100svh;--cs-pad:clamp(16px,3vw,48px);--cs-gap:clamp(16px,2.5vw,40px)}
+html{overflow-x:clip;scroll-behavior:smooth}
+body{overflow-x:clip;min-width:0}
+img,svg,canvas,video,model-viewer{max-width:100%;box-sizing:border-box}
+button,a{touch-action:manipulation}
+.page-header,.topbar,.attack-header{width:min(100%,1600px);margin-inline:auto;box-sizing:border-box}
+.primary-nav,.immersive-nav{min-width:0;max-width:100%;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;white-space:nowrap}
+.primary-nav::-webkit-scrollbar,.immersive-nav::-webkit-scrollbar{display:none}
+
+/* Persistent motion: never depend solely on hover or coarse/fine pointer. */
+.cs-v55-float{animation:csV55Float 7s ease-in-out infinite;will-change:transform}
+.cs-v55-drift{animation:csV55Drift 12s ease-in-out infinite alternate;will-change:transform}
+.cs-v55-pulse{animation:csV55Pulse 3.6s ease-in-out infinite;will-change:transform,opacity}
+@keyframes csV55Float{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-10px,0)}}
+@keyframes csV55Drift{0%{transform:translate3d(-8px,0,0) rotate(-.4deg)}100%{transform:translate3d(8px,-6px,0) rotate(.4deg)}}
+@keyframes csV55Pulse{0%,100%{opacity:.6;transform:scale(.98)}50%{opacity:1;transform:scale(1.025)}}
+
+/* HOME */
+#experience{width:100%;overflow:clip}
+#experience .chapter{min-height:max(78svh,620px)}
+#experience .webgl{position:relative;inset:auto;width:100%;height:100%;min-height:60svh}
+#experience .model-status{max-width:min(46vw,560px)}
+.gateway-sequence img{display:block;width:100%;height:100%;object-fit:cover}
+
+/* RADAR */
+.r43-hero,.r43-observatory,.r43-correlation,.r43-finish{width:100%;overflow:clip}
+.r43-hero-grid,.r43-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.7fr) minmax(0,1fr)}
+.r43-scope-stage{min-height:clamp(360px,58vh,720px);position:relative;overflow:hidden}
+.r43-canvas{display:block;width:100%!important;height:100%!important;min-height:100%;object-fit:contain}
+.r43-scope-art{position:absolute;inset:7%;pointer-events:none;opacity:.55}
+.r43-signal-dock{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.r43-corr-graphic{width:100%;overflow:hidden}.r43-corr-graphic svg{display:block;width:100%;height:auto}
+
+/* PLAYBOOK */
+.pb45-archive,.pb45-sticky,.pb45-grid{min-width:0}
+.pb45-stage-wrap{min-width:0;overflow:clip}.pb45-stage{min-height:min(76svh,820px);position:relative}
+.pb45-stage canvas,.pb45-stage svg{max-width:100%;height:auto}
+.protect-v32-stage,.protect-v32-visual{min-width:0;overflow:clip}
+
+/* LAB */
+.lab-hero,.lab46-chamber,.lab-spectrum,.lab-simulation,.lab-console{min-width:0;overflow:clip}
+.lab-hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.lab-hero-scene,.lab-scene-image-wrap{min-height:clamp(360px,60vh,760px)}
+.lab-scene-image{display:block;width:100%;height:100%;object-fit:cover}
+.lab46-grid{min-width:0}
+
+/* PRIVACY */
+.ps-hero,.ps-scene,.ps-rights,.ps-footer{min-width:0;overflow:clip}
+.ps-scene-inner{min-width:0}
+.ps-art img,.ps-env{max-width:100%}
+.ps-rights-stage{min-width:0;overflow:clip}
+
+/* CHAIN */
+.attack-hero,.attack-hero-stage,.chain-theatre,.atlas-section,.signal-gallery,.final-attack-cta{min-width:0;overflow:clip}
+.attack-hero{min-height:clamp(720px,100svh,980px)}
+.attack-hero-stage{min-height:clamp(420px,62vh,760px);position:relative}
+.hero-art-frame,.chain-hero-art{max-width:100%;box-sizing:border-box}
+.chain-hero-art{display:block;width:min(100%,900px);height:auto;object-fit:contain}
+
+/* Mobile: genuine composition changes, not shrunken desktop */
+@media (max-width:900px){
+  .page-header,.topbar,.attack-header{padding-inline:16px}
+  .primary-nav,.immersive-nav{gap:10px}
+  #experience .chapter{min-height:max(74svh,560px)}
+  .r43-hero-grid,.r43-grid,.lab-hero{grid-template-columns:1fr}
+  .r43-scope-panel{order:-1}
+  .r43-signal-dock{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .r43-scope-stage{min-height:min(72svh,560px)}
+  .pb45-grid{grid-template-columns:1fr}
+  .pb45-stage{min-height:62svh}
+  .lab-hero-scene,.lab-scene-image-wrap{min-height:44svh}
+  .attack-hero{min-height:auto;padding-bottom:48px}
+  .attack-hero-stage{min-height:58svh}
+}
+@media (max-width:600px){
+  :root{--cs-pad:14px}
+  .page-header,.topbar,.attack-header{padding-inline:14px}
+  .r43-signal-dock{grid-template-columns:1fr 1fr;gap:8px}
+  .r43-scope-stage{min-height:48svh}
+  .r43-toolbar{flex-wrap:wrap;gap:10px}
+  .r43-toolbar-actions{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .r43-decision-list{grid-template-columns:1fr}
+  .pb45-stage{min-height:58svh}
+  .lab-hero-scene,.lab-scene-image-wrap{min-height:38svh}
+  .attack-hero-stage{min-height:50svh}
+  .attack-hero-copy,.attack-hero-stage{width:100%}
+  .signal-cards{grid-template-columns:1fr!important}
+  .final-actions{display:grid;grid-template-columns:1fr;gap:10px}
+  .ps-scene-inner{padding-inline:14px}
+  .ps-rights-stage{min-height:auto}
+  .ps-rights-content{width:100%;max-width:none}
+}
+@media (max-width:380px){
+  .r43-signal-dock{grid-template-columns:1fr}
+  .primary-nav a,.immersive-nav a{font-size:.78rem}
+  .attack-hero h1{font-size:clamp(2.2rem,13vw,3.4rem)}
+}
+
+/* Desktop: explicitly keep motion active. */
+@media (min-width:901px){
+  .r43-scope-art,.hero-haze-a,.hero-haze-b,.hero-orbit,.final-glow,.lab-ambient,.ps-hero-bg,.ps-rights-orbit{animation:csV55Drift 14s ease-in-out infinite alternate}
+  .r43-corr-pulse,.r43-system-pill i,.live-dot,.attack-progress,.lab-progress{animation:csV55Pulse 2.8s ease-in-out infinite}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .cs-v55-float,.cs-v55-drift,.cs-v55-pulse,.r43-scope-art,.hero-haze-a,.hero-haze-b,.hero-orbit,.final-glow,.lab-ambient,.ps-hero-bg,.ps-rights-orbit,.r43-corr-pulse,.r43-system-pill i,.live-dot,.attack-progress,.lab-progress{animation:none!important}
+}

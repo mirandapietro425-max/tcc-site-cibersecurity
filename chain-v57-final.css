@@ -1,0 +1,17 @@
+/* CyberShield V57 — authoritative chain gateway + responsive probe */
+.attack-page .chain-hero-art{overflow:visible}
+.attack-page .chain-hero-probe{position:absolute;left:0;top:0;width:20px;height:20px;border-radius:50%;z-index:12;pointer-events:none;background:radial-gradient(circle at 42% 38%,#f7ffff 0 12%,rgba(113,231,245,.95) 25%,rgba(113,231,245,.35) 48%,transparent 70%);box-shadow:0 0 10px rgba(113,231,245,.85),0 0 34px rgba(113,231,245,.34);transform:translate3d(0,0,0);will-change:transform}
+.attack-page .chain-hero-probe::before{content:"";position:absolute;inset:-9px;border:1px solid rgba(141,255,192,.28);border-radius:50%;animation:chainProbePing 1.8s ease-out infinite}
+.attack-page .chain-hero-probe::after{content:"";position:absolute;left:50%;top:50%;width:70px;height:1px;transform:translate(-6px,-.5px);transform-origin:left center;background:linear-gradient(90deg,rgba(113,231,245,.5),transparent);filter:blur(.2px)}
+.attack-page .chain-hero-node{transition:filter .35s ease,box-shadow .35s ease,border-color .35s ease,transform .35s ease}
+.attack-page .chain-hero-node.is-live{filter:brightness(1.24);border-color:rgba(141,255,192,.72);box-shadow:0 0 0 5px rgba(141,255,192,.05),0 0 28px rgba(113,231,245,.24);transform:scale(1.06)}
+@keyframes chainProbePing{0%{transform:scale(.55);opacity:.85}75%{transform:scale(1.8);opacity:0}100%{opacity:0}}
+@keyframes cs54Ping{0%{transform:scale(.65);opacity:.75}70%{transform:scale(1.7);opacity:0}100%{opacity:0}}
+@media (max-width:760px){
+  .attack-page .chain-hero-probe{width:15px;height:15px;box-shadow:0 0 8px rgba(113,231,245,.8),0 0 22px rgba(113,231,245,.28)}
+  .attack-page .chain-hero-probe::after{width:40px}
+}
+@media (prefers-reduced-motion:reduce){
+  .attack-page .chain-hero-probe::before{animation:none}
+  .attack-page .chain-hero-node{transition:none}
+}

@@ -71,6 +71,8 @@
     });
     if(move) scene.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
   }
+  window.__cyberShieldChainSetStage = (index, move=false) => setActive(index, move);
+  window.__cyberShieldChainGetStage = () => active;
   $$('.panel-switch button').forEach(btn=>btn.addEventListener('click',()=>{
     mode=btn.dataset.mode; const s=stages[active];
     $$('.panel-switch button').forEach(b=>{const on=b===btn;b.classList.toggle('is-active',on);b.setAttribute('aria-selected',String(on));});
