@@ -176,6 +176,14 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
     final:null
   };
 
+  // Abertura: somente os dois robôs principais, separados e em órbita suave.
+  // A composição antiga carregava quatro personagens agrupados; isso escondia
+  // a palavra "SEGURANÇA" e também quebrava no viewport estreito.
+  const introSatellites = [
+    { file:'cybershield_robot_woman.glb', target:1.45, pos:[-2.35,-.12,.35], phase:0, speed:.34, rotY:.16 },
+    { file:'cybershield_robot_normal.glb', target:1.45, pos:[ 2.35,-.12,.35], phase:Math.PI, speed:.34, rotY:-.16 }
+  ];
+
   const configs = {
     intro:   { target:2.45, pos:[-1.85,-.05,.15], rot:[0,.10,0], character:true },
     user:    { target:2.25, pos:[2.20,-.20,.25], rot:[0,-.12,0], character:true },
@@ -400,6 +408,56 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
     );
   }
 
+  function loadIntroSatellites(chapter, world) {
+    let loaded = 0;
+    introSatellites.forEach((cfg, index) => {
+      loader.load(
+        MODEL_BASE + cfg.file,
+        gltf => {
+          const model = gltf.scene;
+          fitModel(model, cfg.target);
+          model.position.set(...cfg.pos);
+          model.rotation.set(-Math.PI / 2, cfg.rotY, 0);
+          model.userData.character = true;
+          model.userData.topic = chapter.dataset.topic || 'cid';
+          model.userData.introPhase = cfg.phase;
+          model.userData.introSpin = cfg.speed;
+          model.userData.introBase = [...cfg.pos];
+          model.userData.baseY = cfg.pos[1];
+          model.userData.satelliteIndex = index;
+
+          model.traverse(obj => {
+            obj.userData.topic = model.userData.topic;
+            if (obj.isMesh) {
+              obj.castShadow = false;
+              obj.receiveShadow = false;
+              if (obj.material) {
+                obj.material.transparent = obj.material.transparent ?? false;
+                obj.material.envMapIntensity = .82;
+              }
+            }
+          });
+
+          world.group.add(model);
+          world.models.push(model);
+          loaded++;
+
+          if (gltf.animations?.length) {
+            world.mixer ||= new THREE.AnimationMixer(model);
+            gltf.animations.forEach(clip => world.mixer.clipAction(clip).play());
+          }
+
+          if (loaded === introSatellites.length) {
+            world.ready = true;
+            markModelReady(chapter);
+          }
+        },
+        null,
+        () => {}
+      );
+    });
+  }
+
   chapters.forEach(chapter => {
     const canvas = chapter.querySelector('canvas');
     const world = worlds.get(canvas?.id);
@@ -408,17 +466,9 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
     const file = modelByKind[world.kind] || null;
     chapter.dataset.model = file || '';
     if (world.kind === 'intro') {
-      // A abertura deve ser limpa: sem robôs/personagens.
-      // A primeira cena é conduzida pela tipografia + partículas + som.
-      chapter.dataset.model = '';
-      chapter.classList.add('intro-clean');
-      // Segurança: a abertura nunca carrega nem mostra personagens.
-      world.group.clear();
-      world.models.length = 0;
-      const state = chapter.querySelector('.model-state');
-      const title = chapter.querySelector('.model-title');
-      if (state) state.textContent = 'AMBIENTE';
-      if (title) title.textContent = 'CAMADA DE ABERTURA';
+      chapter.dataset.model = introSatellites.map(item => item.file).join(',');
+      chapter.classList.add('intro-orbit');
+      loadIntroSatellites(chapter, world);
     } else if (file) loadSingleModel(chapter,world,file);
     else {
       chapter.classList.add('no-character');
@@ -433,7 +483,7 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
     const t=performance.now()*.001;
 
     worlds.forEach(world => {
-      const { renderer, canvas, camera, group, rings, kind, model } = world;
+      const { renderer, canvas, camera, group, rings, kind, model, models } = world;
 
       const width=canvas.clientWidth;
       const height=canvas.clientHeight;
@@ -445,8 +495,23 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
 
       const local = world.mouse;
       const cfg=configs[kind] || configs.intro;
-      if (cfg.character && model) {
-        // V54: os personagens ficam vivos mesmo em desktop: rotação + respiração vertical.
+      if (kind === 'intro' && models.length) {
+        // A abertura mantém os robôs afastados do título e os faz orbitar
+        // individualmente, em vez de empilhar os quatro personagens antigos.
+        models.forEach((satellite, index) => {
+          const base = satellite.userData.introBase || satellite.position;
+          const phase = satellite.userData.introPhase || index * Math.PI;
+          const speed = satellite.userData.introSpin || .34;
+          const orbit = t * speed + phase;
+          satellite.position.x = base[0] + Math.cos(orbit) * .28;
+          satellite.position.y = base[1] + Math.sin(orbit * 1.12) * .07;
+          satellite.position.z = base[2] + Math.sin(orbit) * .18;
+          satellite.rotation.x = -Math.PI / 2;
+          satellite.rotation.y = (index ? -.16 : .16) + Math.sin(orbit) * .06;
+          satellite.rotation.z = Math.sin(orbit * .8) * .018;
+        });
+      } else if (cfg.character && model) {
+        // Os personagens de cada capítulo ficam vivos em desktop e mobile.
         group.rotation.set(0,0,0);
         model.rotation.x = -Math.PI / 2;
         const satellite = model.userData.satelliteIndex ?? -1;
@@ -621,89 +686,8 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
 
   window.__cyberShieldExperienceLoaded=true;
 })();
-\n\n/* V68 — abertura: SEGURANÇA é o primeiro acontecimento visual; a cena só entra depois. */
-(() => {
-  'use strict';
-  const intro = document.querySelector('.chapter-intro');
-  if (!intro) return;
-  const title = intro.querySelector('.hero-3d');
-  const sub = intro.querySelector('.intro-sub');
-  const cue = intro.querySelector('.scroll-cue');
-  const eyebrow = intro.querySelector('.eyebrow');
-  const sfxEl = document.getElementById('sfx-click');
-  if (!title) return;
 
-  const text = title.textContent.trim();
-  title.setAttribute('aria-label', text);
-  title.textContent = '';
-  [...text].forEach((ch, i) => {
-    const span = document.createElement('span');
-    span.className = 'hero-letter';
-    span.textContent = ch === ' ' ? '\u00a0' : ch;
-    span.style.setProperty('--delay', `${i * 88}ms`);
-    title.appendChild(span);
-  });
-
-  [eyebrow, sub, cue].forEach(el => { if (el) el.classList.add('intro-seq-hidden'); });
-  intro.classList.add('intro-seq-running');
-
-  let started = false;
-  let finished = false;
-
-  const playLetter = (index) => {
-    if (!sfxEl) return;
-    try {
-      sfxEl.currentTime = 0;
-      sfxEl.volume = index % 2 ? 0.055 : 0.075;
-      const p = sfxEl.play();
-      if (p && p.catch) p.catch(() => {});
-    } catch (_) {}
-  };
-
-  const completeSequence = () => {
-    if (finished) return;
-    finished = true;
-    intro.classList.add('intro-seq-complete');
-    eyebrow?.classList.add('is-visible');
-    setTimeout(() => sub?.classList.add('is-visible'), 180);
-    setTimeout(() => cue?.classList.add('is-visible'), 430);
-  };
-
-  const playSequence = () => {
-    if (started) return;
-    started = true;
-    [...title.querySelectorAll('.hero-letter')].forEach((el, i) => {
-      setTimeout(() => {
-        el.classList.add('is-visible');
-        playLetter(i);
-      }, i * 88);
-    });
-    setTimeout(completeSequence, text.length * 88 + 520);
-  };
-
-  const startWhenVisible = () => {
-    if (started) return;
-    const r = intro.getBoundingClientRect();
-    if (r.bottom < 0 || r.top > window.innerHeight) return;
-    /* The cinematic word should not wait for a second observer or for scroll. */
-    playSequence();
-  };
-
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(entries => {
-      if (entries.some(e => e.isIntersecting)) startWhenVisible();
-    }, {threshold: .45});
-    io.observe(intro);
-  } else {
-    startWhenVisible();
-  }
-
-  /* Do not use synthetic clicks and do not tie this intro to audio unlock. */
-  window.addEventListener('load', startWhenVisible, {once:true, passive:true});
-})();
-
-/* V68 — as letras secundárias entram apenas quando o capítulo está realmente ativo. */
-/* V66 — headlines reveal only while their chapter is visible. */
+/* V70 — títulos secundários são preparados, mas só aparecem durante a descida. */
 (() => {
   'use strict';
   const mark = root => {
@@ -717,17 +701,10 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
         const s = document.createElement('span');
         s.className = 'scene-letter';
         s.textContent = ch === ' ' ? '\u00a0' : ch;
-        s.style.setProperty('--delay', `${Math.min(i, 24) * 22}ms`);
+        s.style.setProperty('--delay', `${Math.min(i, 28) * 24}ms`);
         h.appendChild(s);
       });
     });
   };
-  const revealActive = () => {
-    document.querySelectorAll('.chapter.is-active .chapter-content h2').forEach(h => {
-      h.querySelectorAll('.scene-letter').forEach(s => s.classList.add('is-visible'));
-    });
-  };
   document.querySelectorAll('.chapter').forEach(mark);
-  const observer = new MutationObserver(revealActive);
-  document.querySelectorAll('.chapter').forEach(ch => observer.observe(ch,{attributes:true,attributeFilter:['class']}));
 })();
