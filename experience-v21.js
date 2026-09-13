@@ -67,6 +67,7 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
     if (!chapter) return;
     chapter.classList.add('is-active');
     $$('.chapter-content > *, .story-copy > *, .model-status, .interactive-card, .threat-chip, .attack-node, .defense-stack > div, .data-flow > div, .code-window, .final-actions > *', chapter)
+      .filter(el => !el.matches('h1,h2,h3'))
       .forEach((el, i) => {
         el.animate(
           [
@@ -176,14 +177,6 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
     final:null
   };
 
-  // Abertura: somente os dois robôs principais, separados e em órbita suave.
-  // A composição antiga carregava quatro personagens agrupados; isso escondia
-  // a palavra "SEGURANÇA" e também quebrava no viewport estreito.
-  const introSatellites = [
-    { file:'cybershield_robot_woman.glb', target:1.45, pos:[-2.35,-.12,.35], phase:0, speed:.34, rotY:.16 },
-    { file:'cybershield_robot_normal.glb', target:1.45, pos:[ 2.35,-.12,.35], phase:Math.PI, speed:.34, rotY:-.16 }
-  ];
-
   const configs = {
     intro:   { target:2.45, pos:[-1.85,-.05,.15], rot:[0,.10,0], character:true },
     user:    { target:2.25, pos:[2.20,-.20,.25], rot:[0,-.12,0], character:true },
@@ -286,6 +279,7 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
       rings,
       model:null,
       models:[],
+      mixers:[],
       mixer:null,
       clock:new THREE.Clock(),
       ready:false,
@@ -318,9 +312,24 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
     return world;
   }
 
-  Object.entries(worldKinds).forEach(([id,kind]) => makeWorld($('#'+id),kind));
-
   const loader = new GLTFLoader();
+
+  // Performance: create the intro immediately, and create other WebGL worlds only
+  // when the chapter is near the viewport. This preserves the existing scene
+  // structure while avoiding eight GPU contexts at page load.
+  function ensureWorld(chapter) {
+    if (!chapter) return null;
+    const canvas = chapter.querySelector('canvas');
+    if (!canvas) return null;
+    const existing = worlds.get(canvas.id);
+    if (existing) return existing;
+    const kind = worldKinds[canvas.id];
+    if (!kind) return null;
+    const world = makeWorld(canvas, kind);
+    initializeChapterWorld(chapter, world);
+    return world;
+  }
+
   const mixers = [];
 
   function fitModel(obj, target) {
@@ -408,23 +417,35 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
     );
   }
 
-  function loadIntroSatellites(chapter, world) {
+
+  // V70 — abertura: quatro personagens separados, em órbita lenta.
+  // Não há um "cluster" central; cada personagem tem uma posição própria.
+  const introOrbitModels = [
+    { file:'cybershield_robot_woman.glb',  target:1.55, pos:[-2.55, -0.10, 0.30], phase:0.0, speed:0.22, tilt:-0.10 },
+    { file:'cybershield_robot_normal.glb', target:1.55, pos:[ 2.55, -0.10, 0.30], phase:Math.PI, speed:0.22, tilt: 0.10 }
+  ];
+
+  function loadIntroOrbit(chapter, world) {
     let loaded = 0;
-    introSatellites.forEach((cfg, index) => {
+    const total = introOrbitModels.length;
+
+    introOrbitModels.forEach((cfg, index) => {
       loader.load(
         MODEL_BASE + cfg.file,
         gltf => {
           const model = gltf.scene;
           fitModel(model, cfg.target);
           model.position.set(...cfg.pos);
-          model.rotation.set(-Math.PI / 2, cfg.rotY, 0);
+          model.rotation.set(-Math.PI / 2, cfg.tilt, 0);
+
           model.userData.character = true;
+          model.userData.introOrbit = true;
+          model.userData.orbitIndex = index;
+          model.userData.orbitPhase = cfg.phase;
+          model.userData.orbitSpeed = cfg.speed;
+          model.userData.basePosition = new THREE.Vector3(...cfg.pos);
+          model.userData.baseRotationY = cfg.tilt;
           model.userData.topic = chapter.dataset.topic || 'cid';
-          model.userData.introPhase = cfg.phase;
-          model.userData.introSpin = cfg.speed;
-          model.userData.introBase = [...cfg.pos];
-          model.userData.baseY = cfg.pos[1];
-          model.userData.satelliteIndex = index;
 
           model.traverse(obj => {
             obj.userData.topic = model.userData.topic;
@@ -433,23 +454,24 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
               obj.receiveShadow = false;
               if (obj.material) {
                 obj.material.transparent = obj.material.transparent ?? false;
-                obj.material.envMapIntensity = .82;
+                obj.material.envMapIntensity = .86;
               }
             }
           });
 
           world.group.add(model);
           world.models.push(model);
-          loaded++;
 
           if (gltf.animations?.length) {
-            world.mixer ||= new THREE.AnimationMixer(model);
-            gltf.animations.forEach(clip => world.mixer.clipAction(clip).play());
+            const mixer = new THREE.AnimationMixer(model);
+            gltf.animations.forEach(clip => mixer.clipAction(clip).play());
+            world.mixers.push(mixer);
           }
 
-          if (loaded === introSatellites.length) {
+          loaded++;
+          if (loaded === total) {
             world.ready = true;
-            markModelReady(chapter);
+            markModelReady(chapter, '3D ONLINE');
           }
         },
         null,
@@ -458,60 +480,91 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
     });
   }
 
-  chapters.forEach(chapter => {
-    const canvas = chapter.querySelector('canvas');
-    const world = worlds.get(canvas?.id);
-    if (!world) return;
-
+  function initializeChapterWorld(chapter, world) {
+    if (!chapter || !world || world._initialized) return;
+    world._initialized = true;
     const file = modelByKind[world.kind] || null;
     chapter.dataset.model = file || '';
     if (world.kind === 'intro') {
-      chapter.dataset.model = introSatellites.map(item => item.file).join(',');
-      chapter.classList.add('intro-orbit');
-      loadIntroSatellites(chapter, world);
-    } else if (file) loadSingleModel(chapter,world,file);
-    else {
+      chapter.dataset.model = 'intro-orbit';
+      chapter.classList.remove('intro-clean');
+      loadIntroOrbit(chapter, world);
+    } else if (file) {
+      loadSingleModel(chapter, world, file);
+    } else {
       chapter.classList.add('no-character');
       const state = chapter.querySelector('.model-state');
       const title = chapter.querySelector('.model-title');
       if (state) state.textContent = 'AMBIENTE';
       if (title) title.textContent = 'SEM PERSONAGEM';
     }
+  }
+
+  const introChapter = document.querySelector('.chapter-intro');
+  if (introChapter) ensureWorld(introChapter);
+
+  const worldLoadIO = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        ensureWorld(entry.target);
+        worldLoadIO.unobserve(entry.target);
+      }
+    });
+  }, { root:null, rootMargin:'55% 0px 55% 0px', threshold:0.01 }) : null;
+
+  chapters.forEach(chapter => {
+    if (chapter === introChapter) return;
+    if (worldLoadIO) worldLoadIO.observe(chapter);
+    else ensureWorld(chapter);
   });
 
   function render() {
+    if (document.hidden) {
+      rafId = requestAnimationFrame(render);
+      return;
+    }
     const t=performance.now()*.001;
 
     worlds.forEach(world => {
-      const { renderer, canvas, camera, group, rings, kind, model, models } = world;
+      const { renderer, canvas, camera, group, rings, kind, model } = world;
 
       const width=canvas.clientWidth;
       const height=canvas.clientHeight;
       if (!width || !height) return;
 
-      renderer.setSize(width,height,false);
-      camera.aspect=width/height;
-      camera.updateProjectionMatrix();
+      const rect = canvas.getBoundingClientRect();
+      const visible = kind === 'intro' || (rect.bottom > -80 && rect.top < innerHeight + 80);
+      if (!visible) return;
+
+      if (world._width !== width || world._height !== height) {
+        renderer.setSize(width,height,false);
+        camera.aspect=width/height;
+        camera.updateProjectionMatrix();
+        world._width = width;
+        world._height = height;
+      }
 
       const local = world.mouse;
       const cfg=configs[kind] || configs.intro;
-      if (kind === 'intro' && models.length) {
-        // A abertura mantém os robôs afastados do título e os faz orbitar
-        // individualmente, em vez de empilhar os quatro personagens antigos.
-        models.forEach((satellite, index) => {
-          const base = satellite.userData.introBase || satellite.position;
-          const phase = satellite.userData.introPhase || index * Math.PI;
-          const speed = satellite.userData.introSpin || .34;
-          const orbit = t * speed + phase;
-          satellite.position.x = base[0] + Math.cos(orbit) * .28;
-          satellite.position.y = base[1] + Math.sin(orbit * 1.12) * .07;
-          satellite.position.z = base[2] + Math.sin(orbit) * .18;
-          satellite.rotation.x = -Math.PI / 2;
-          satellite.rotation.y = (index ? -.16 : .16) + Math.sin(orbit) * .06;
-          satellite.rotation.z = Math.sin(orbit * .8) * .018;
+      if (kind === 'intro' && world.models.length) {
+        // Dois personagens independentes: cada um orbita em seu próprio ponto.
+        group.rotation.set(0,0,0);
+        world.models.forEach((m, i) => {
+          const base = m.userData.basePosition || m.position;
+          const phase = m.userData.orbitPhase || i;
+          const speed = m.userData.orbitSpeed || .15;
+          const angle = t * speed + phase;
+          const radiusX = 0.22;
+          const radiusY = 0.13;
+          m.position.x = base.x + Math.cos(angle) * radiusX;
+          m.position.y = base.y + Math.sin(angle * 1.08) * radiusY;
+          m.position.z = base.z + Math.sin(angle) * .08;
+          m.rotation.x = -Math.PI / 2;
+          m.rotation.y = (m.userData.baseRotationY || 0) + Math.sin(angle * .72) * .10;
+          m.rotation.z = Math.cos(angle * .9) * .018;
         });
       } else if (cfg.character && model) {
-        // Os personagens de cada capítulo ficam vivos em desktop e mobile.
+        // Personagens das cenas internas: movimento suave, sem deslocamento por scroll.
         group.rotation.set(0,0,0);
         model.rotation.x = -Math.PI / 2;
         const satellite = model.userData.satelliteIndex ?? -1;
@@ -541,7 +594,9 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
         }
       }
 
-      if (world.mixer) world.mixer.update(world.clock.getDelta());
+      const delta = world.clock.getDelta();
+      if (world.mixer) world.mixer.update(delta);
+      if (world.mixers?.length) world.mixers.forEach(m => m.update(delta));
       renderer.render(world.scene,camera);
     });
 
@@ -624,8 +679,10 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
 
       dots?.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('is-active',i===nearest));
 
-      if(started) playSfx(dir>0?'whoosh':'transition',.11);
-      animateScene(chapters[nearest],dir);
+      if(started){
+        playSfx(dir>0?'whoosh':'transition',.11);
+        animateScene(chapters[nearest],dir);
+      }
       lastScene=nearest;
     }
 
@@ -649,8 +706,17 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
     dots?.appendChild(b);
   });
 
-  addEventListener('scroll',()=>requestAnimationFrame(updateScroll),{passive:true});
-  addEventListener('resize',updateScroll);
+  let scrollUpdateQueued = false;
+  const queueScrollUpdate = () => {
+    if (scrollUpdateQueued) return;
+    scrollUpdateQueued = true;
+    requestAnimationFrame(() => {
+      scrollUpdateQueued = false;
+      updateScroll();
+    });
+  };
+  addEventListener('scroll', queueScrollUpdate, {passive:true});
+  addEventListener('resize', queueScrollUpdate, {passive:true});
   updateScroll();
 
   /* ---------- entrance ---------- */
@@ -666,7 +732,7 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
       setTimeout(()=>boot.remove(),1200);
     }
     chapters[0]?.scrollIntoView({behavior:'auto',block:'start'});
-    setTimeout(()=>animateScene(chapters[0],1),120);
+    window.dispatchEvent(new Event('scroll'));
   },{once:true});
 
   /* ---------- keep content visible even if module had delays ---------- */
@@ -686,25 +752,108 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
 
   window.__cyberShieldExperienceLoaded=true;
 })();
-
-/* V70 — títulos secundários são preparados, mas só aparecem durante a descida. */
+\n\n/* V70 FINAL — abertura com dois robôs + títulos preservando <br>/<em>. */
 (() => {
   'use strict';
-  const mark = root => {
-    if (!root || root.dataset.lettersMarked === '1') return;
-    root.dataset.lettersMarked = '1';
-    root.querySelectorAll('.chapter-content h2:not(.hero-3d)').forEach(h => {
-      const t = h.textContent;
-      h.dataset.originalText = t;
-      h.textContent = '';
-      [...t].forEach((ch, i) => {
-        const s = document.createElement('span');
-        s.className = 'scene-letter';
-        s.textContent = ch === ' ' ? '\u00a0' : ch;
-        s.style.setProperty('--delay', `${Math.min(i, 28) * 24}ms`);
-        h.appendChild(s);
+
+  const intro = document.querySelector('.chapter-intro');
+  const title = intro?.querySelector('.hero-3d');
+  if (intro && title) {
+    intro.classList.add('intro-orbit-ready', 'intro-static');
+    title.classList.add('intro-static-title');
+    intro.querySelectorAll('.eyebrow,.intro-sub,.scroll-cue').forEach(el => {
+      el.classList.remove('intro-seq-hidden','is-visible');
+    });
+  }
+
+  const headings = [...document.querySelectorAll('.chapter-content h2:not(.hero-3d)')];
+  if (!headings.length) return;
+
+  const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const revealed = new WeakSet();
+  const sounds = [];
+  const source = document.getElementById('sfx-click');
+
+  if (source) {
+    for (let i = 0; i < 3; i++) {
+      const a = source.cloneNode(true);
+      a.removeAttribute('id');
+      a.preload = 'auto';
+      a.volume = 0.055;
+      sounds.push(a);
+    }
+  }
+
+  const wrapTextNodes = (heading) => {
+    if (heading.dataset.lettersMarked === '1') return;
+
+    const walker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    let node;
+    while ((node = walker.nextNode())) {
+      if (node.nodeValue) nodes.push(node);
+    }
+
+    let globalIndex = 0;
+    nodes.forEach(textNode => {
+      const frag = document.createDocumentFragment();
+      [...textNode.nodeValue].forEach(ch => {
+        const span = document.createElement('span');
+        span.className = 'scene-letter';
+        span.textContent = ch === ' ' ? '\u00A0' : ch;
+        span.style.setProperty('--delay', `${Math.min(globalIndex, 32) * 24}ms`);
+        frag.appendChild(span);
+        globalIndex++;
       });
+      textNode.parentNode.replaceChild(frag, textNode);
+    });
+
+    heading.dataset.lettersMarked = '1';
+  };
+
+  const reveal = (heading) => {
+    if (!heading || revealed.has(heading)) return;
+    revealed.add(heading);
+
+    const letters = [...heading.querySelectorAll('.scene-letter')];
+    letters.forEach((letter, index) => {
+      const delay = reduced ? 0 : Math.min(index, 32) * 24;
+      window.setTimeout(() => {
+        letter.classList.add('is-visible');
+
+        if (reduced || !document.body.classList.contains('experience-started') || !sounds.length) return;
+
+        const audio = sounds[index % sounds.length];
+        try {
+          audio.currentTime = 0;
+          audio.volume = index % 2 ? 0.045 : 0.06;
+          const play = audio.play();
+          play?.catch?.(() => {});
+        } catch (_) {}
+      }, delay);
     });
   };
-  document.querySelectorAll('.chapter').forEach(mark);
+
+  headings.forEach(wrapTextNodes);
+
+  if (!('IntersectionObserver' in window)) {
+    headings.forEach((h) => reveal(h));
+    return;
+  }
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      if (!document.body.classList.contains('experience-started')) return;
+      reveal(entry.target);
+      io.unobserve(entry.target);
+    });
+  }, {
+    root: null,
+    rootMargin: '0px 0px -18% 0px',
+    threshold: 0.30
+  });
+
+  headings.forEach(h => io.observe(h));
 })();
+

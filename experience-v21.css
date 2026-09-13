@@ -102,3 +102,41 @@
   .pb45-capsule:hover,.pb45-capsule:focus-visible,.pb45-capsule.is-selected{transform:translateY(-2px)!important}
   .pb45-dossier{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;top:auto!important;width:100%!important;max-width:100%!important;max-height:none!important;margin:18px 0 0!important}
 }
+
+/* V70 FINAL — preserve editorial line breaks and keep the opening immediately visible. */
+.chapter-intro .intro-copy{z-index:5;}
+.chapter-intro .hero-3d{
+  opacity:1!important;
+  transform:none!important;
+  filter:none!important;
+  animation:none!important;
+}
+.chapter-intro .webgl{
+  opacity:.76!important;
+  visibility:visible!important;
+  pointer-events:none!important;
+}
+.scene-letter{
+  display:inline-block;
+  opacity:0;
+  transform:translate3d(0,18px,0) scale(.985);
+  filter:blur(3px);
+  will-change:opacity,transform,filter;
+}
+.scene-letter.is-visible{
+  opacity:1;
+  transform:none;
+  filter:none;
+  transition:
+    opacity .48s cubic-bezier(.2,.8,.2,1),
+    transform .58s cubic-bezier(.2,.8,.2,1),
+    filter .58s cubic-bezier(.2,.8,.2,1);
+  transition-delay:var(--delay,0ms);
+}
+@media(max-width:700px){
+  .chapter-intro .webgl{opacity:.52!important;}
+  .chapter-intro .hero-3d{font-size:clamp(3.1rem,16vw,6.4rem);}
+}
+@media(prefers-reduced-motion:reduce){
+  .scene-letter{opacity:1!important;transform:none!important;filter:none!important;transition:none!important;}
+}
