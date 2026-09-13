@@ -1,0 +1,4 @@
+/* Chain V60 final interaction/image fix */
+.attack-page .chain-hero-node,.attack-page .atlas-hot{pointer-events:auto!important;cursor:pointer!important;touch-action:manipulation;}
+.attack-page .object-exploit-image img,.attack-page .object-objectives-image img{display:block;width:100%;height:auto;object-fit:contain;}
+@media (max-width:760px){.attack-page .object-exploit-image,.attack-page .object-objectives-image{width:94%!important;left:3%!important;}}

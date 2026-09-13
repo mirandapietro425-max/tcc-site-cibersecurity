@@ -91,7 +91,22 @@
   function makeAtlas(){
     const holder=$('#atlas-hotspots'); if(!holder) return;
     const points=[[10,70],[25,36],[41,23],[57,31],[70,48],[81,63],[88,29]];
-    points.forEach(([x,y],i)=>{const b=document.createElement('button');b.type='button';b.className='atlas-hot'+(i===0?' is-active':'');b.textContent=String(i+1).padStart(2,'0');b.style.left=`${x}%`;b.style.top=`${y}%`;b.setAttribute('aria-label',`${stages[i].index} ${stages[i].name}`);b.addEventListener('click',()=>{setActive(i,true);});holder.appendChild(b);});
+    points.forEach(([x,y],i)=>{
+      const b=document.createElement('button');
+      b.type='button';
+      b.className='atlas-hot'+(i===0?' is-active':'');
+      b.textContent=String(i+1).padStart(2,'0');
+      b.style.left=`${x}%`;
+      b.style.top=`${y}%`;
+      b.dataset.stageIndex=String(i);
+      b.setAttribute('aria-label',`${stages[i].index} ${stages[i].name}`);
+      b.title=`Ir para ${stages[i].index} · ${stages[i].name}`;
+      b.addEventListener('click',()=>{
+        setActive(i,true);
+        document.getElementById('theater')?.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
+      });
+      holder.appendChild(b);
+    });
   }
   const theater=document.getElementById('theater');
   if(theater&&'IntersectionObserver' in window){new IntersectionObserver(entries=>entries.forEach(e=>scene.classList.toggle('is-in-view',e.isIntersecting)),{threshold:.12}).observe(theater);}

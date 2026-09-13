@@ -68,6 +68,7 @@
     const choose = () => {
       syncStage(i, {move:true});
       resetAuto();
+      document.getElementById('theater')?.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
     };
     node.addEventListener('click', choose);
     node.addEventListener('keydown', e => {
