@@ -4,7 +4,7 @@
     {
       "id": 1,
       "file": "001.webp",
-      "start": 0,
+      "start": 0.0,
       "end": 4.532,
       "chapter": 0,
       "name": "001_001_00-04_vazio-particulas.jpg"
@@ -197,16 +197,16 @@
       "id": 25,
       "file": "025.webp",
       "start": 72.464,
-      "end": 80.589,
+      "end": 80.509,
       "chapter": 1,
       "name": "025_015_34-42_mesma-informacao.jpg"
     },
     {
       "id": 26,
       "file": "026.webp",
-      "start": 80.589,
+      "start": 80.509,
       "end": 80.589,
-      "chapter": 1,
+      "chapter": 2,
       "name": "026_M11_entre-015-016_orbitas.jpg"
     },
     {
@@ -285,22 +285,22 @@
       "id": 36,
       "file": "036.webp",
       "start": 114.364,
-      "end": 114.364,
-      "chapter": 2,
+      "end": 114.444,
+      "chapter": 3,
       "name": "036_M16_entre-020-021_borda-escura.jpg"
     },
     {
       "id": 37,
       "file": "037.webp",
-      "start": 114.364,
-      "end": 114.364,
-      "chapter": 2,
+      "start": 114.444,
+      "end": 114.524,
+      "chapter": 3,
       "name": "037_B01_020-021_equilibrio-oscilacao.jpg"
     },
     {
       "id": 38,
       "file": "038.webp",
-      "start": 114.364,
+      "start": 114.524,
       "end": 117.887,
       "chapter": 3,
       "name": "038_021_00-03_oscilacao.jpg"
@@ -365,24 +365,24 @@
       "id": 46,
       "file": "046.webp",
       "start": 138.52,
-      "end": 163.763,
+      "end": 163.683,
       "chapter": 3,
       "name": "046_025_24-49_limite-invasao.jpg"
     },
     {
       "id": 47,
       "file": "047.webp",
-      "start": 163.763,
-      "end": 163.843,
-      "chapter": 3,
+      "start": 163.683,
+      "end": 163.763,
+      "chapter": 4,
       "name": "047_M21_entre-025-026_assinatura-invalida.jpg"
     },
     {
       "id": 48,
       "file": "048.webp",
-      "start": 163.843,
+      "start": 163.763,
       "end": 163.843,
-      "chapter": 3,
+      "chapter": 4,
       "name": "048_B02_025-026_invasao-colapso.jpg"
     },
     {
@@ -453,24 +453,24 @@
       "id": 57,
       "file": "057.webp",
       "start": 205.271,
-      "end": 223.61,
+      "end": 223.53,
       "chapter": 4,
       "name": "057_030_41-59_silencio.jpg"
     },
     {
       "id": 58,
       "file": "058.webp",
-      "start": 223.61,
-      "end": 223.69,
-      "chapter": 4,
+      "start": 223.53,
+      "end": 223.61,
+      "chapter": 5,
       "name": "058_M26_entre-030-031_primeiro-scan.jpg"
     },
     {
       "id": 59,
       "file": "059.webp",
-      "start": 223.69,
+      "start": 223.61,
       "end": 223.69,
-      "chapter": 4,
+      "chapter": 5,
       "name": "059_B03_030-031_silencio-investigacao.jpg"
     },
     {
@@ -541,24 +541,24 @@
       "id": 68,
       "file": "068.webp",
       "start": 256.314,
-      "end": 274.836,
+      "end": 274.756,
       "chapter": 5,
       "name": "068_035_32-50_evidencia.jpg"
     },
     {
       "id": 69,
       "file": "069.webp",
-      "start": 274.836,
-      "end": 274.916,
-      "chapter": 5,
+      "start": 274.756,
+      "end": 274.836,
+      "chapter": 6,
       "name": "069_M31_entre-035-036_alvo-isolado.jpg"
     },
     {
       "id": 70,
       "file": "070.webp",
-      "start": 274.916,
+      "start": 274.836,
       "end": 274.916,
-      "chapter": 5,
+      "chapter": 6,
       "name": "070_B04_035-036_evidencia-isolamento.jpg"
     },
     {
@@ -629,24 +629,24 @@
       "id": 79,
       "file": "079.webp",
       "start": 322.668,
-      "end": 336.119,
+      "end": 336.039,
       "chapter": 6,
       "name": "079_040_43-55_estabilizar.jpg"
     },
     {
       "id": 80,
       "file": "080.webp",
-      "start": 336.119,
-      "end": 336.199,
-      "chapter": 6,
+      "start": 336.039,
+      "end": 336.119,
+      "chapter": 7,
       "name": "080_M36_entre-040-041_luz-recuperada.jpg"
     },
     {
       "id": 81,
       "file": "081.webp",
-      "start": 336.199,
+      "start": 336.119,
       "end": 336.199,
-      "chapter": 6,
+      "chapter": 7,
       "name": "081_B05_040-041_estabilizacao-sintese.jpg"
     },
     {
@@ -717,14 +717,14 @@
       "id": 90,
       "file": "090.webp",
       "start": 365.323,
-      "end": 373.905,
+      "end": 373.825,
       "chapter": 7,
       "name": "090_045_31-40_proteger-compreender.jpg"
     },
     {
       "id": 91,
       "file": "091.webp",
-      "start": 373.905,
+      "start": 373.825,
       "end": 373.905,
       "chapter": 7,
       "name": "091_M41_entre-045-046_recuo.jpg"
@@ -733,14 +733,14 @@
       "id": 92,
       "file": "092.webp",
       "start": 373.905,
-      "end": 374.85,
+      "end": 374.77,
       "chapter": 7,
       "name": "092_046_40-41_transicao-final.jpg"
     },
     {
       "id": 93,
       "file": "093.webp",
-      "start": 374.85,
+      "start": 374.77,
       "end": 374.85,
       "chapter": 7,
       "name": "093_M42_entre-046-047_pulso.jpg"
@@ -749,14 +749,14 @@
       "id": 94,
       "file": "094.webp",
       "start": 374.85,
-      "end": 375.795,
+      "end": 375.715,
       "chapter": 7,
       "name": "094_047_41-42_pulso-final.jpg"
     },
     {
       "id": 95,
       "file": "095.webp",
-      "start": 375.795,
+      "start": 375.715,
       "end": 375.795,
       "chapter": 7,
       "name": "095_M43_entre-047-048_reducao.jpg"
@@ -765,22 +765,22 @@
       "id": 96,
       "file": "096.webp",
       "start": 375.795,
-      "end": 376.739,
+      "end": 375.859,
       "chapter": 7,
       "name": "096_048_42-43_fadeout.jpg"
     },
     {
       "id": 97,
       "file": "097.webp",
-      "start": 376.739,
-      "end": 376.819,
+      "start": 375.859,
+      "end": 376.559,
       "chapter": 7,
       "name": "097_M44_entre-048_final-ponto.jpg"
     },
     {
       "id": 98,
       "file": "098.webp",
-      "start": 376.819,
+      "start": 376.559,
       "end": 376.659,
       "chapter": 7,
       "name": "098_M45_final-silencio.jpg"

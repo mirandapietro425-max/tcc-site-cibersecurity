@@ -21,7 +21,6 @@ import { STORYBOARD_SEQUENCE } from './assets/hexad/storyboard/storyboard-sequen
 import { FRAME_CONTEXT } from './assets/hexad/storyboard/frame-context.js';
 const frameSource=(id)=>{const n=String(id).padStart(3,'0'); return `${BASE}storyboard/frames/${n}.webp`;};
 const frameContext=(id)=>FRAME_CONTEXT.find(x=>x.id===Number(id))||null;
-window.__hexadModuleReady = true;
 const app=document.querySelector('#hx71');
 const story=document.querySelector('#hx71-story');
 const progressFill=document.querySelector('#hx71-progress-fill');
@@ -172,7 +171,7 @@ function setScrollFromTime(t){
   const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
   window.scrollTo(0, clamp(t/DURATION)*max);
 }
-function jump(t){experience.playing=false;setScrollFromTime(t);updateUI(true)}
+function jump(t){experience.playing=false;stopFilmClock();narrationAudio?.pause();audio.main?.pause();setScrollFromTime(t);updateUI(true)}
 function closePanels(){forcePanel.classList.remove('is-open');forcePanel.setAttribute('aria-hidden','true');memoryDrawer.classList.remove('is-open');memoryDrawer.setAttribute('aria-hidden','true');document.querySelector('#hx71-frame-viewer')?.classList.remove('is-open');forceOpen=false}
 function toggleMemory(v){memoryDrawer.classList.toggle('is-open',v);memoryDrawer.setAttribute('aria-hidden',String(!v))}
 
@@ -401,19 +400,35 @@ function syncNarration(force=false){
 }
 
 
+function stopFilmClock(){ /* V90: unified RAF clock; kept for legacy call sites. */ }
+function startFilmClock(){ /* V90: unified RAF clock runs continuously. */ }
+
 function toggleFilm(){
   experience.playing=!experience.playing;
-  if(experience.playing && !experience.sound){ toggleSound(); }
+  if(experience.playing && !experience.sound) toggleSound();
   const b=document.querySelector('#hx71-film');
   b.setAttribute('aria-pressed',String(experience.playing));
   b.innerHTML=experience.playing?'<span>Ⅱ</span> PAUSAR FILME':'<span>▶</span> ASSISTIR FILME';
   document.querySelector('#hx71-play-indicator').hidden=!experience.playing;
   document.body.classList.toggle('hx71-film-mode',experience.playing);
-  if(experience.playing){ lastRAF=performance.now(); syncStoryboard(experience.time,true); }
-  else if(storyboardSync) storyboardSync.textContent='STORYBOARD · PAUSADO';
-  if(experience.sound && experience.playing) syncNarration(true);
+  if(experience.playing){
+    if(experience.time>=DURATION-.25) experience.time=0;
+    syncStoryboard(experience.time,true);
+    syncNarration(true);
+  }else{
+    narrationAudio?.pause();
+    audio.main?.pause();
+    if(storyboardSync) storyboardSync.textContent='STORYBOARD · PAUSADO';
+  }
 }
 document.querySelector('#hx71-film').addEventListener('click',toggleFilm);
+
+// V90: secondary UX controls use the same frame viewer as the cinematic engine.
+window.__hexadUX={
+  inspectFrame(i){ openFrameViewer(i); },
+  currentFrame(){ return (STORYBOARD_SEQUENCE[storyboardIndex]||STORYBOARD_SEQUENCE[0])?.id||1; },
+  compareFrame(i){ openFrameViewer(i); }
+};
 // Film-first presentation: the 98 authored frames are the primary visual layer whenever the film is playing.
 function enforceFilmVisualState(){
   document.body.classList.toggle('hx71-film-mode', !!experience.playing);
@@ -442,9 +457,12 @@ document.querySelector('#hx71-observe').addEventListener('click',()=>{sfx('alert
 document.querySelectorAll('[data-investigate]').forEach((b,i)=>{
   b.addEventListener('click',()=>{document.querySelectorAll('[data-investigate]').forEach(x=>x.classList.remove('is-active'));b.classList.add('is-active');jump(223.63+i*12)})
 });
-document.querySelector('#hx71-restart').addEventListener('click',()=>{experience.playing=false;experience.time=0;setScrollFromTime(0);closePanels()});
+document.querySelector('#hx71-restart').addEventListener('click',()=>{experience.playing=false;stopFilmClock();narrationAudio?.pause();audio.main?.pause();experience.time=0;setScrollFromTime(0);closePanels();updateUI(true)});
 document.querySelector('#hx71-chapter1')?.addEventListener('click',()=>{
   experience.playing=false;
+  stopFilmClock();
+  narrationAudio?.pause();
+  audio.main?.pause();
   experience.time=0;
   experience.progress=0;
   setScrollFromTime(0);
@@ -680,15 +698,33 @@ function scrollHandler(){if(!experience.playing){setTimeFromScroll();updateUI()}
 addEventListener('scroll',scrollHandler,{passive:true});
 
 function frame(now){
-  const dt=Math.min(.05,(now-lastRAF)/1000);lastRAF=now;
+  const dt=Math.min(.05,(now-lastRAF)/1000);
+  lastRAF=now;
   if(experience.playing){
-    experience.time=Math.min(DURATION,experience.time+dt);
-    setScrollFromTime(experience.time);
-    if(experience.time>=DURATION){experience.playing=false;document.querySelector('#hx71-play-indicator').hidden=true}
+    // V90: o áudio master é a fonte de tempo do filme.
+    // RAF apenas renderiza; ele não dita a progressão visual quando o áudio está tocando.
+    const master=narrationAudio;
+    const audioClock=(master && !master.paused && master.readyState>=2 && Number.isFinite(master.currentTime))
+      ? master.currentTime
+      : null;
+    experience.time=audioClock===null
+      ? Math.min(DURATION,experience.time+dt)
+      : clamp(audioClock,0,DURATION);
     experience.progress=experience.time/DURATION;
+    setScrollFromTime(experience.time);
+    if(experience.time>=DURATION-0.06){
+      experience.time=DURATION;
+      experience.progress=1;
+      experience.playing=false;
+      try{master?.pause()}catch{}
+      document.querySelector('#hx71-play-indicator')?.setAttribute('hidden','');
+      document.body.classList.remove('hx71-film-mode');
+      syncEndOfFilm(true);
+    }
     updateUI();
+  } else {
+    visual(experience.time,now);
   }
-  visual(experience.time,now);
   if(sceneApi)sceneApi.renderer.render(sceneApi.scene,sceneApi.camera);
   requestAnimationFrame(frame);
 }
@@ -801,51 +837,16 @@ const _updateUI=updateUI;
 updateUI=function(force=false){ _updateUI(force); syncChapterMap(); };
 
 
+window.addEventListener('pagehide',()=>{ try{narrationAudio?.pause()}catch{}; });
+window.__hexadModuleReady = true;
+requestAnimationFrame(frame);
+
 /* -------------------------------------------------------------------------
-   V79 — REAL FILM ORCHESTRATION
-   The authored 98-frame sequence is the film's primary image layer.
-   3D is contextual depth; audio is the master clock.
+   V90 SYNC CONSOLIDATION
+   The narration master is the single source of truth for the film clock.
+   Older V79 duplicate button orchestration was removed so the image runtime,
+   cinematic controller and audio cannot toggle the same film twice.
 ------------------------------------------------------------------------- */
-audioTracks.forEach((t,i)=>{ t.file = `narration-${String(i+1).padStart(2,'0')}.mp3`; });
-
-function v79StartNarration(force=false){
-  syncNarration(force);
-}
-
-
-let v79FilmGuard=false;
-const v79FilmButton=document.querySelector('#hx71-film');
-if(v79FilmButton){
-  v79FilmButton.addEventListener('click',(ev)=>{
-    ev.preventDefault();
-    ev.stopImmediatePropagation();
-    experience.playing=!experience.playing;
-    document.body.classList.toggle('hx71-film-mode',experience.playing);
-    v79FilmGuard=true;
-    if(experience.playing){
-      if(experience.time>=DURATION-0.25) experience.time=0;
-      experience.sound=true;
-      const soundBtn=document.querySelector('#hx71-sound');
-      const soundSmall=document.querySelector('#hx71-sound-small');
-      if(soundBtn){soundBtn.textContent='SOM ATIVO';soundBtn.setAttribute('aria-pressed','true');}
-      if(soundSmall) soundSmall.textContent='SOM ON';
-      if(!audio.main){
-        audio.main=new Audio(BASE+'audio/ambience/hexad-main.mp3');
-        audio.main.loop=true; audio.main.volume=.12;
-      }
-      audio.main.play().catch(()=>{});
-      v79StartNarration(true);
-      syncStoryboard(experience.time,true);
-      document.querySelector('#hx71-play-indicator')?.removeAttribute('hidden');
-    }else{
-      narrationAudio?.pause();
-      audio.main?.pause();
-      document.querySelector('#hx71-play-indicator')?.setAttribute('hidden','');
-      if(storyboardSync) storyboardSync.textContent='STORYBOARD · PAUSADO';
-    }
-    ev.stopPropagation();
-  },true);
-}
 
 // Image parallax: deliberate and restrained, only on desktop.
 if(!reduced){

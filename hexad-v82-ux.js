@@ -26,11 +26,33 @@ const acts=[
 ['A SÍNTESE','As relações retornam ao equilíbrio com compreensão maior.','A informação permanece viva porque as seis condições funcionam em relação.']];
 const props=[['Confidencialidade','somente quem deve ver alcança a informação'],['Posse / Controle','a informação permanece sob controle legítimo'],['Integridade','o conteúdo continua correto'],['Autenticidade','a origem continua verificável'],['Disponibilidade','a informação é alcançável quando necessária'],['Utilidade','o dado continua cumprindo seu propósito']];
 const getId=()=>Number(range?.value||1); const getCtx=()=>FRAME_CONTEXT.find(x=>x.id===getId())||FRAME_CONTEXT[0];
-function update(){const c=getCtx(),a=acts[c.chapter]||acts[0]; actLabel.textContent=`ATO ${String(c.chapter+1).padStart(2,'0')} · ${a[0]}`; frameLabel.textContent=`${String(c.id).padStart(3,'0')} / 098`; play.textContent=document.body.classList.contains('hx71-film-mode')?'Ⅱ':'▶'; rail.classList.add('is-visible');}
+function update(){const c=getCtx(),a=acts[c.chapter]||acts[0]; actLabel.textContent=`ATO ${String(c.chapter+1).padStart(2,'0')} · ${a[0]}`; frameLabel.textContent=`${String(c.id).padStart(3,'0')} / 098`; play.textContent=document.body.classList.contains('hx71-film-mode')?'Ⅱ':'▶'; if(document.body.classList.contains('hx71-film-mode')) rail.classList.add('is-visible'); else rail.classList.remove('is-visible');}
 function openLens(){const c=getCtx(),a=acts[c.chapter]||acts[0]; lensContext.textContent=`${a[1]} · ${c.title}`; lensGrid.innerHTML=''; props.forEach(([n,desc])=>{const b=document.createElement('button');b.type='button';b.className='hx82-lens-chip';b.innerHTML=`<span>${n}</span><small>${desc}</small>`;b.onclick=()=>{lensGrid.querySelectorAll('button').forEach(x=>x.classList.remove('is-active'));b.classList.add('is-active');lensDetail.textContent=`${n}: ${desc}. ${a[2]}`};lensGrid.appendChild(b)});lensGrid.querySelector('button')?.classList.add('is-active');lensDetail.textContent=a[2];lensPanel.classList.add('is-open');lensPanel.setAttribute('aria-hidden','false');lensClose.focus();}
 function closeLens(){lensPanel.classList.remove('is-open');lensPanel.setAttribute('aria-hidden','true');lens.focus();}
-play.onclick=()=>document.querySelector('#hx71-film')?.click(); inspect.onclick=()=>document.querySelector('#hx71-frame-current')?.click(); compare.onclick=()=>document.querySelector('#hx71-frame-current')?.click(); lens.onclick=openLens; lensClose.onclick=closeLens;
+play?.addEventListener('click',()=>document.querySelector('#hx71-film')?.click());
+inspect?.addEventListener('click',()=>{
+  const id=getId();
+  if(window.__hexadUX?.inspectFrame) window.__hexadUX.inspectFrame(id);
+  else document.querySelector('#hx71-frame-current')?.click();
+});
+compare?.addEventListener('click',()=>{
+  const id=getId();
+  if(window.__hexadUX?.compareFrame) window.__hexadUX.compareFrame(id);
+  else document.querySelector('#hx71-frame-current')?.click();
+});
+lens?.addEventListener('click',openLens);
+lensClose?.addEventListener('click',closeLens);
 let sx=0,sy=0; app.addEventListener('touchstart',e=>{if(!document.body.classList.contains('hx71-film-mode'))return;const t=e.changedTouches[0];sx=t.clientX;sy=t.clientY},{passive:true});
 app.addEventListener('touchend',e=>{if(!document.body.classList.contains('hx71-film-mode'))return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;if(Math.abs(dx)<60||Math.abs(dx)<Math.abs(dy)*1.2)return;const n=Math.max(1,Math.min(98,getId()+(dx<0?1:-1)));range.value=String(n);range.dispatchEvent(new Event('input',{bubbles:true}));},{passive:true});
-const mo=new MutationObserver(update);mo.observe(document.body,{attributes:true,attributeFilter:['class']}); setInterval(update,300); update();
+let raf=0;
+function scheduleUpdate(){
+  if(raf)return;
+  raf=requestAnimationFrame(()=>{raf=0;update()});
+}
+const mo=new MutationObserver(scheduleUpdate);
+mo.observe(document.body,{attributes:true,attributeFilter:['class']});
+window.addEventListener('scroll',scheduleUpdate,{passive:true});
+window.addEventListener('resize',scheduleUpdate,{passive:true});
+window.addEventListener('load',scheduleUpdate,{once:true});
+update();
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lensPanel.classList.contains('is-open'))closeLens(); if((e.key==='l'||e.key==='L')&&!['INPUT','TEXTAREA'].includes(document.activeElement?.tagName)){e.preventDefault();openLens();}});

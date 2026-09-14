@@ -1,0 +1,14 @@
+/* HEXAD V90.1 — structural UX safety layer. No visual redesign. */
+.hx82-film-rail{box-sizing:border-box;z-index:120;max-width:min(92vw,760px);bottom:92px}
+.hx82-film-rail button{box-sizing:border-box;min-height:44px}
+.hx82-lens-panel,.hx71-frame-viewer,.hx71-memory-drawer,.hx71-force-panel,.hx72-deck,.hx72-sim{z-index:300}
+.hx82-lens-panel[aria-hidden="true"],.hx71-frame-viewer[aria-hidden="true"],.hx71-memory-drawer[aria-hidden="true"],.hx71-force-panel[aria-hidden="true"],.hx72-deck[aria-hidden="true"],.hx72-sim[aria-hidden="true"]{pointer-events:none}
+@media(max-width:800px){
+ .hx82-film-rail{left:12px;right:12px;bottom:max(86px,calc(env(safe-area-inset-bottom) + 74px));width:auto;max-width:none;padding-bottom:max(8px,env(safe-area-inset-bottom))}
+ .hx82-rail-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .hx82-rail-actions button{min-width:0;width:100%}
+}
+@media(max-width:560px){
+ .hx82-film-rail{bottom:max(92px,calc(env(safe-area-inset-bottom) + 80px))}
+}
+@media(prefers-reduced-motion:reduce){.hx82-film-rail,.hx82-lens-panel,.hx71-frame-viewer{scroll-behavior:auto!important}}
