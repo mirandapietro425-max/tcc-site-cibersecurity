@@ -109,7 +109,7 @@
   ];
   const duration = 376.659;
   let active = 0;
-  let currentId = 1;
+  let currentId = 0;
   let playing = false;
   let raf = 0;
   let startAt = 0;
@@ -156,7 +156,9 @@
   imgs[0]?.setAttribute('loading','eager');
   imgs[0]?.setAttribute('decoding','sync');
   imgs[0]?.parentElement?.style.setProperty('--hx-frame-image', `url("${srcFor(1)}")`);
-  imgs[0]?.addEventListener('load', () => imgs[0].classList.add('is-active'), {once:true});
+  const activateFirst = () => { imgs[0]?.classList.add('is-active'); imgs[1]?.classList.remove('is-active'); };
+  if (imgs[0]?.complete && imgs[0]?.naturalWidth > 0) activateFirst();
+  else imgs[0]?.addEventListener('load', activateFirst, {once:true});
   const loader = document.querySelector('#hx72-loader');
   const reveal = () => loader?.classList.add('is-done');
   if (imgs[0]?.complete) setTimeout(reveal, 80); else imgs[0]?.addEventListener('load', () => setTimeout(reveal, 80), {once:true});

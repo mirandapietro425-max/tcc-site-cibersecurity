@@ -400,3 +400,44 @@ body.hx81-image-first{background:#020308;isolation:isolate}
   .hx71-storyboard-frame img,.hx71-storyboard-frame.is-active img{transform:none!important;transition:none!important}
   .hx82-film-rail,.hx82-lens-panel{transition:none!important}
 }
+
+/* V86 — FIRST-FRAME VISIBILITY FAILSAFE */
+.hx71-storyboard-stage{z-index:2.7!important;opacity:1!important;visibility:visible!important;}
+.hx71-storyboard-a.is-active,.hx71-storyboard-a.is-active img{opacity:1!important;visibility:visible!important;}
+.hx71-storyboard-frame img{visibility:visible;}
+.hx71-storyboard-wash{pointer-events:none;}
+/* V85 — FINAL COLLISION / VIEWPORT SAFETY */
+html,body{max-width:100%;overflow-x:clip;overscroll-behavior-x:none}
+.hx71{max-width:100%;overflow-x:clip}
+body.hx81-image-first .hx71-chapter-copy{margin-bottom:max(110px,14vh);text-wrap:balance}
+@media (min-width:801px) and (max-width:1199px){
+  .hx71-chapter[data-id="forces"]{padding-right:clamp(340px,34vw,440px)}
+  .hx71-chapter[data-id="threat"],
+  .hx71-chapter[data-id="collapse"],
+  .hx71-chapter[data-id="investigation"],
+  .hx71-chapter[data-id="restoration"]{padding-right:clamp(320px,32vw,410px)}
+  .hx71-forces{right:24px;gap:10px;width:min(34vw,320px)}
+  .hx71-steps{right:24px;width:min(34vw,320px)}
+  .hx71-readout{right:24px;width:min(250px,27vw)}
+  .hx71-impact{right:28px}
+}
+@media (min-width:1200px){
+  .hx71-chapter[data-id="forces"]{padding-right:clamp(460px,35vw,580px)}
+  .hx71-chapter[data-id="threat"],
+  .hx71-chapter[data-id="collapse"],
+  .hx71-chapter[data-id="investigation"],
+  .hx71-chapter[data-id="restoration"]{padding-right:clamp(390px,32vw,540px)}
+  .hx71-forces{right:clamp(36px,4.5vw,96px)}
+  .hx71-steps{right:clamp(36px,4.5vw,96px)}
+}
+@media (max-width:800px){
+  body.hx81-image-first .hx71-chapter-copy{margin-bottom:0}
+  .hx71-chapter{padding-bottom:max(190px,24svh);}
+  .hx71-final{padding-bottom:max(230px,27svh)}
+  .hx82-film-rail{max-height:calc(100svh - 18px);}
+}
+@media (max-width:560px){
+  .hx71-chapter{padding-bottom:max(205px,26svh)}
+  .hx71-final{padding-bottom:max(250px,30svh)}
+  .hx82-rail-actions button{min-height:46px}
+}
