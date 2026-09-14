@@ -214,134 +214,20 @@ function setupMemory(){
 }
 setupMemory();
 
-function frameEntry(i){
-  return STORYBOARD_SEQUENCE[Math.max(0,Math.min(STORYBOARD_SEQUENCE.length-1,i-1))];
-}
-function frameChapter(i){
-  const e=frameEntry(i);
-  return e ? getChapter(e.cue) : chapters[0];
-}
-function frameLabel(i){return `FRAME ${String(i).padStart(3,'0')} / 098`;}
-
-function setupStoryboardUX(){
-  if(document.querySelector('#hx71-storyboard-tools')) return;
-  const tools=document.createElement('aside');
-  tools.id='hx71-storyboard-tools';
-  tools.className='hx71-storyboard-tools';
-  tools.innerHTML=`
-    <div class="hx71-storyboard-tools-top">
-      <button type="button" class="hx71-frame-current" id="hx71-frame-current" aria-label="Abrir contexto do frame atual">FRAME 001 / 098</button>
-      <span id="hx71-frame-time">00:00</span>
-      <button type="button" class="hx71-frame-inspect" id="hx71-frame-inspect">INSPECIONAR</button>
-    </div>
-    <input id="hx71-frame-scrub" type="range" min="1" max="98" value="1" step="1" aria-label="Navegar pelos 98 frames do storyboard">
-    <div class="hx71-frame-chapters" id="hx71-frame-chapters" aria-label="Capítulos do filme"></div>
-    <div class="hx71-frame-tools-bottom"><span>SEQUÊNCIA VISUAL</span><span id="hx71-frame-chapter">O VAZIO</span></div>
-  `;
-  document.querySelector('#hx71')?.appendChild(tools);
-  const range=tools.querySelector('#hx71-frame-scrub');
-  const inspect=()=>openFrameViewer(Number(range.value));
-  tools.querySelector('#hx71-frame-current')?.addEventListener('click',inspect);
-  tools.querySelector('#hx71-frame-inspect')?.addEventListener('click',inspect);
-  range?.addEventListener('input',()=>{
-    const e=frameEntry(Number(range.value));
-    if(!e) return;
-    experience.playing=false;
-    document.body.classList.remove('hx71-film-mode');
-    setScrollFromTime(e.cue);
-    updateUI(true);
-  });
-  const chapterRail=tools.querySelector('#hx71-frame-chapters');
-  chapters.forEach((chapter,i)=>{
-    const b=document.createElement('button');
-    b.type='button'; b.className='hx71-frame-chapter-marker';
-    b.textContent=String(i+1).padStart(2,'0');
-    b.title=`ATO ${String(i+1).padStart(2,'0')} · ${chapter.name}`;
-    b.style.left=`${(chapter.start/DURATION)*100}%`;
-    b.addEventListener('click',()=>{experience.playing=false;document.body.classList.remove('hx71-film-mode');setScrollFromTime(chapter.start+.01);updateUI(true)});
-    chapterRail?.appendChild(b);
-  });
-}
-setupStoryboardUX();
-
-let frameViewerIndex=1;
-let frameViewerReturnFocus=null;
 function openFrameViewer(i){
-  i=Math.max(1,Math.min(98,Number(i)||1));
-  frameViewerIndex=i;
   let viewer=document.querySelector('#hx71-frame-viewer');
   if(!viewer){
-    viewer=document.createElement('aside');
-    viewer.id='hx71-frame-viewer';
-    viewer.className='hx71-frame-viewer';
-    viewer.setAttribute('role','dialog');
-    viewer.setAttribute('aria-modal','true');
-    viewer.setAttribute('aria-label','Contexto do frame do filme');
-    viewer.innerHTML=`
-      <div class="hx71-frame-viewer-head">
-        <div><span class="hx71-kicker">CONTEXTO DO FILME</span><b id="hx71-frame-title"></b><small id="hx71-frame-meta"></small></div>
-        <button class="hx71-close" id="hx71-frame-close" type="button">FECHAR ×</button>
-      </div>
-      <div class="hx71-frame-compare" id="hx71-frame-compare">
-        <figure><img id="hx71-frame-prev" alt=""><figcaption>ANTERIOR</figcaption></figure>
-        <figure class="is-current"><img id="hx71-frame-img" alt=""><figcaption>ATUAL</figcaption></figure>
-        <figure><img id="hx71-frame-next" alt=""><figcaption>PRÓXIMO</figcaption></figure>
-      </div>
-      <div class="hx71-frame-story">
-        <div><span class="hx71-kicker" id="hx71-frame-chapter-label">O VAZIO</span><p id="hx71-frame-story-copy"></p></div>
-        <div class="hx71-frame-actions">
-          <button id="hx71-frame-prev-btn" class="hx71-btn" type="button">← ANTERIOR</button>
-          <button id="hx71-frame-next-btn" class="hx71-btn" type="button">PRÓXIMO →</button>
-          <button id="hx71-frame-continue" class="hx71-btn hx71-btn-main" type="button">CONTINUAR FILME ▶</button>
-        </div>
-      </div>`;
+    viewer=document.createElement('aside');viewer.id='hx71-frame-viewer';viewer.className='hx71-frame-viewer';
+    viewer.innerHTML=`<button class="hx71-close" id="hx71-frame-close">FECHAR ×</button><img id="hx71-frame-img" alt=""><div><b id="hx71-frame-title"></b><span>STORYBOARD AUDITADO</span></div>`;
     document.body.appendChild(viewer);
-    const close=()=>{
-      viewer.classList.remove('is-open');
-      viewer.setAttribute('aria-hidden','true');
-      frameViewerReturnFocus?.focus?.();
-    };
-    viewer.querySelector('#hx71-frame-close').addEventListener('click',close);
-    viewer.querySelector('#hx71-frame-prev-btn').addEventListener('click',()=>openFrameViewer(frameViewerIndex-1));
-    viewer.querySelector('#hx71-frame-next-btn').addEventListener('click',()=>openFrameViewer(frameViewerIndex+1));
-    viewer.querySelector('#hx71-frame-continue').addEventListener('click',()=>{
-      const e=frameEntry(frameViewerIndex);
-      close();
-      if(e){setScrollFromTime(e.cue);experience.playing=true;document.body.classList.add('hx71-film-mode');updateUI(true);syncNarration(true);}
-    });
+    viewer.querySelector('#hx71-frame-close').addEventListener('click',()=>viewer.classList.remove('is-open'));
   }
-  const e=frameEntry(i), prev=frameEntry(i-1)||e, next=frameEntry(i+1)||e, c=e?getChapter(e.cue):chapters[0];
-  const setImg=(sel,entry)=>{const el=viewer.querySelector(sel); if(!el)return; el.src=entry?.src||''; el.alt=entry?frameLabel(entry.id):'';};
-  setImg('#hx71-frame-prev',prev); setImg('#hx71-frame-img',e); setImg('#hx71-frame-next',next);
-  viewer.querySelector('#hx71-frame-title').textContent=frameLabel(i);
-  viewer.querySelector('#hx71-frame-meta').textContent=`${fmt(e?.cue||0)} · ${c.name}`;
-  viewer.querySelector('#hx71-frame-chapter-label').textContent=`ATO ${String(chapters.indexOf(c)+1).padStart(2,'0')} · ${c.name}`;
-  viewer.querySelector('#hx71-frame-story-copy').textContent=c.copy;
-  viewer.querySelector('#hx71-frame-prev-btn').disabled=i<=1;
-  viewer.querySelector('#hx71-frame-next-btn').disabled=i>=98;
-  const range=document.querySelector('#hx71-frame-scrub'); if(range) range.value=String(i);
-  frameViewerReturnFocus=document.activeElement;
-  viewer.setAttribute('aria-hidden','false');
+  const names=['001_001_00-04_vazio-particulas.jpg','002_M01_entre-001-002_particulas-nascem.jpg'];
+  viewer.querySelector('#hx71-frame-img').src=`${BASE}storyboard/frames/${String(i).padStart(3,'0')}.webp`;
+  viewer.querySelector('#hx71-frame-img').onerror=()=>{viewer.querySelector('#hx71-frame-img').src=`${BASE}storyboard/thumbs/${String(i).padStart(3,'0')}.webp`};
+  viewer.querySelector('#hx71-frame-title').textContent=`FRAME ${String(i).padStart(3,'0')}`;
   viewer.classList.add('is-open');
-  requestAnimationFrame(()=>viewer.querySelector('#hx71-frame-close')?.focus());
 }
-document.addEventListener('keydown',(e)=>{
-  const viewer=document.querySelector('#hx71-frame-viewer');
-  const open=viewer?.classList.contains('is-open');
-  const tag=(document.activeElement?.tagName||'').toLowerCase();
-  if(e.key==='Escape' && open){e.preventDefault(); viewer.querySelector('#hx71-frame-close')?.click(); return;}
-  if(e.key.toLowerCase()==='i' && !open && !['input','textarea','select'].includes(tag)){const cur=storyboardIndex+1;if(cur>0)openFrameViewer(cur); return;}
-  if(open){
-    if(e.key==='ArrowLeft'){e.preventDefault();openFrameViewer(Math.max(1,frameViewerIndex-1));}
-    if(e.key==='ArrowRight'){e.preventDefault();openFrameViewer(Math.min(98,frameViewerIndex+1));}
-    if(e.key==='Tab'){
-      const f=[...viewer.querySelectorAll('button:not(:disabled)')]; if(!f.length)return;
-      const first=f[0], last=f[f.length-1];
-      if(e.shiftKey && document.activeElement===first){e.preventDefault();last.focus();}
-      else if(!e.shiftKey && document.activeElement===last){e.preventDefault();first.focus();}
-    }
-  }
-});
 
 function setupAudio(){
   window.addEventListener('pointerdown',()=>{if(experience.sound===false) return},{once:true});
@@ -624,19 +510,6 @@ function updateUI(force=false){
   document.querySelectorAll('#hx71-restoration li').forEach((li,i)=>{const done=restP>=i+1;li.classList.toggle('is-on',done);li.lastElementChild.textContent=done?'CONCLUÍDO':'AGUARDANDO'});
   if(force) syncNarration(true);
   syncStoryboard(t,force);
-  const entry=STORYBOARD_SEQUENCE[storyboardIndex] || STORYBOARD_SEQUENCE[0];
-  const range=document.querySelector('#hx71-frame-scrub');
-  const cur=document.querySelector('#hx71-frame-current');
-  const ft=document.querySelector('#hx71-frame-time');
-  const fc=document.querySelector('#hx71-frame-chapter');
-  if(entry){
-    if(range) range.value=String(entry.id);
-    if(cur) cur.textContent=frameLabel(entry.id);
-    if(ft) ft.textContent=fmt(entry.cue);
-    if(fc) fc.textContent=getChapter(entry.cue).name;
-    const activeChapter=chapters.indexOf(getChapter(entry.cue));
-    document.querySelectorAll('.hx71-frame-chapter-marker').forEach((m,i)=>m.classList.toggle('is-active',i===activeChapter));
-  }
   updateMedia(t);
   syncAmbience(t);
 }

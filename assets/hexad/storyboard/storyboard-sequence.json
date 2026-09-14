@@ -1,0 +1,789 @@
+{
+  "duration": 376.659,
+  "frames": [
+    {
+      "id": 1,
+      "file": "001.webp",
+      "start": 0,
+      "end": 4.532,
+      "chapter": 0,
+      "name": "001_001_00-04_vazio-particulas.jpg"
+    },
+    {
+      "id": 2,
+      "file": "002.webp",
+      "start": 4.532,
+      "end": 5.035,
+      "chapter": 0,
+      "name": "002_M01_entre-001-002_particulas-nascem.jpg"
+    },
+    {
+      "id": 3,
+      "file": "003.webp",
+      "start": 5.035,
+      "end": 8.56,
+      "chapter": 0,
+      "name": "003_002_05-08_particulas-sem-forma.jpg"
+    },
+    {
+      "id": 4,
+      "file": "004.webp",
+      "start": 8.56,
+      "end": 9.064,
+      "chapter": 0,
+      "name": "004_M02_entre-002-003_correntes.jpg"
+    },
+    {
+      "id": 5,
+      "file": "005.webp",
+      "start": 9.064,
+      "end": 15.61,
+      "chapter": 0,
+      "name": "005_003_09-15_vazio-atravessado.jpg"
+    },
+    {
+      "id": 6,
+      "file": "006.webp",
+      "start": 15.61,
+      "end": 16.113,
+      "chapter": 0,
+      "name": "006_M03_entre-003-004_convergencia.jpg"
+    },
+    {
+      "id": 7,
+      "file": "007.webp",
+      "start": 16.113,
+      "end": 19.638,
+      "chapter": 0,
+      "name": "007_004_16-19_algo-permanece.jpg"
+    },
+    {
+      "id": 8,
+      "file": "008.webp",
+      "start": 19.638,
+      "end": 20.142,
+      "chapter": 0,
+      "name": "008_M04_entre-004-005_fragmento-fixa.jpg"
+    },
+    {
+      "id": 9,
+      "file": "009.webp",
+      "start": 20.142,
+      "end": 24.674,
+      "chapter": 0,
+      "name": "009_005_20-24_fragmento.jpg"
+    },
+    {
+      "id": 10,
+      "file": "010.webp",
+      "start": 24.674,
+      "end": 25.177,
+      "chapter": 0,
+      "name": "010_M05_entre-005-006_geometria.jpg"
+    },
+    {
+      "id": 11,
+      "file": "011.webp",
+      "start": 25.177,
+      "end": 38.269,
+      "chapter": 0,
+      "name": "011_006_25-38_possibilidade.jpg"
+    },
+    {
+      "id": 12,
+      "file": "012.webp",
+      "start": 38.269,
+      "end": 40.784,
+      "chapter": 1,
+      "name": "012_007_00-02_energia.jpg"
+    },
+    {
+      "id": 13,
+      "file": "013.webp",
+      "start": 40.784,
+      "end": 41.287,
+      "chapter": 1,
+      "name": "013_M06_entre-007-008_pulso-encontra.jpg"
+    },
+    {
+      "id": 14,
+      "file": "014.webp",
+      "start": 41.287,
+      "end": 43.801,
+      "chapter": 1,
+      "name": "014_008_03-05_estrutura.jpg"
+    },
+    {
+      "id": 15,
+      "file": "015.webp",
+      "start": 43.801,
+      "end": 44.304,
+      "chapter": 1,
+      "name": "015_M07_entre-008-009_lattice-fecha.jpg"
+    },
+    {
+      "id": 16,
+      "file": "016.webp",
+      "start": 44.304,
+      "end": 47.824,
+      "chapter": 1,
+      "name": "016_009_06-09_nucleo.jpg"
+    },
+    {
+      "id": 17,
+      "file": "017.webp",
+      "start": 47.824,
+      "end": 48.327,
+      "chapter": 1,
+      "name": "017_M08_entre-009-010_camadas.jpg"
+    },
+    {
+      "id": 18,
+      "file": "018.webp",
+      "start": 48.327,
+      "end": 52.852,
+      "chapter": 1,
+      "name": "018_010_10-14_camadas-conexoes.jpg"
+    },
+    {
+      "id": 19,
+      "file": "019.webp",
+      "start": 52.852,
+      "end": 53.355,
+      "chapter": 1,
+      "name": "019_M09_entre-010-011_significados.jpg"
+    },
+    {
+      "id": 20,
+      "file": "020.webp",
+      "start": 53.355,
+      "end": 55.869,
+      "chapter": 1,
+      "name": "020_011_15-17_incompleta.jpg"
+    },
+    {
+      "id": 21,
+      "file": "021.webp",
+      "start": 55.869,
+      "end": 56.372,
+      "chapter": 1,
+      "name": "021_M10_entre-011-012_sinais.jpg"
+    },
+    {
+      "id": 22,
+      "file": "022.webp",
+      "start": 56.372,
+      "end": 64.418,
+      "chapter": 1,
+      "name": "022_012_18-25_reconhecer-transmitir.jpg"
+    },
+    {
+      "id": 23,
+      "file": "023.webp",
+      "start": 64.418,
+      "end": 68.441,
+      "chapter": 1,
+      "name": "023_013_26-29_nucleo-vivo.jpg"
+    },
+    {
+      "id": 24,
+      "file": "024.webp",
+      "start": 68.441,
+      "end": 72.464,
+      "chapter": 1,
+      "name": "024_014_30-33_seis-forcas.jpg"
+    },
+    {
+      "id": 25,
+      "file": "025.webp",
+      "start": 72.464,
+      "end": 80.589,
+      "chapter": 1,
+      "name": "025_015_34-42_mesma-informacao.jpg"
+    },
+    {
+      "id": 26,
+      "file": "026.webp",
+      "start": 80.589,
+      "end": 80.589,
+      "chapter": 1,
+      "name": "026_M11_entre-015-016_orbitas.jpg"
+    },
+    {
+      "id": 27,
+      "file": "027.webp",
+      "start": 80.589,
+      "end": 84.1,
+      "chapter": 2,
+      "name": "027_016_00-03_equilibrio.jpg"
+    },
+    {
+      "id": 28,
+      "file": "028.webp",
+      "start": 84.1,
+      "end": 84.613,
+      "chapter": 2,
+      "name": "028_M12_entre-016-017_canais-ativam.jpg"
+    },
+    {
+      "id": 29,
+      "file": "029.webp",
+      "start": 84.613,
+      "end": 88.204,
+      "chapter": 2,
+      "name": "029_017_04-07_canais-conectados.jpg"
+    },
+    {
+      "id": 30,
+      "file": "030.webp",
+      "start": 88.204,
+      "end": 88.717,
+      "chapter": 2,
+      "name": "030_M13_entre-017-018_resposta.jpg"
+    },
+    {
+      "id": 31,
+      "file": "031.webp",
+      "start": 88.717,
+      "end": 92.307,
+      "chapter": 2,
+      "name": "031_018_08-11_mundos-respondem.jpg"
+    },
+    {
+      "id": 32,
+      "file": "032.webp",
+      "start": 92.307,
+      "end": 92.82,
+      "chapter": 2,
+      "name": "032_M14_entre-018-019_campo-controle.jpg"
+    },
+    {
+      "id": 33,
+      "file": "033.webp",
+      "start": 92.82,
+      "end": 99.489,
+      "chapter": 2,
+      "name": "033_019_12-18_controle-integridade.jpg"
+    },
+    {
+      "id": 34,
+      "file": "034.webp",
+      "start": 99.489,
+      "end": 100.001,
+      "chapter": 2,
+      "name": "034_M15_entre-019-020_autenticidade.jpg"
+    },
+    {
+      "id": 35,
+      "file": "035.webp",
+      "start": 100.001,
+      "end": 114.364,
+      "chapter": 2,
+      "name": "035_020_19-33_confiavel.jpg"
+    },
+    {
+      "id": 36,
+      "file": "036.webp",
+      "start": 114.364,
+      "end": 114.364,
+      "chapter": 2,
+      "name": "036_M16_entre-020-021_borda-escura.jpg"
+    },
+    {
+      "id": 37,
+      "file": "037.webp",
+      "start": 114.364,
+      "end": 114.364,
+      "chapter": 2,
+      "name": "037_B01_020-021_equilibrio-oscilacao.jpg"
+    },
+    {
+      "id": 38,
+      "file": "038.webp",
+      "start": 114.364,
+      "end": 117.887,
+      "chapter": 3,
+      "name": "038_021_00-03_oscilacao.jpg"
+    },
+    {
+      "id": 39,
+      "file": "039.webp",
+      "start": 117.887,
+      "end": 118.39,
+      "chapter": 3,
+      "name": "039_M17_entre-021-022_onda-irregular.jpg"
+    },
+    {
+      "id": 40,
+      "file": "040.webp",
+      "start": 118.39,
+      "end": 128.958,
+      "chapter": 3,
+      "name": "040_022_04-14_sinal-desviado.jpg"
+    },
+    {
+      "id": 41,
+      "file": "041.webp",
+      "start": 128.958,
+      "end": 129.462,
+      "chapter": 3,
+      "name": "041_M18_entre-022-023_alerta.jpg"
+    },
+    {
+      "id": 42,
+      "file": "042.webp",
+      "start": 129.462,
+      "end": 132.985,
+      "chapter": 3,
+      "name": "042_023_15-18_sistema-observa.jpg"
+    },
+    {
+      "id": 43,
+      "file": "043.webp",
+      "start": 132.985,
+      "end": 133.488,
+      "chapter": 3,
+      "name": "043_M19_entre-023-024_drone-trajetoria.jpg"
+    },
+    {
+      "id": 44,
+      "file": "044.webp",
+      "start": 133.488,
+      "end": 138.017,
+      "chapter": 3,
+      "name": "044_024_19-23_drone-aproxima.jpg"
+    },
+    {
+      "id": 45,
+      "file": "045.webp",
+      "start": 138.017,
+      "end": 138.52,
+      "chapter": 3,
+      "name": "045_M20_entre-024-025_perimetro.jpg"
+    },
+    {
+      "id": 46,
+      "file": "046.webp",
+      "start": 138.52,
+      "end": 163.763,
+      "chapter": 3,
+      "name": "046_025_24-49_limite-invasao.jpg"
+    },
+    {
+      "id": 47,
+      "file": "047.webp",
+      "start": 163.763,
+      "end": 163.843,
+      "chapter": 3,
+      "name": "047_M21_entre-025-026_assinatura-invalida.jpg"
+    },
+    {
+      "id": 48,
+      "file": "048.webp",
+      "start": 163.843,
+      "end": 163.843,
+      "chapter": 3,
+      "name": "048_B02_025-026_invasao-colapso.jpg"
+    },
+    {
+      "id": 49,
+      "file": "049.webp",
+      "start": 163.843,
+      "end": 171.291,
+      "chapter": 4,
+      "name": "049_026_00-07_falha-detectada.jpg"
+    },
+    {
+      "id": 50,
+      "file": "050.webp",
+      "start": 171.291,
+      "end": 171.798,
+      "chapter": 4,
+      "name": "050_M22_entre-026-027_primeira-fratura.jpg"
+    },
+    {
+      "id": 51,
+      "file": "051.webp",
+      "start": 171.798,
+      "end": 178.391,
+      "chapter": 4,
+      "name": "051_027_08-14_canal-rompido.jpg"
+    },
+    {
+      "id": 52,
+      "file": "052.webp",
+      "start": 178.391,
+      "end": 178.898,
+      "chapter": 4,
+      "name": "052_M23_entre-027-028_energia-espalha.jpg"
+    },
+    {
+      "id": 53,
+      "file": "053.webp",
+      "start": 178.898,
+      "end": 185.492,
+      "chapter": 4,
+      "name": "053_028_15-21_particulas-dispersas.jpg"
+    },
+    {
+      "id": 54,
+      "file": "054.webp",
+      "start": 185.492,
+      "end": 185.999,
+      "chapter": 4,
+      "name": "054_M24_entre-028-029_arquitetura-torce.jpg"
+    },
+    {
+      "id": 55,
+      "file": "055.webp",
+      "start": 185.999,
+      "end": 204.764,
+      "chapter": 4,
+      "name": "055_029_22-40_cascata.jpg"
+    },
+    {
+      "id": 56,
+      "file": "056.webp",
+      "start": 204.764,
+      "end": 205.271,
+      "chapter": 4,
+      "name": "056_M25_entre-029-030_luz-apaga.jpg"
+    },
+    {
+      "id": 57,
+      "file": "057.webp",
+      "start": 205.271,
+      "end": 223.61,
+      "chapter": 4,
+      "name": "057_030_41-59_silencio.jpg"
+    },
+    {
+      "id": 58,
+      "file": "058.webp",
+      "start": 223.61,
+      "end": 223.69,
+      "chapter": 4,
+      "name": "058_M26_entre-030-031_primeiro-scan.jpg"
+    },
+    {
+      "id": 59,
+      "file": "059.webp",
+      "start": 223.69,
+      "end": 223.69,
+      "chapter": 4,
+      "name": "059_B03_030-031_silencio-investigacao.jpg"
+    },
+    {
+      "id": 60,
+      "file": "060.webp",
+      "start": 223.69,
+      "end": 229.165,
+      "chapter": 5,
+      "name": "060_031_00-05_investigacao.jpg"
+    },
+    {
+      "id": 61,
+      "file": "061.webp",
+      "start": 229.165,
+      "end": 229.677,
+      "chapter": 5,
+      "name": "061_M27_entre-031-032_camadas-dados.jpg"
+    },
+    {
+      "id": 62,
+      "file": "062.webp",
+      "start": 229.677,
+      "end": 236.336,
+      "chapter": 5,
+      "name": "062_032_06-12_o-que-mudou.jpg"
+    },
+    {
+      "id": 63,
+      "file": "063.webp",
+      "start": 236.336,
+      "end": 236.848,
+      "chapter": 5,
+      "name": "063_M28_entre-032-033_rastro-fraco.jpg"
+    },
+    {
+      "id": 64,
+      "file": "064.webp",
+      "start": 236.848,
+      "end": 245.557,
+      "chapter": 5,
+      "name": "064_033_13-21_rastros.jpg"
+    },
+    {
+      "id": 65,
+      "file": "065.webp",
+      "start": 245.557,
+      "end": 246.069,
+      "chapter": 5,
+      "name": "065_M29_entre-033-034_comparacao.jpg"
+    },
+    {
+      "id": 66,
+      "file": "066.webp",
+      "start": 246.069,
+      "end": 255.802,
+      "chapter": 5,
+      "name": "066_034_22-31_tres-estados.jpg"
+    },
+    {
+      "id": 67,
+      "file": "067.webp",
+      "start": 255.802,
+      "end": 256.314,
+      "chapter": 5,
+      "name": "067_M30_entre-034-035_mapa-evidencia.jpg"
+    },
+    {
+      "id": 68,
+      "file": "068.webp",
+      "start": 256.314,
+      "end": 274.836,
+      "chapter": 5,
+      "name": "068_035_32-50_evidencia.jpg"
+    },
+    {
+      "id": 69,
+      "file": "069.webp",
+      "start": 274.836,
+      "end": 274.916,
+      "chapter": 5,
+      "name": "069_M31_entre-035-036_alvo-isolado.jpg"
+    },
+    {
+      "id": 70,
+      "file": "070.webp",
+      "start": 274.916,
+      "end": 274.916,
+      "chapter": 5,
+      "name": "070_B04_035-036_evidencia-isolamento.jpg"
+    },
+    {
+      "id": 71,
+      "file": "071.webp",
+      "start": 274.916,
+      "end": 284.227,
+      "chapter": 6,
+      "name": "071_036_00-08_detectar-isolar.jpg"
+    },
+    {
+      "id": 72,
+      "file": "072.webp",
+      "start": 284.227,
+      "end": 284.784,
+      "chapter": 6,
+      "name": "072_M32_entre-036-037_barreira.jpg"
+    },
+    {
+      "id": 73,
+      "file": "073.webp",
+      "start": 284.784,
+      "end": 298.712,
+      "chapter": 6,
+      "name": "073_037_09-21_reparar.jpg"
+    },
+    {
+      "id": 74,
+      "file": "074.webp",
+      "start": 298.712,
+      "end": 299.269,
+      "chapter": 6,
+      "name": "074_M33_entre-037-038_reconstrucao.jpg"
+    },
+    {
+      "id": 75,
+      "file": "075.webp",
+      "start": 299.269,
+      "end": 309.854,
+      "chapter": 6,
+      "name": "075_038_22-31_verificar.jpg"
+    },
+    {
+      "id": 76,
+      "file": "076.webp",
+      "start": 309.854,
+      "end": 310.411,
+      "chapter": 6,
+      "name": "076_M34_entre-038-039_assinatura-confirmada.jpg"
+    },
+    {
+      "id": 77,
+      "file": "077.webp",
+      "start": 310.411,
+      "end": 322.111,
+      "chapter": 6,
+      "name": "077_039_32-42_restaurar.jpg"
+    },
+    {
+      "id": 78,
+      "file": "078.webp",
+      "start": 322.111,
+      "end": 322.668,
+      "chapter": 6,
+      "name": "078_M35_entre-039-040_retorno-canais.jpg"
+    },
+    {
+      "id": 79,
+      "file": "079.webp",
+      "start": 322.668,
+      "end": 336.119,
+      "chapter": 6,
+      "name": "079_040_43-55_estabilizar.jpg"
+    },
+    {
+      "id": 80,
+      "file": "080.webp",
+      "start": 336.119,
+      "end": 336.199,
+      "chapter": 6,
+      "name": "080_M36_entre-040-041_luz-recuperada.jpg"
+    },
+    {
+      "id": 81,
+      "file": "081.webp",
+      "start": 336.199,
+      "end": 336.199,
+      "chapter": 6,
+      "name": "081_B05_040-041_estabilizacao-sintese.jpg"
+    },
+    {
+      "id": 82,
+      "file": "082.webp",
+      "start": 336.199,
+      "end": 339.345,
+      "chapter": 7,
+      "name": "082_041_00-03_informacao.jpg"
+    },
+    {
+      "id": 83,
+      "file": "083.webp",
+      "start": 339.345,
+      "end": 339.818,
+      "chapter": 7,
+      "name": "083_M37_entre-041-042_seis-papeis.jpg"
+    },
+    {
+      "id": 84,
+      "file": "084.webp",
+      "start": 339.818,
+      "end": 347.847,
+      "chapter": 7,
+      "name": "084_042_04-12_seis-propriedades.jpg"
+    },
+    {
+      "id": 85,
+      "file": "085.webp",
+      "start": 347.847,
+      "end": 348.32,
+      "chapter": 7,
+      "name": "085_M38_entre-042-043_conexao-total.jpg"
+    },
+    {
+      "id": 86,
+      "file": "086.webp",
+      "start": 348.32,
+      "end": 355.405,
+      "chapter": 7,
+      "name": "086_043_13-20_relacao-viva.jpg"
+    },
+    {
+      "id": 87,
+      "file": "087.webp",
+      "start": 355.405,
+      "end": 355.877,
+      "chapter": 7,
+      "name": "087_M39_entre-043-044_sistema-unico.jpg"
+    },
+    {
+      "id": 88,
+      "file": "088.webp",
+      "start": 355.877,
+      "end": 364.851,
+      "chapter": 7,
+      "name": "088_044_21-30_um-sistema.jpg"
+    },
+    {
+      "id": 89,
+      "file": "089.webp",
+      "start": 364.851,
+      "end": 365.323,
+      "chapter": 7,
+      "name": "089_M40_entre-044-045_compreensao.jpg"
+    },
+    {
+      "id": 90,
+      "file": "090.webp",
+      "start": 365.323,
+      "end": 373.905,
+      "chapter": 7,
+      "name": "090_045_31-40_proteger-compreender.jpg"
+    },
+    {
+      "id": 91,
+      "file": "091.webp",
+      "start": 373.905,
+      "end": 373.905,
+      "chapter": 7,
+      "name": "091_M41_entre-045-046_recuo.jpg"
+    },
+    {
+      "id": 92,
+      "file": "092.webp",
+      "start": 373.905,
+      "end": 374.85,
+      "chapter": 7,
+      "name": "092_046_40-41_transicao-final.jpg"
+    },
+    {
+      "id": 93,
+      "file": "093.webp",
+      "start": 374.85,
+      "end": 374.85,
+      "chapter": 7,
+      "name": "093_M42_entre-046-047_pulso.jpg"
+    },
+    {
+      "id": 94,
+      "file": "094.webp",
+      "start": 374.85,
+      "end": 375.795,
+      "chapter": 7,
+      "name": "094_047_41-42_pulso-final.jpg"
+    },
+    {
+      "id": 95,
+      "file": "095.webp",
+      "start": 375.795,
+      "end": 375.795,
+      "chapter": 7,
+      "name": "095_M43_entre-047-048_reducao.jpg"
+    },
+    {
+      "id": 96,
+      "file": "096.webp",
+      "start": 375.795,
+      "end": 376.739,
+      "chapter": 7,
+      "name": "096_048_42-43_fadeout.jpg"
+    },
+    {
+      "id": 97,
+      "file": "097.webp",
+      "start": 376.739,
+      "end": 376.819,
+      "chapter": 7,
+      "name": "097_M44_entre-048_final-ponto.jpg"
+    },
+    {
+      "id": 98,
+      "file": "098.webp",
+      "start": 376.819,
+      "end": 376.659,
+      "chapter": 7,
+      "name": "098_M45_final-silencio.jpg"
+    }
+  ]
+}

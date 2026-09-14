@@ -12,9 +12,27 @@
 <link rel="stylesheet" href="hexad-v72-cinematic.css">
 </head>
 <body>
+<a class="hx72-skip" href="#hx71-story">PULAR PARA A EXPERIÊNCIA</a>
+<div id="hx72-loader" class="hx72-loader" aria-live="polite">
+  <div>
+    <strong>HEXAD</strong>
+    <small id="hx72-loader-copy">PREPARANDO A EXPERIÊNCIA</small>
+    <div class="hx72-loader-bar" aria-hidden="true"><i id="hx72-loader-bar-fill"></i></div>
+  </div>
+</div>
 <div id="hx71" class="hx71" data-scene="void">
+  <div class="hx71-fallback-visual" aria-hidden="true">
+    <img id="hx71-fallback-still" src="assets/hexad/2d/hexad-overview.webp" alt="">
+    <div class="hx71-fallback-glow"></div>
+  </div>
   <canvas id="hx71-canvas" aria-hidden="true"></canvas>
   <div class="hx71-vignette" aria-hidden="true"></div>
+  <div id="hx71-storyboard-stage" class="hx71-storyboard-stage" aria-hidden="true">
+    <div class="hx71-storyboard-frame hx71-storyboard-a"><img id="hx71-storyboard-img-a" alt="" decoding="async"></div>
+    <div class="hx71-storyboard-frame hx71-storyboard-b"><img id="hx71-storyboard-img-b" alt="" decoding="async"></div>
+    <div class="hx71-storyboard-wash"></div>
+    <div class="hx71-storyboard-meta"><span id="hx71-storyboard-act">FRAME 001 / 098</span><b id="hx71-storyboard-sync">NARRAÇÃO · SINCRONIZADA</b></div>
+  </div>
   <div class="hx71-cinema-layer" aria-hidden="true">
     <video id="hx71-cinema-video" muted playsinline preload="metadata" poster="assets/hexad/2d/hexad-overview.webp">
       <source id="hx71-cinema-webm" src="" type="video/webm">
@@ -29,12 +47,12 @@
     <div class="hx71-actions">
       <button id="hx71-film" class="hx71-btn hx71-btn-main" type="button" aria-pressed="false"><span>▶</span> ASSISTIR FILME</button>
       <button id="hx71-memory" class="hx71-btn" type="button">MEMÓRIA VISUAL</button>
-      <button id="hx71-index" class="hx71-btn" type="button">ÍNDICE</button>
+      <button id="hx71-index" class="hx71-btn" type="button">MAPA</button>
       <button id="hx71-sound" class="hx71-btn" type="button" aria-pressed="false">SOM</button>
     </div>
   </header>
 
-  <div class="hx71-progress"><div id="hx71-progress-fill"></div><span id="hx71-time">00:00</span><span id="hx71-duration">06:17</span></div>
+  <div class="hx71-progress"><div id="hx71-progress-fill"></div><span id="hx71-time">00:00</span><span id="hx71-duration">06:16</span></div>
 
   <main id="hx71-story" aria-label="CyberShield Hexad">
     <section class="hx71-chapter" data-id="void" data-start="0" data-end="38.269">
@@ -121,7 +139,7 @@
         <h2>Seis forças.<br><em>Um sistema.</em><br>Uma informação.</h2>
         <p>A informação é aquilo que conseguimos proteger, controlar, preservar, verificar, alcançar e utilizar.</p>
         <div class="hx71-sixline"></div>
-        <div class="hx71-after-film">
+        <div class="hx71-after-film"><span class="hx72-after-label">A EXPERIÊNCIA CONTINUA</span>
           <button id="hx71-explore" class="hx71-btn hx71-btn-main" type="button">EXPLORAR AS 6 FORÇAS ↗</button>
           <button id="hx71-investigate-mode" class="hx71-btn" type="button">INVESTIGAR O INCIDENTE ↗</button>
           <button id="hx71-simulate" class="hx71-btn" type="button">SIMULAR UMA FALHA ↗</button>
@@ -182,34 +200,70 @@
   const loader = document.getElementById('hx72-loader');
   const copy = document.getElementById('hx72-loader-copy');
   const bar = document.getElementById('hx72-loader-bar-fill');
+  const video = document.getElementById('hx71-cinema-video');
+  const film = document.getElementById('hx71-film');
+  const memory = document.getElementById('hx71-memory');
+  const memoryGrid = document.getElementById('hx71-memory-grid');
   let booted = false;
-  const watchdog = setTimeout(() => {
+
+  function revealLoader(label='Experiência pronta'){
     if (booted) return;
     booted = true;
-    document.body.classList.add('hx72-boot-fallback');
-    if (copy) copy.textContent = 'Modo cinematográfico';
+    if (copy) copy.textContent = label;
     if (bar) bar.style.width = '100%';
     loader?.classList.add('is-done');
-    const video = document.getElementById('hx71-cinema-video');
-    const film = document.getElementById('hx71-film');
-    film?.addEventListener('click', async () => {
-      const src = document.getElementById('hx71-cinema-webm');
-      const mp4 = document.getElementById('hx71-cinema-mp4');
-      if (src) src.src = 'assets/hexad/video/hexad-genesis.webm';
-      if (mp4) mp4.src = 'assets/hexad/video/hexad-genesis.mp4';
-      video?.load();
-      try { await video?.play(); } catch {}
-      document.querySelector('.hx71-cinema-layer')?.style.setProperty('opacity','1');
-    }, {once:false});
-    document.querySelector('#hx71-index')?.addEventListener('click', () => {
-      const first = document.querySelector('.hx71-chapter[data-start="0"]');
-      first?.scrollIntoView({behavior:'smooth', block:'start'});
-    });
-    document.querySelector('#hx71-memory')?.addEventListener('click', () => {
-      document.querySelector('#hx71-memory-drawer')?.classList.add('is-open');
-    });
-  }, 7500);
-  window.addEventListener('hexad:booted', () => { booted = true; clearTimeout(watchdog); }, {once:true});
+  }
+
+  function startCinematicFallback(){
+    document.body.classList.add('hx72-boot-fallback');
+    const src = document.getElementById('hx71-cinema-webm');
+    const mp4 = document.getElementById('hx71-cinema-mp4');
+    if (src) src.src = 'assets/hexad/video/hexad-genesis.webm';
+    if (mp4) mp4.src = 'assets/hexad/video/hexad-genesis.mp4';
+    video.loop = true;
+    video?.load();
+    video?.play().catch(()=>{});
+    document.querySelector('.hx71-cinema-layer')?.style.setProperty('opacity','0.82');
+    document.querySelector('#hx71-play-indicator')?.removeAttribute('hidden');
+  }
+
+  function buildMemoryFallback(){
+    if (!memoryGrid || memoryGrid.children.length) return;
+    for(let i=1;i<=98;i++){
+      const b=document.createElement('button'); b.className='hx71-memory-item'; b.type='button';
+      b.innerHTML=`<img src="assets/hexad/storyboard/thumbs/${String(i).padStart(3,'0')}.webp" alt="Frame ${String(i).padStart(3,'0')}" loading="lazy"><span>${String(i).padStart(3,'0')}</span>`;
+      b.addEventListener('click',()=>{
+        let viewer=document.getElementById('hx71-frame-viewer');
+        if(!viewer){
+          viewer=document.createElement('aside'); viewer.id='hx71-frame-viewer'; viewer.className='hx71-frame-viewer';
+          viewer.innerHTML=`<button class="hx71-close" type="button">FECHAR ×</button><img alt=""><div><b></b><span>STORYBOARD AUDITADO</span></div>`;
+          document.body.appendChild(viewer);
+          viewer.querySelector('button').addEventListener('click',()=>viewer.classList.remove('is-open'));
+        }
+        viewer.querySelector('img').src=`assets/hexad/storyboard/frames/${String(i).padStart(3,'0')}.webp`;
+        viewer.querySelector('div b').textContent=`FRAME ${String(i).padStart(3,'0')}`;
+        viewer.classList.add('is-open');
+      });
+      memoryGrid.appendChild(b);
+    }
+  }
+
+  // These controls must work even if the WebGL module or external CDN fails.
+  film?.addEventListener('click',()=>{
+    if(window.__hexadModuleReady) return;
+    const first=document.querySelector('.hx71-chapter[data-start="0"]');
+    first?.scrollIntoView({behavior:'smooth',block:'start'});
+    startCinematicFallback();
+  }, {capture:true});
+  memory?.addEventListener('click',()=>{ buildMemoryFallback(); document.getElementById('hx71-memory-drawer')?.classList.add('is-open'); }, {capture:true});
+
+  const watchdog = setTimeout(() => {
+    if (window.__hexadModuleReady && booted) return;
+    revealLoader('Modo cinematográfico');
+    buildMemoryFallback();
+  }, 6500);
+
+  window.addEventListener('hexad:booted', () => { booted = true; clearTimeout(watchdog); revealLoader('Universo pronto'); }, {once:true});
 })();
 </script>
 <script type="module" src="hexad-v72-cinematic.js"></script>
