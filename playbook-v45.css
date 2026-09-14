@@ -66,3 +66,11 @@
   .pb45-archive{min-height:245svh!important;}
   .pb45-knowledge{min-height:980px!important;}
 }
+
+/* Final mobile continuity repair: keep the knowledge block in normal document flow after the sticky archive. */
+@media(max-width:720px){
+  .pb45-archive{height:auto!important;min-height:0!important;overflow:visible!important;}
+  .pb45-sticky{height:100svh!important;min-height:0!important;position:sticky!important;top:0!important;}
+  .pb45-knowledge{position:relative!important;display:block!important;visibility:visible!important;opacity:1!important;min-height:0!important;height:auto!important;margin-top:0!important;}
+  .pb45-flight{height:auto!important;min-height:0!important;}
+}

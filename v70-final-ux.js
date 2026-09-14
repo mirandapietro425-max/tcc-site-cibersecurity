@@ -97,8 +97,8 @@
 
     // Desktop: do not start while the user is still in the previous scene.
     // Mobile keeps the more forgiving trigger that was already working well.
-    const topLimit = innerWidth <= 700 ? innerHeight * 0.82 : innerHeight * 0.72;
-    const bottomLimit = innerWidth <= 700 ? innerHeight * 0.18 : innerHeight * 0.20;
+    const topLimit = innerWidth <= 700 ? innerHeight * 0.82 : innerHeight * 0.58;
+    const bottomLimit = innerWidth <= 700 ? innerHeight * 0.18 : innerHeight * 0.26;
     return r.top <= topLimit && r.bottom >= bottomLimit;
   }
 
@@ -140,7 +140,7 @@
       });
     }, {
       root: null,
-      rootMargin: innerWidth <= 700 ? '-10% 0px -18% 0px' : '-20% 0px -30% 0px',
+      rootMargin: innerWidth <= 700 ? '-10% 0px -18% 0px' : '-34% 0px -34% 0px',
       threshold: 0.01
     });
 

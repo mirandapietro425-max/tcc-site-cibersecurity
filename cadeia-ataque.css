@@ -18,3 +18,30 @@
 @media (max-width:1100px){.attack-hero{grid-template-columns:1fr}.attack-hero-stage{min-height:480px}.attack-theater{grid-template-columns:170px 1fr}.attack-panel{grid-column:1/-1;min-height:auto}.deep-grid{grid-template-columns:repeat(4,1fr)}.signal-gallery-header{grid-template-columns:1fr}.signal-cards{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:760px){.object-stage-image{width:96%;left:2%;bottom:0}.object-stage-image img{border-radius:0}.attack-hero{padding-top:30px}.attack-hero h1{font-size:3.2rem}.attack-hero-stage{min-height:390px}.hero-visual-hacker{width:52%}.attack-intro{grid-template-columns:1fr;gap:10px;padding:75px 0}.attack-theater{grid-template-columns:1fr;padding-bottom:80px}.attack-rail{min-height:auto}.attack-rail ol{grid-template-columns:repeat(2,1fr);gap:5px}.rail-footer{display:none}.attack-scene{height:510px}.scene-caption span{font-size:2.2rem}.scene-terminal{max-width:170px}.break-lab{grid-template-columns:1fr}.break-chain{border-right:0;border-bottom:1px solid var(--line);min-height:190px}.decision-grid{grid-template-columns:1fr}.deep-grid{grid-template-columns:repeat(2,1fr)}.signal-cards{grid-template-columns:1fr}.attack-footer{flex-direction:column}.immersive-nav{display:none}}
 @media (prefers-reduced-motion:reduce){.hero-orbit,.hero-scanline,.scene-pulse{animation:none}.attack-hero-stage{transition:none}.scene-object,.scene-workstation,.scene-vault{transition:none}.scene-grid{transform:none;opacity:.22}}
+
+/* Seven supplied 16:9 stage images: one image per stage, consistent framing. */
+.attack-page .object-stage-image{
+  width:82%; left:9%; bottom:2%; z-index:5;
+  overflow:hidden; border-radius:14px;
+}
+.attack-page .object-stage-image img{
+  width:100%; height:auto; aspect-ratio:16/9; object-fit:contain;
+  display:block; border:1px solid rgba(112,231,247,.16);
+  box-shadow:0 30px 70px rgba(0,0,0,.42);
+}
+.attack-page .attack-scene[data-stage="recon"] .object-recon,
+.attack-page .attack-scene[data-stage="weapon"] .object-weapon,
+.attack-page .attack-scene[data-stage="delivery"] .object-delivery,
+.attack-page .attack-scene[data-stage="exploit"] .object-exploit-image,
+.attack-page .attack-scene[data-stage="install"] .object-install-image,
+.attack-page .attack-scene[data-stage="c2"] .object-c2-image,
+.attack-page .attack-scene[data-stage="objectives"] .object-objectives-image{
+  opacity:1; transform:none;
+}
+.attack-page .attack-scene[data-stage="install"] .scene-workstation,
+.attack-page .attack-scene[data-stage="c2"] .object-router,
+.attack-page .attack-scene[data-stage="objectives"] .scene-vault{opacity:0;}
+@media(max-width:760px){
+  .attack-page .object-stage-image{width:96%; left:2%; bottom:4%; border-radius:10px;}
+  .attack-page .object-stage-image img{aspect-ratio:16/9; object-fit:contain; box-shadow:0 20px 45px rgba(0,0,0,.38);}
+}

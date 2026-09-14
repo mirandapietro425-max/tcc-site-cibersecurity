@@ -54,3 +54,13 @@ html,body{overflow-x:hidden;}
 @media(prefers-reduced-motion:reduce){
  .v70-letter{opacity:1!important;transform:none!important;filter:none!important;transition:none!important;}
 }
+
+/* V70 desktop timing repair: keep the per-letter render visible on desktop without changing the mobile choreography. */
+@media (min-width:701px){
+  .chapter-content h2.v70-lettered .v70-word{display:inline-block;white-space:nowrap;vertical-align:baseline;}
+  .chapter-content h2.v70-lettered .v70-letter{display:inline-block;white-space:pre;opacity:0;transform:translate3d(0,20px,0) scale(.985);filter:blur(5px);}
+  .chapter-content h2.v70-lettered .v70-letter.is-visible{opacity:1;transform:none;filter:none;}
+  .chapter-intro .hero-3d .v70-word{display:inline-block;white-space:nowrap;}
+  .chapter-intro .hero-3d .v70-letter{display:inline-block;white-space:pre;opacity:0;transform:translate3d(0,22px,0) scale(.985);filter:blur(6px);}
+  .chapter-intro .hero-3d .v70-letter.is-visible{opacity:1;transform:none;filter:none;}
+}

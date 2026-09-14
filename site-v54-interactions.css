@@ -71,3 +71,11 @@
 @media (prefers-reduced-motion:reduce){
   .cs-v54-motion,.attack-page .hero-haze,.attack-page .hero-art-frame::after,.attack-page .object-hacker,.attack-page .object-phone,.attack-page .object-router,.attack-page .object-robot,.attack-page .scene-workstation,.r43-hero::after,.r43-hero .cs-v54-radar-beacon,.r43-scope-stage::before,.pb45-core,.pb45-archive .cs-v54-archive-beacon,.lab46-chamber .cs-v54-lab-scan,.ps-quiet .cs-v54-data-orbit,.ps-data-core{animation:none!important;transition:none!important}
 }
+
+/* Desktop live-signal visibility repair: keep the moving trail visible on fine-pointer layouts. */
+@media (min-width:701px) and (prefers-reduced-motion: no-preference){
+  .cs-v54-motion{display:block!important;opacity:1!important;visibility:visible!important;}
+  .cs-v54-probe,.cs-v54-trail,.cs-v54-particle{visibility:visible!important;}
+  .cs-v54-trail{will-change:left,top,opacity;filter:drop-shadow(0 0 8px rgba(113,231,245,.45));}
+  .cs-v54-particle{will-change:transform,opacity;}
+}
