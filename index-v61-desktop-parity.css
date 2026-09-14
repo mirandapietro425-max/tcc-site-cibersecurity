@@ -1,0 +1,14 @@
+/* DESKTOP PARITY — same reveal timing/choreography as mobile, without changing mobile rules. */
+html,body{overflow-x:hidden;}
+@media (min-width:701px){
+  .chapter-intro .hero-3d .v70-word,
+  .chapter-content h2.v70-lettered .v70-word{display:inline-block!important;white-space:nowrap!important;vertical-align:baseline;}
+  .chapter-intro .hero-3d .v70-letter,
+  .chapter-content h2.v70-lettered .v70-letter{display:inline-block!important;white-space:pre!important;opacity:0!important;transform:translate3d(0,22px,0) scale(.975)!important;filter:blur(6px)!important;}
+  .chapter-intro .hero-3d .v70-letter.is-visible,
+  .chapter-content h2.v70-lettered .v70-letter.is-visible{opacity:1!important;transform:none!important;filter:none!important;animation:v70LetterRender .82s cubic-bezier(.2,.82,.2,1) both!important;}
+}
+/* Do not let legacy section-entry effects reveal headings before the letter sequence. */
+@media (min-width:701px){
+  .chapter:not(.chapter-intro) .chapter-content h2.v70-lettered{opacity:1!important;transform:none!important;filter:none!important;}
+}

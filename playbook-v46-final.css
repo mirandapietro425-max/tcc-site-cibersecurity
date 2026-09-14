@@ -1,0 +1,130 @@
+/* PLAYBOOK V46 — layout repair: six protocols always visible, no overlap. */
+.pb45-stage-wrap{position:relative;display:grid;grid-template-rows:auto auto;gap:14px;min-height:760px;align-content:center;overflow:visible;}
+.pb45-stage{overflow:visible;}
+.pb45-inspector{position:relative!important;right:auto!important;bottom:auto!important;transform:none!important;width:min(620px,100%)!important;margin:0 auto;padding:16px;z-index:20;}
+.pb45-inspector.is-changing{transform:translateY(4px)!important;}
+
+@media (min-width:721px){
+  .pb45-stage{width:min(660px,48vw);}
+  .pb45-inspector{max-width:620px;}
+}
+
+@media (max-width:1050px) and (min-width:721px){
+  .pb45-stage-wrap{min-height:720px;}
+  .pb45-stage{width:min(620px,68vw);}
+  .pb45-inspector{max-width:580px;}
+}
+
+@media (max-width:720px){
+  .pb45-archive{min-height:0!important;height:auto!important;overflow:visible!important;}
+  .pb45-sticky{position:relative!important;top:auto!important;height:auto!important;min-height:0!important;display:block!important;padding:82px 16px 28px!important;}
+  .pb45-grid{display:block!important;}
+  .pb45-copy{max-width:none!important;}
+  .pb45-copy h2{font-size:clamp(2.9rem,13vw,4.8rem)!important;}
+  .pb45-stage-wrap{min-height:0!important;width:100%!important;display:block!important;margin-top:24px!important;}
+  .pb45-stage{width:100%!important;max-width:none!important;height:auto!important;aspect-ratio:auto!important;border-radius:24px!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px!important;padding:16px!important;transform:none!important;filter:none!important;overflow:visible!important;}
+  .pb45-stage > svg,.pb45-stage > .pb45-orbit{display:none!important;}
+  .pb45-core{position:relative!important;left:auto!important;top:auto!important;transform:none!important;grid-column:1/-1!important;width:150px!important;height:150px!important;margin:0 auto 2px!important;}
+  .pb45-node{position:relative!important;left:auto!important;top:auto!important;width:100%!important;min-height:78px!important;transform:none!important;padding:11px!important;z-index:9!important;}
+  .pb45-node:hover,.pb45-node:focus-visible,.pb45-node.is-active{transform:translateY(-2px)!important;}
+  .pb45-inspector{display:block!important;position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;width:100%!important;max-width:none!important;margin:4px 0 0!important;grid-column:1/-1!important;padding:14px!important;}
+  .pb45-inspector h3{font-size:20px!important;}
+  .pb45-inspector p{font-size:11px!important;line-height:1.6!important;}
+  .pb45-chapter,.pb45-scrollcue{display:none!important;}
+  .pb45-knowledge{margin-top:28px!important;}
+}
+
+@media (max-width:430px){
+  .pb45-stage{grid-template-columns:1fr!important;padding:14px!important;}
+  .pb45-core{grid-column:1!important;width:138px!important;height:138px!important;}
+  .pb45-node{grid-column:1!important;}
+  .pb45-inspector{grid-column:1!important;}
+}
+
+/* V47 FINAL PLAYBOOK LAYOUT — dedicated inspector column on desktop;
+   complete six-protocol flow on mobile without clipping. */
+@media (min-width:721px){
+  .pb45-stage-wrap{
+    position:relative!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(300px,360px)!important;
+    grid-template-rows:auto!important;
+    gap:clamp(22px,3vw,42px)!important;
+    align-items:center!important;
+    align-content:center!important;
+    min-height:700px!important;
+    width:100%!important;
+    overflow:visible!important;
+  }
+  .pb45-stage{
+    grid-column:1!important;
+    grid-row:1!important;
+    justify-self:center!important;
+    align-self:center!important;
+    width:min(620px,100%)!important;
+    max-width:620px!important;
+    overflow:visible!important;
+  }
+  .pb45-inspector{
+    grid-column:2!important;
+    grid-row:1!important;
+    position:relative!important;
+    inset:auto!important;
+    width:100%!important;
+    max-width:360px!important;
+    min-width:0!important;
+    margin:0!important;
+    align-self:center!important;
+    justify-self:stretch!important;
+    transform:none!important;
+    overflow:visible!important;
+  }
+  .pb45-inspector.is-changing{transform:translateY(4px)!important;}
+}
+
+@media (max-width:720px){
+  .pb45-stage-wrap{
+    display:block!important;
+    min-height:0!important;
+    height:auto!important;
+    overflow:visible!important;
+  }
+  .pb45-stage{
+    display:grid!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    overflow:visible!important;
+  }
+  .pb45-node{
+    visibility:visible!important;
+    opacity:1!important;
+  }
+  .pb45-inspector{
+    display:block!important;
+    position:relative!important;
+    inset:auto!important;
+    width:100%!important;
+    max-width:none!important;
+    min-height:0!important;
+    margin:16px 0 0!important;
+    transform:none!important;
+    overflow:visible!important;
+  }
+  .pb45-knowledge{
+    position:relative!important;
+    clear:both!important;
+    margin-top:34px!important;
+  }
+}
+
+@media (max-width:430px){
+  .pb45-stage{
+    grid-template-columns:1fr!important;
+    width:100%!important;
+  }
+  .pb45-inspector{
+    width:100%!important;
+    margin-top:18px!important;
+  }
+}

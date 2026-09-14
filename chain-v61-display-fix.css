@@ -1,0 +1,12 @@
+/* CHAIN V61 — desktop image framing without altering the proven mobile layout. */
+@media (min-width:761px){
+  .attack-theater{align-items:start!important;}
+  .attack-scene-wrap{min-width:0!important;}
+  .attack-scene{height:auto!important;min-height:0!important;aspect-ratio:16/9!important;}
+  .attack-page .object-stage-image,
+  .attack-page .object-stage-image img{
+    width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;
+  }
+  .attack-page .object-stage-image img{object-fit:cover!important;object-position:center!important;}
+  .attack-rail,.attack-panel{min-height:calc((min(100%, 760px)) * .5625)!important;}
+}
