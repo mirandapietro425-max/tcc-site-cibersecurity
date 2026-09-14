@@ -357,3 +357,46 @@ body.hx81-image-first{background:#020308;isolation:isolate}
   .hx71-investigation-steps button{min-height:44px}
   .hx71-final{padding-bottom:210px}
 }
+
+/* V84 — RESPONSIVE SAFETY / COLLISION BOUNDARIES */
+.hx71-storyboard-stage{contain:layout paint;}
+.hx71-storyboard-frame{contain:layout paint;}
+.hx71-chapter{padding-left:clamp(20px,6vw,96px);padding-right:clamp(20px,6vw,96px);}
+.hx71-chapter-copy{max-inline-size:min(470px,100%);}
+@media(min-width:1200px){
+  body.hx81-image-first .hx71-chapter-copy{margin-left:clamp(0px,1vw,18px)}
+  .hx71-chapter[data-id="forces"]{padding-right:clamp(430px,34vw,560px)}
+  .hx71-chapter[data-id="threat"],.hx71-chapter[data-id="collapse"],.hx71-chapter[data-id="investigation"],.hx71-chapter[data-id="restoration"]{padding-right:clamp(360px,31vw,520px)}
+  .hx71-forces{right:clamp(34px,4.5vw,90px);gap:10px}
+  .hx71-force-card{min-width:0;max-width:250px}
+  .hx71-readout,.hx71-steps{right:clamp(34px,4.5vw,90px)}
+}
+@media(min-width:801px) and (max-width:1199px){
+  .hx71-chapter[data-id="forces"]{padding-right:clamp(330px,32vw,430px)}
+  .hx71-chapter[data-id="threat"],.hx71-chapter[data-id="collapse"],.hx71-chapter[data-id="investigation"],.hx71-chapter[data-id="restoration"]{padding-right:clamp(300px,30vw,390px)}
+  .hx71-forces{right:22px;grid-template-columns:repeat(2,minmax(180px,220px));gap:9px}
+  .hx71-readout,.hx71-steps{right:22px}
+}
+@media(max-width:800px){
+  .hx71-chapter{padding-inline:18px;overflow:visible}
+  .hx71-chapter-copy{max-inline-size:100%;margin-inline:0}
+  .hx71-forces,.hx71-readout,.hx71-steps,.hx71-restore-button{position:relative;inset:auto;transform:none}
+  .hx71-forces{margin-top:28px}
+  .hx71-readout{margin-top:20px}
+  .hx71-steps{margin-top:20px}
+  .hx71-restore-button{margin-top:22px}
+  .hx82-film-rail{left:8px;right:8px;width:auto;transform:translateY(12px)}
+  .hx82-film-rail.is-visible,.hx71-film-mode .hx82-film-rail{transform:translateY(0)}
+  .hx82-lens-inner{padding-bottom:max(18px,env(safe-area-inset-bottom))}
+}
+@media(max-width:560px){
+  .hx71-chapter{padding-inline:14px;}
+  .hx71-chapter-copy{padding-inline:14px!important}
+  .hx71-force-card{width:100%;min-height:78px}
+  .hx71-final-actions,.hx71-after-film{gap:8px}
+  .hx71-final-actions .hx71-btn,.hx71-after-film .hx71-btn{min-height:44px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hx71-storyboard-frame img,.hx71-storyboard-frame.is-active img{transform:none!important;transition:none!important}
+  .hx82-film-rail,.hx82-lens-panel{transition:none!important}
+}

@@ -159,9 +159,9 @@
   imgs[0]?.addEventListener('load', () => imgs[0].classList.add('is-active'), {once:true});
   const loader = document.querySelector('#hx72-loader');
   const reveal = () => loader?.classList.add('is-done');
-  if (imgs[0]?.complete) setTimeout(reveal, 160); else imgs[0]?.addEventListener('load', () => setTimeout(reveal, 120), {once:true});
+  if (imgs[0]?.complete) setTimeout(reveal, 80); else imgs[0]?.addEventListener('load', () => setTimeout(reveal, 80), {once:true});
   imgs[0]?.addEventListener('error', () => { imgs[0].src = 'assets/hexad/2d/hexad-overview.webp'; imgs[0].parentElement?.style.setProperty('--hx-frame-image', 'url("assets/hexad/2d/hexad-overview.webp")'); reveal(); }, {once:true});
-  setTimeout(reveal, 1200);
+  setTimeout(reveal, 2500);
   // Warm next frames without blocking first paint.
   [2,3,4].forEach(id => { const im = new Image(); im.decoding='async'; im.src=srcFor(id); });
 
@@ -221,7 +221,7 @@
   };
   const start = () => {
     if(playing) return;
-    playing=true; document.body.classList.add('hx71-film-mode');
+    playing=true; document.body.classList.add('hx71-film-mode','hx81-image-first');
     if(playIndicator) playIndicator.hidden=false;
     baseTime = timeFromScroll();
     if(baseTime >= duration-.25) baseTime=0;
