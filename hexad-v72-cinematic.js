@@ -443,6 +443,15 @@ document.querySelectorAll('[data-investigate]').forEach((b,i)=>{
   b.addEventListener('click',()=>{document.querySelectorAll('[data-investigate]').forEach(x=>x.classList.remove('is-active'));b.classList.add('is-active');jump(223.63+i*12)})
 });
 document.querySelector('#hx71-restart').addEventListener('click',()=>{experience.playing=false;experience.time=0;setScrollFromTime(0);closePanels()});
+document.querySelector('#hx71-chapter1')?.addEventListener('click',()=>{
+  experience.playing=false;
+  experience.time=0;
+  experience.progress=0;
+  setScrollFromTime(0);
+  closePanels();
+  updateUI(true);
+  window.scrollTo({top:0,behavior:reduced?'auto':'smooth'});
+});
 
 function setup3D(){
   if(window.__hexadThreeUnavailable || !THREE || !GLTFLoader){
@@ -619,6 +628,16 @@ function updateMedia(t){
   videoLayer.style.opacity=idx>=0?.42:0;
 }
 
+function syncEndOfFilm(force=false){
+  const ended = experience.time >= (DURATION - 0.06);
+  document.body.classList.toggle('hx71-film-ended', ended);
+  document.querySelectorAll('.hx71-end-actions').forEach((el)=>{
+    el.setAttribute('aria-hidden', ended ? 'false' : 'true');
+  });
+  const indicator=document.querySelector('#hx71-play-indicator');
+  if(ended && indicator) indicator.hidden=true;
+}
+
 function updateUI(force=false){
   const t=experience.time;const p=t/DURATION;const c=getChapter(t);
   progressFill.style.width=(p*100)+'%';
@@ -653,6 +672,7 @@ function updateUI(force=false){
   }
   updateMedia(t);
   syncAmbience(t);
+  syncEndOfFilm(force);
   enforceFilmVisualState();
 }
 

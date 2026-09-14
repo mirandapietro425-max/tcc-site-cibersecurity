@@ -469,3 +469,164 @@ body.hx81-image-first .hx71-chapter-copy{margin-bottom:max(110px,14vh);text-wrap
 @media (prefers-reduced-motion:reduce){
   .hx71-storyboard-frame img{will-change:auto;}
 }
+
+/* V88 — DESKTOP + TABLET PORTABILITY / HARD COLLISION BOUNDARIES */
+:root{
+  --hx-safe-top:82px;
+  --hx-safe-bottom:96px;
+  --hx-safe-side:clamp(32px,6vw,96px);
+  --hx-copy-max:470px;
+  --hx-dense-right:430px;
+  --hx-dense-gap:64px;
+}
+
+/* Desktop: copy and dense right-side modules occupy explicit non-overlapping zones. */
+@media (min-width:1440px){
+  .hx71-chapter{padding-left:var(--hx-safe-side);padding-right:calc(var(--hx-dense-right) + var(--hx-dense-gap) + var(--hx-safe-side));}
+  .hx71-chapter-copy{width:min(var(--hx-copy-max),100%);max-width:var(--hx-copy-max);}
+  .hx71-chapter[data-id="void"],
+  .hx71-chapter[data-id="birth"],
+  .hx71-chapter[data-id="equilibrium"],
+  .hx71-chapter[data-id="synthesis"]{padding-right:var(--hx-safe-side);}
+  .hx71-forces{right:var(--hx-safe-side);width:min(var(--hx-dense-right),34vw);}
+  .hx71-readout,.hx71-steps{right:var(--hx-safe-side);width:min(var(--hx-dense-right),34vw);}
+  .hx71-impact{right:var(--hx-safe-side);}
+  .hx71-restore-button{right:var(--hx-safe-side);}
+}
+
+/* 1200–1439: tighter but still deterministic two-zone layout. */
+@media (min-width:1200px) and (max-width:1439px){
+  :root{--hx-safe-side:72px;--hx-copy-max:430px;--hx-dense-right:400px;--hx-dense-gap:52px;}
+  .hx71-chapter{padding-left:var(--hx-safe-side);padding-right:calc(var(--hx-dense-right) + var(--hx-dense-gap) + var(--hx-safe-side));}
+  .hx71-chapter[data-id="void"],
+  .hx71-chapter[data-id="birth"],
+  .hx71-chapter[data-id="equilibrium"],
+  .hx71-chapter[data-id="synthesis"]{padding-right:var(--hx-safe-side);}
+  .hx71-chapter-copy{width:min(var(--hx-copy-max),100%);max-width:var(--hx-copy-max);}
+  .hx71-forces{right:72px;width:400px;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+  .hx71-readout,.hx71-steps{right:72px;width:400px;}
+  .hx71-impact{right:72px;}
+  .hx71-restore-button{right:72px;}
+}
+
+/* 901–1199: desktop/tablet-landscape compact mode. Do not let right modules compete with copy. */
+@media (min-width:901px) and (max-width:1199px){
+  :root{--hx-safe-side:40px;--hx-copy-max:410px;--hx-dense-right:320px;--hx-dense-gap:40px;}
+  .hx71-top{height:76px;padding:0 22px;}
+  .hx71-actions{gap:5px;}
+  .hx71-actions .hx71-btn{min-height:40px;padding-inline:9px;font-size:8px;letter-spacing:.08em;}
+  .hx71-progress{top:75px;left:22px;right:22px;}
+  .hx71-chapter{padding-left:var(--hx-safe-side);padding-right:calc(var(--hx-dense-right) + var(--hx-dense-gap) + var(--hx-safe-side));}
+  .hx71-chapter[data-id="void"],
+  .hx71-chapter[data-id="birth"],
+  .hx71-chapter[data-id="equilibrium"],
+  .hx71-chapter[data-id="synthesis"]{padding-right:var(--hx-safe-side);}
+  .hx71-chapter-copy{width:min(var(--hx-copy-max),100%);max-width:var(--hx-copy-max);}
+  .hx71-chapter h1{font-size:clamp(42px,5.3vw,64px);}
+  .hx71-chapter h2{font-size:clamp(38px,5vw,58px);}
+  .hx71-chapter p{font-size:14px;max-width:410px;}
+  .hx71-forces{right:24px;top:50%;width:320px;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}
+  .hx71-force-card{padding:13px;}
+  .hx71-readout,.hx71-steps{right:24px;width:320px;}
+  .hx71-impact{right:24px;}
+  .hx71-restore-button{right:24px;bottom:96px;}
+}
+
+/* 601–900 portrait: dedicated vertical composition. */
+@media (orientation:portrait) and (min-width:601px) and (max-width:1100px){
+  :root{--hx-safe-side:28px;--hx-copy-max:680px;}
+  .hx71-top{height:70px;padding:0 20px;grid-template-columns:1fr auto;}
+  .hx71-top-center{display:flex;}
+  .hx71-actions .hx71-btn:not(.hx71-btn-main){display:none;}
+  .hx71-progress{top:69px;left:20px;right:20px;}
+  .hx71-chapter{height:150svh!important;min-height:820px!important;padding:clamp(92px,11svh,130px) 28px clamp(150px,18svh,220px);display:flex;align-items:flex-start;justify-content:center;flex-direction:column;gap:24px;}
+  .hx71-chapter[data-id="forces"],
+  .hx71-chapter[data-id="threat"],
+  .hx71-chapter[data-id="collapse"],
+  .hx71-chapter[data-id="investigation"],
+  .hx71-chapter[data-id="restoration"]{padding-right:28px;}
+  .hx71-chapter-copy{width:min(100%,680px);max-width:680px;margin:0!important;}
+  .hx71-chapter h1{font-size:clamp(42px,7.5vw,64px);}
+  .hx71-chapter h2{font-size:clamp(38px,7vw,58px);}
+  .hx71-chapter p{font-size:15px;max-width:620px;}
+  .hx71-forces,.hx71-steps,.hx71-readout,.hx71-impact,.hx71-restore-button{position:relative;inset:auto;transform:none;width:100%;max-width:680px;margin:0;}
+  .hx71-forces{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+  .hx71-steps{display:grid;grid-template-columns:1fr 1fr;gap:0 18px;}
+  .hx71-restore-button{width:auto;align-self:flex-start;}
+  .hx71-impact{display:flex;align-items:baseline;gap:14px;justify-content:flex-start;}
+  .hx71-impact span{font-size:clamp(110px,18vw,180px);}
+  .hx71-readout{max-width:360px;}
+}
+
+/* <=600 portrait mobile: preserve the already-validated V87 flow, but make zones explicit. */
+@media (max-width:600px){
+  :root{--hx-safe-side:14px;}
+  .hx71-top{height:70px;padding:0 15px;}
+  .hx71-progress{top:70px;left:15px;right:15px;}
+  .hx71-chapter{height:150svh!important;min-height:760px!important;padding:88px 14px max(205px,26svh)!important;display:flex;align-items:flex-end;gap:18px;}
+  .hx71-chapter[data-id="forces"],
+  .hx71-chapter[data-id="threat"],
+  .hx71-chapter[data-id="collapse"],
+  .hx71-chapter[data-id="investigation"],
+  .hx71-chapter[data-id="restoration"]{padding-right:14px!important;}
+  .hx71-chapter-copy{width:100%!important;max-width:100%!important;margin:0!important;}
+  .hx71-chapter h1,.hx71-chapter h2{font-size:clamp(30px,9.6vw,48px);line-height:.95;}
+  .hx71-chapter p{font-size:13px;line-height:1.55;max-width:100%;}
+  .hx71-forces,.hx71-steps,.hx71-readout,.hx71-impact,.hx71-restore-button{position:relative;inset:auto;transform:none;width:100%;max-width:100%;margin:0;}
+  .hx71-forces{grid-template-columns:1fr;gap:10px;}
+  .hx71-steps{display:block;}
+  .hx71-restore-button{align-self:stretch;}
+}
+
+/* Mobile landscape: compact cinematic mode, not a squeezed portrait layout. */
+@media (orientation:landscape) and (max-width:900px){
+  .hx71-top{height:58px;padding:0 16px;}
+  .hx71-progress{top:58px;left:16px;right:16px;}
+  .hx71-chapter{height:165svh!important;min-height:520px!important;padding:76px 22px 110px!important;align-items:center;}
+  .hx71-chapter-copy{width:min(52vw,500px)!important;max-width:500px!important;margin:0!important;}
+  .hx71-chapter h1,.hx71-chapter h2{font-size:clamp(30px,6.2vw,48px);}
+  .hx71-chapter p{font-size:12px;line-height:1.45;max-width:48vw;}
+  .hx71-forces,.hx71-steps,.hx71-readout,.hx71-impact,.hx71-restore-button{position:absolute!important;inset:auto!important;transform:none!important;}
+  .hx71-forces{right:20px!important;top:50%!important;bottom:auto!important;width:min(46vw,360px)!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;transform:translateY(-50%)!important;}
+  .hx71-steps{right:20px!important;top:22%!important;width:min(46vw,360px)!important;}
+  .hx71-readout{right:20px!important;top:28%!important;width:min(46vw,260px)!important;}
+  .hx71-restore-button{right:20px!important;bottom:16%!important;width:auto!important;}
+}
+
+/* Hard layout invariant: dense right modules may never cross the copy's reserved boundary. */
+@media (min-width:901px){
+  .hx71-chapter[data-id="forces"] .hx71-chapter-copy,
+  .hx71-chapter[data-id="threat"] .hx71-chapter-copy,
+  .hx71-chapter[data-id="collapse"] .hx71-chapter-copy,
+  .hx71-chapter[data-id="investigation"] .hx71-chapter-copy,
+  .hx71-chapter[data-id="restoration"] .hx71-chapter-copy{max-width:var(--hx-copy-max);}
+  .hx71-chapter[data-id="forces"] .hx71-chapter-copy{margin-right:var(--hx-dense-gap);}
+}
+
+
+/* V88 — END-OF-FILM NAVIGATION
+   Destination buttons remain completely hidden until the continuous film reaches its end. */
+.hx71-end-actions{
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(12px);
+  pointer-events:none !important;
+  transition:opacity .45s ease, transform .45s ease, visibility .45s ease;
+}
+body.hx71-film-ended .hx71-end-actions{
+  opacity:1;
+  visibility:visible;
+  transform:none;
+  pointer-events:auto !important;
+}
+body.hx71-film-ended .hx71-end-actions .hx71-btn{
+  pointer-events:auto !important;
+}
+@media(max-width:800px){
+  body.hx71-film-ended .hx71-final{
+    padding-bottom:max(120px,18svh);
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .hx71-end-actions{transition:none}
+}
