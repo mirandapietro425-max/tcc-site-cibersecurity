@@ -1,0 +1,9 @@
+/* CHAIN V62 — small desktop scale increase + slower, clearer opening. Mobile untouched. */
+@media (min-width:1101px){
+  .attack-page .attack-hero{min-height:108vh;padding-top:68px;padding-bottom:92px;}
+  .attack-page .attack-hero-stage{min-height:640px;}
+  .attack-page .hero-art-frame{height:min(590px,70vh);}
+  .attack-page .attack-theater{grid-template-columns:190px minmax(0,1.22fr) minmax(290px,.78fr)!important;gap:16px!important;}
+  .attack-page .attack-scene{width:100%;}
+  .attack-page .object-stage-image img{transform:scale(1.035);transform-origin:center center;}
+}

@@ -125,3 +125,12 @@ html,body{overflow-x:hidden;}
 @keyframes protectScanFull{0%{background-position:0 -34%}100%{background-position:0 134%}}
 @keyframes protectSignalBeam{0%{transform:translateY(-40%);opacity:0}10%{opacity:.9}50%{opacity:1}90%{opacity:.9}100%{transform:translateY(5400%);opacity:0}}
 @media(prefers-reduced-motion:reduce){.protect-v32-scan{animation:none!important}.protect-v32-scan::after{animation:none!important;opacity:.35}}
+
+/* HEXAD portal bridge — dedicated experience entry */
+.hexad-top-link{border-color:rgba(156,220,255,.28)!important;background:rgba(96,210,255,.045)!important;}
+.hexad-top-link:hover,.hexad-top-link:focus-visible{border-color:rgba(156,220,255,.58)!important;background:rgba(96,210,255,.09)!important;}
+.hexad-portal-link{display:inline-flex;align-items:center;gap:10px;margin-top:22px;width:max-content;padding:10px 14px;border:1px solid rgba(148,207,255,.24);border-radius:999px;color:rgba(230,244,255,.9);text-decoration:none;background:rgba(255,255,255,.025);font:600 11px/1 'Space Mono',monospace;letter-spacing:.12em;transition:transform .25s ease,border-color .25s ease,background .25s ease;}
+.hexad-portal-link span{opacity:.55;font-weight:500;}
+.hexad-portal-link:hover,.hexad-portal-link:focus-visible{transform:translateY(-1px);border-color:rgba(148,207,255,.54);background:rgba(148,207,255,.075);outline:none;}
+@media (max-width:720px){.hexad-portal-link{margin-top:16px;font-size:10px;padding:9px 12px;}.topbar-right{gap:6px}.top-link{padding:7px 9px}.hexad-top-link{display:inline-flex!important}}
+@media (prefers-reduced-motion:reduce){.hexad-portal-link{transition:none}.hexad-portal-link:hover{transform:none}}
