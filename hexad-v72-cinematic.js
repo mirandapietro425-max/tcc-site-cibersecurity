@@ -64,20 +64,28 @@ async function syncStoryboard(t,force=false){
   storyboardIndex=idx;
   const requestId=++storyboardRequestId;
   const entry=STORYBOARD_SEQUENCE[idx];
-  const next=STORYBOARD_SEQUENCE[idx+1];
-  if(next) preloadStoryboard(next.id);
-  const layer=(storyboardLayer+1)%2; storyboardLayer=layer;
+  // Always warm a generous look-ahead so the next authored image is ready before its cue.
+  STORYBOARD_SEQUENCE.slice(idx+1, idx+5).forEach(e=>preloadStoryboard(e.id));
+  const layer=(storyboardLayer+1)%2;
   const img=storyboardImgs[layer];
   if(!img) return;
-  const ok=await preloadStoryboard(entry.id);
-  if(requestId!==storyboardRequestId || idx!==storyboardIndex) return;
-  if(!ok){if(storyboardSync) storyboardSync.textContent='STORYBOARD · FALLBACK'; return;}
-  img.src=frameSource(entry.id);
+  const src=frameSource(entry.id);
+  img.src=src;
   img.alt=`Frame ${String(entry.id).padStart(3,'0')} do storyboard auditado`;
-  storyboardImgs.forEach((el,i)=>el?.classList.toggle('is-active',i===layer));
-  if(storyboardAct) storyboardAct.textContent=`FRAME ${String(entry.id).padStart(3,'0')} / 098`;
-  if(storyboardSync) storyboardSync.textContent=experience.playing?'NARRAÇÃO · SINCRONIZADA':'STORYBOARD · NAVEGAÇÃO';
+  const activate=()=>{
+    if(requestId!==storyboardRequestId || idx!==storyboardIndex) return;
+    storyboardLayer=layer;
+    storyboardImgs.forEach((el,i)=>el?.classList.toggle('is-active',i===layer));
+    if(storyboardAct) storyboardAct.textContent=`FRAME ${String(entry.id).padStart(3,'0')} / 098`;
+    if(storyboardSync) storyboardSync.textContent=experience.playing?'NARRAÇÃO · SINCRONIZADA':'STORYBOARD · NAVEGAÇÃO';
+  };
+  if(img.complete && img.naturalWidth>0) activate();
+  else {
+    img.addEventListener('load',activate,{once:true});
+    img.addEventListener('error',()=>{ if(storyboardSync) storyboardSync.textContent='STORYBOARD · FALLBACK'; },{once:true});
+  }
 }
+
 
 // Warm the opening frames without delaying boot.
 [1,2,3,4].forEach(preloadStoryboard);
@@ -381,21 +389,17 @@ function syncAmbience(t){
   });
 }
 function syncNarration(force=false){
-  if(!experience.sound)return;
-  const idx=audioTracks.findIndex(x=>experience.time>=x.start&&experience.time<x.end);
-  if(idx<0)return;
-  const tr=audioTracks[idx];const local=Math.max(0,experience.time-tr.start);
-  if(force || idx!==narrationTrackIndex){
-    narrationTrackIndex=idx;
-    narrationAudio?.pause();
-    narrationAudio=new Audio(BASE+'audio/narration/'+tr.file);
-    narrationAudio.preload='auto';narrationAudio.volume=.94;
-    narrationAudio.currentTime=local;
-    narrationAudio.play().catch(()=>{});
-  }else if(Math.abs((narrationAudio.currentTime||0)-local)>.8 && !experience.playing){
-    try{narrationAudio.currentTime=local}catch{}
-  }
+  if(!experience.sound) return;
+  const a=window.__hexadNarrationMaster || (narrationAudio = new Audio(BASE+'audio/narration/narration-master.mp3'));
+  a.preload='auto'; a.volume=.96;
+  window.__hexadNarrationMaster=a;
+  narrationAudio=a;
+  const target=Math.max(0,Math.min(DURATION,experience.time));
+  const seek=()=>{try{if(force || Math.abs((a.currentTime||0)-target)>.22)a.currentTime=target}catch{}};
+  if(a.readyState>=1) seek(); else a.addEventListener('loadedmetadata',seek,{once:true});
+  if(experience.playing) a.play().catch(()=>{});
 }
+
 
 function toggleFilm(){
   experience.playing=!experience.playing;
@@ -785,30 +789,9 @@ updateUI=function(force=false){ _updateUI(force); syncChapterMap(); };
 audioTracks.forEach((t,i)=>{ t.file = `narration-${String(i+1).padStart(2,'0')}.mp3`; });
 
 function v79StartNarration(force=false){
-  if(!experience.sound) return;
-  const idx=audioTracks.findIndex(x=>experience.time>=x.start && experience.time<x.end);
-  if(idx<0) return;
-  const tr=audioTracks[idx];
-  const local=Math.max(0,experience.time-tr.start);
-  if(force || idx!==narrationTrackIndex || !narrationAudio){
-    narrationTrackIndex=idx;
-    try{ narrationAudio?.pause(); }catch{}
-    const a=new Audio(BASE+'audio/narration/'+tr.file);
-    a.preload='auto'; a.volume=.96;
-    narrationAudio=a;
-    const playNow=()=>{
-      try{ a.currentTime=Math.min(local, Math.max(0,(a.duration||local)-.02)); }catch{}
-      a.play().catch(()=>{});
-    };
-    if(Number.isFinite(a.duration) && a.readyState>=1) playNow();
-    else a.addEventListener('loadedmetadata',playNow,{once:true});
-  }else if(experience.playing){
-    const drift=Math.abs((narrationAudio.currentTime||0)-local);
-    if(drift>.45){
-      try{ narrationAudio.currentTime=local; }catch{}
-    }
-  }
+  syncNarration(force);
 }
+
 
 let v79FilmGuard=false;
 const v79FilmButton=document.querySelector('#hx71-film');

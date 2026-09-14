@@ -103,9 +103,9 @@
     {id:93,start:374.85,end:374.85,chapter:7},
     {id:94,start:374.85,end:375.795,chapter:7},
     {id:95,start:375.795,end:375.795,chapter:7},
-    {id:96,start:375.795,end:376.739,chapter:7},
-    {id:97,start:376.739,end:376.819,chapter:7},
-    {id:98,start:376.819,end:376.659,chapter:7},
+    {id:96,start:375.795,end:375.859,chapter:7},
+    {id:97,start:375.859,end:376.559,chapter:7},
+    {id:98,start:376.559,end:376.659,chapter:7},
   ];
   const duration = 376.659;
   let active = 0;
@@ -116,7 +116,8 @@
   let baseTime = 0;
   let fallbackAudio = null;
   let audioIndex = -1;
-  const audioFiles = Array.from({length:8}, (_,i) => `assets/hexad/audio/narration/narration-${String(i+1).padStart(2,'0')}.mp3`);
+  let narrationMaster = null;
+  const narrationMasterSrc = 'assets/hexad/audio/narration/narration-master.mp3';
 
   const srcFor = (id) => `assets/hexad/storyboard/frames/${String(id).padStart(3,'0')}.webp`;
   const clamp = (n,a,b) => Math.max(a,Math.min(b,n));
@@ -186,29 +187,31 @@
     const el = [...document.querySelectorAll('.hx71-chapter')].find(x => t >= Number(x.dataset.start) && t < Number(x.dataset.end));
     return el || document.querySelector('.hx71-chapter:last-of-type');
   };
-  const updateNarration = (t) => {
-    const track = frames.length && [
-      [0,38.269],[38.269,80.509],[80.509,114.364],[114.364,163.683],
-      [163.683,223.53],[223.53,274.756],[274.756,336.039],[336.039,376.659]
-    ].findIndex(([a,b]) => t>=a && t<b);
-    if(track < 0) return;
-    if(track !== audioIndex){
-      audioIndex=track;
-      try{ fallbackAudio?.pause(); }catch{}
-      fallbackAudio = new Audio(audioFiles[track]);
-      fallbackAudio.preload='auto'; fallbackAudio.volume=.96;
-      fallbackAudio.currentTime = Math.max(0, t - [0,38.269,80.509,114.364,163.683,223.53,274.756,336.039][track]);
-      fallbackAudio.play().catch(()=>{});
-    }else if(fallbackAudio && playing){
-      const base = [0,38.269,80.509,114.364,163.683,223.53,274.756,336.039][track];
-      const drift = Math.abs((fallbackAudio.currentTime||0) - (t-base));
-      if(drift > .65){ try{fallbackAudio.currentTime = Math.max(0,t-base)}catch{} }
+  const ensureNarrationMaster = () => {
+    if(narrationMaster) return narrationMaster;
+    narrationMaster = new Audio(narrationMasterSrc);
+    narrationMaster.preload = 'auto';
+    narrationMaster.volume = .96;
+    window.__hexadNarrationMaster = narrationMaster;
+    return narrationMaster;
+  };
+  const updateNarration = (t, shouldPlay=false) => {
+    const a = ensureNarrationMaster();
+    const target = clamp(t, 0, duration);
+    const seek = () => { try { if(Math.abs((a.currentTime||0)-target) > .22) a.currentTime = target; } catch {} };
+    if(a.readyState >= 1) seek();
+    else a.addEventListener('loadedmetadata', seek, {once:true});
+    if(shouldPlay){
+      a.play().catch(()=>{});
+    } else {
+      try { a.pause(); } catch {}
     }
   };
 
+
   const stop = () => {
     playing=false; cancelAnimationFrame(raf); raf=0; startAt=0;
-    try{fallbackAudio?.pause()}catch{}; audioIndex=-1;
+    try{fallbackAudio?.pause()}catch{}; try{narrationMaster?.pause()}catch{}; audioIndex=-1;
     if(playIndicator) playIndicator.hidden = true;
   };
   const tickPlay = (now) => {
@@ -217,7 +220,7 @@
     const chapter = chapterForTime(t);
     const max = Math.max(1, document.documentElement.scrollHeight-innerHeight);
     if(max>1) scrollTo({top:(t/duration)*max,behavior:'auto'});
-    visualTick(t); updateNarration(t);
+    visualTick(t); updateNarration(t, true);
     if(t>=duration-.02){ stop(); return; }
     raf=requestAnimationFrame(tickPlay);
   };
@@ -229,7 +232,7 @@
     if(baseTime >= duration-.25) baseTime=0;
     startAt = performance.now();
     visualTick(baseTime);
-    updateNarration(baseTime);
+    updateNarration(baseTime, true);
     raf=requestAnimationFrame(tickPlay);
   };
   const toggle = () => playing ? stop() : start();
@@ -240,7 +243,7 @@
 
   addEventListener('scroll', () => { if(!playing && !window.__hexadModuleReady) visualTick(); }, {passive:true});
   addEventListener('resize', () => { if(!playing && !window.__hexadModuleReady) visualTick(); }, {passive:true});
-  addEventListener('beforeunload', () => { try{fallbackAudio?.pause()}catch{}; });
+  addEventListener('beforeunload', () => { try{fallbackAudio?.pause()}catch{}; try{narrationMaster?.pause()}catch{}; });
   window.__hexadImageRuntime = {start, stop, setFrame, visualTick};
   document.body.classList.add('hx81-image-first');
   // Paint the first frame immediately. A black loader/3D bootstrap must never gate the artwork.
