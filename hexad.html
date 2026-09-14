@@ -10,8 +10,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="hexad-v72-cinematic.css">
+<link rel="preload" as="image" href="assets/hexad/storyboard/frames/001.webp" fetchpriority="high">
 </head>
-<body>
+<body class="hx81-image-first">
 <a class="hx72-skip" href="#hx71-story">PULAR PARA A EXPERIÊNCIA</a>
 <div id="hx72-loader" class="hx72-loader" aria-live="polite">
   <div>
@@ -28,8 +29,8 @@
   <canvas id="hx71-canvas" aria-hidden="true"></canvas>
   <div class="hx71-vignette" aria-hidden="true"></div>
   <div id="hx71-storyboard-stage" class="hx71-storyboard-stage" aria-hidden="true">
-    <div class="hx71-storyboard-frame hx71-storyboard-a"><img id="hx71-storyboard-img-a" alt="" decoding="async"></div>
-    <div class="hx71-storyboard-frame hx71-storyboard-b"><img id="hx71-storyboard-img-b" alt="" decoding="async"></div>
+    <div class="hx71-storyboard-frame hx71-storyboard-a"><img id="hx71-storyboard-img-a" src="assets/hexad/storyboard/frames/001.webp" alt="Frame 001 — O Vazio" decoding="sync" loading="eager" fetchpriority="high"></div>
+    <div class="hx71-storyboard-frame hx71-storyboard-b"><img id="hx71-storyboard-img-b" alt="" decoding="async" loading="lazy"></div>
     <div class="hx71-storyboard-wash"></div>
     <div class="hx71-storyboard-meta"><span id="hx71-storyboard-act">FRAME 001 / 098</span><b id="hx71-storyboard-sync">NARRAÇÃO · SINCRONIZADA</b></div>
   </div>
@@ -285,6 +286,7 @@
   window.addEventListener('hexad:booted', () => { booted = true; clearTimeout(watchdog); revealLoader('Universo pronto'); }, {once:true});
 })();
 </script>
+<script src="hexad-image-first-runtime.js"></script>
 <script type="module" src="hexad-v72-cinematic.js"></script>
 <script type="module" src="hexad-v82-ux.js"></script>
 </body>
