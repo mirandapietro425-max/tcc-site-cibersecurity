@@ -1,8 +1,23 @@
 
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
-import {GLTFLoader} from 'https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/loaders/GLTFLoader.js';
+// Robust module bootstrap: prefer jsDelivr, then fall back to esm.sh/unpkg.
+// The cinematic fallback below still works if all WebGL/CDN imports fail.
+let THREE, GLTFLoader;
+try {
+  THREE = await import('https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js');
+  ({GLTFLoader} = await import('https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/loaders/GLTFLoader.js'));
+} catch (primaryError) {
+  console.warn('HEXAD primary Three.js CDN unavailable; trying fallback CDN.', primaryError);
+  try {
+    THREE = await import('https://esm.sh/three@0.180.0');
+    ({GLTFLoader} = await import('https://esm.sh/three@0.180.0/examples/jsm/loaders/GLTFLoader.js?bundle'));
+  } catch (secondaryError) {
+    console.warn('HEXAD secondary Three.js CDN unavailable; enabling cinematic fallback.', secondaryError);
+    window.__hexadThreeUnavailable = true;
+  }
+}
 
 const BASE='assets/hexad/';
+window.__hexadModuleReady = true;
 const app=document.querySelector('#hx71');
 const story=document.querySelector('#hx71-story');
 const progressFill=document.querySelector('#hx71-progress-fill');
@@ -133,6 +148,7 @@ worlds.forEach((w,i)=>{
 
 function setupMemory(){
   const grid=document.querySelector('#hx71-memory-grid');
+  if(!grid || grid.children.length) return;
   const ranges=[
     [1,11,'ATO 01'],[12,23,'ATO 02'],[24,36,'ATO 03–04'],[37,48,'ATO 04–05'],[49,57,'ATO 06'],
     [58,70,'ATO 07'],[71,81,'ATO 08'],[82,98,'ATO 09']
@@ -141,7 +157,7 @@ function setupMemory(){
     const b=document.createElement('button');b.className='hx71-memory-item';b.type='button';
     let label='STORYBOARD';
     for(const r of ranges) if(i>=r[0]&&i<=r[1]) label=r[2];
-    b.innerHTML=`<img src="${BASE}storyboard/thumbs/${String(i).padStart(3,'0')}.webp" alt="Frame ${String(i).padStart(3,'0')} — ${label}" loading="lazy"><span>${String(i).padStart(3,'0')}</span>`;
+    b.innerHTML=`<img src="${BASE}storyboard/thumbs/${String(i).padStart(3,'0')}.webp" alt="Frame ${String(i).padStart(3,'0')} — ${label}" loading="lazy" onerror="this.src='assets/hexad/2d/hexad-overview.webp'"><span>${String(i).padStart(3,'0')}</span>`;
     b.addEventListener('click',()=>openFrameViewer(i));
     grid.appendChild(b);
   }
@@ -157,7 +173,8 @@ function openFrameViewer(i){
     viewer.querySelector('#hx71-frame-close').addEventListener('click',()=>viewer.classList.remove('is-open'));
   }
   const names=['001_001_00-04_vazio-particulas.jpg','002_M01_entre-001-002_particulas-nascem.jpg'];
-  viewer.querySelector('#hx71-frame-img').src=`${BASE}storyboard/thumbs/${String(i).padStart(3,'0')}.webp`;
+  viewer.querySelector('#hx71-frame-img').src=`${BASE}storyboard/frames/${String(i).padStart(3,'0')}.webp`;
+  viewer.querySelector('#hx71-frame-img').onerror=()=>{viewer.querySelector('#hx71-frame-img').src=`${BASE}storyboard/thumbs/${String(i).padStart(3,'0')}.webp`};
   viewer.querySelector('#hx71-frame-title').textContent=`FRAME ${String(i).padStart(3,'0')}`;
   viewer.classList.add('is-open');
 }
@@ -248,6 +265,9 @@ document.querySelectorAll('[data-investigate]').forEach((b,i)=>{
 document.querySelector('#hx71-restart').addEventListener('click',()=>{experience.playing=false;experience.time=0;setScrollFromTime(0);closePanels()});
 
 function setup3D(){
+  if(window.__hexadThreeUnavailable || !THREE || !GLTFLoader){
+    throw new Error('Three.js unavailable; using cinematic fallback');
+  }
   const canvas=document.querySelector('#hx71-canvas');
   const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'high-performance'});
   renderer.setPixelRatio(Math.min(devicePixelRatio,innerWidth<800?1.25:1.7));
@@ -295,16 +315,28 @@ const loader=new GLTFLoader(loadingManager);
   const planets=[];
   const satellites=[];
   const nodes=[];
-  function load(name,group,cb){loader.load(BASE+'3d/'+name,g=>{const m=g.scene;m.traverse(o=>{if(o.isMesh){o.frustumCulled=true;if(o.material){o.material.metalness=Math.min(1,(o.material.metalness??.45)+.1);o.material.roughness=Math.max(.2,(o.material.roughness??.5)-.05)}}});cb(m)},undefined,err=>console.warn('HEXAD asset',name,err))}
+  function load(name,group,cb){
+    loader.load(BASE+'3d/'+name,g=>{
+      const m=g.scene;
+      m.traverse(o=>{if(o.isMesh){o.frustumCulled=true;if(o.material){o.material.metalness=Math.min(1,(o.material.metalness??.45)+.1);o.material.roughness=Math.max(.2,(o.material.roughness??.5)-.05)}}});
+      group?.add(m);
+      cb(m);
+    },undefined,err=>console.warn('HEXAD asset',name,err));
+  }
 
-  load('hexad-data-core.glb',coreGroup,m=>{core=m;core.scale.setScalar(1.25);markCritical()});
-  load('hexad-data-fragment.glb',root,m=>{fragment=m;fragment.scale.setScalar(.58);markCritical()});
-  load('hexad-drone.glb',droneGroup,m=>{drone=m;drone.scale.setScalar(.68);markCritical()});
-  load('hexad-scanner.glb',droneGroup,m=>{scanner=m;scanner.scale.setScalar(.5);scanner.visible=false});
-  load('hexad-sun.glb',root,m=>{sun=m;sun.scale.setScalar(.5);sun.visible=false});
-  worlds.forEach((w,i)=>load(w.model,worldGroup,m=>{m.userData.index=i;m.scale.setScalar(.7);m.position.set(Math.cos(i*Math.PI/3-Math.PI/2)*3.15,Math.sin(i*Math.PI/3-Math.PI/2)*1.15,Math.sin(i*Math.PI/3-Math.PI/2)*1.35);planets[i]=m}));
-  for(let i=0;i<6;i++)load('hexad-satellite.glb',orbitGroup,m=>{m.scale.setScalar(.24);m.userData.phase=i;satellites.push(m)});
-  for(let i=0;i<6;i++)load('hexad-node.glb',orbitGroup,m=>{m.scale.setScalar(.12);m.userData.phase=i;nodes.push(m)});
+  load('hexad-data-core.glb',coreGroup,m=>{core=m;core.scale.setScalar(1.25);if(sceneApi)sceneApi.core=core;markCritical()});
+  load('hexad-data-fragment.glb',root,m=>{fragment=m;fragment.scale.setScalar(.58);if(sceneApi)sceneApi.fragment=fragment;markCritical()});
+  // Drone is secondary to the initial reveal: it can arrive progressively.
+  const loadSecondary=()=>{
+    load('hexad-drone.glb',droneGroup,m=>{drone=m;drone.scale.setScalar(.68);if(sceneApi)sceneApi.drone=drone});
+    load('hexad-scanner.glb',droneGroup,m=>{scanner=m;scanner.scale.setScalar(.5);scanner.visible=false;if(sceneApi)sceneApi.scanner=scanner});
+    load('hexad-sun.glb',root,m=>{sun=m;sun.scale.setScalar(.5);sun.visible=false;if(sceneApi)sceneApi.sun=sun});
+    worlds.forEach((w,i)=>load(w.model,worldGroup,m=>{m.userData.index=i;m.scale.setScalar(.7);m.position.set(Math.cos(i*Math.PI/3-Math.PI/2)*3.15,Math.sin(i*Math.PI/3-Math.PI/2)*1.15,Math.sin(i*Math.PI/3-Math.PI/2)*1.35);planets[i]=m}));
+    for(let i=0;i<6;i++)load('hexad-satellite.glb',orbitGroup,m=>{m.scale.setScalar(.24);m.userData.phase=i;satellites.push(m)});
+    for(let i=0;i<6;i++)load('hexad-node.glb',orbitGroup,m=>{m.scale.setScalar(.12);m.userData.phase=i;nodes.push(m)});
+  };
+  const kickSecondary=()=>('requestIdleCallback' in window ? requestIdleCallback(loadSecondary,{timeout:1200}) : setTimeout(loadSecondary,120));
+  window.addEventListener('hexad:booted',kickSecondary,{once:true});
 
   function resize(){const w=innerWidth,h=innerHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h,false)}
   addEventListener('resize',resize,{passive:true});resize();
