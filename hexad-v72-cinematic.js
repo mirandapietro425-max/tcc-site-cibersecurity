@@ -18,6 +18,9 @@ try {
 
 const BASE='assets/hexad/';
 import { STORYBOARD_SEQUENCE } from './assets/hexad/storyboard/storyboard-sequence.js';
+import { FRAME_CONTEXT } from './assets/hexad/storyboard/frame-context.js';
+const frameSource=(id)=>{const n=String(id).padStart(3,'0'); return `${BASE}storyboard/frames/${n}.webp`;};
+const frameContext=(id)=>FRAME_CONTEXT.find(x=>x.id===Number(id))||null;
 window.__hexadModuleReady = true;
 const app=document.querySelector('#hx71');
 const story=document.querySelector('#hx71-story');
@@ -43,7 +46,7 @@ function preloadStoryboard(id){
   if(storyboardWarm.has(id)) return storyboardWarm.get(id);
   const entry=STORYBOARD_SEQUENCE.find(x=>x.id===id);
   if(!entry) return Promise.resolve(false);
-  const p=new Promise(resolve=>{const im=new Image(); im.decoding='async'; im.onload=()=>resolve(true); im.onerror=()=>resolve(false); im.src=entry.src;});
+  const p=new Promise(resolve=>{const im=new Image(); im.decoding='async'; im.onload=()=>resolve(true); im.onerror=()=>resolve(false); im.src=frameSource(entry.id);});
   storyboardWarm.set(id,p);
   return p;
 }
@@ -69,7 +72,7 @@ async function syncStoryboard(t,force=false){
   const ok=await preloadStoryboard(entry.id);
   if(requestId!==storyboardRequestId || idx!==storyboardIndex) return;
   if(!ok){if(storyboardSync) storyboardSync.textContent='STORYBOARD · FALLBACK'; return;}
-  img.src=entry.src;
+  img.src=frameSource(entry.id);
   img.alt=`Frame ${String(entry.id).padStart(3,'0')} do storyboard auditado`;
   storyboardImgs.forEach((el,i)=>el?.classList.toggle('is-active',i===layer));
   if(storyboardAct) storyboardAct.textContent=`FRAME ${String(entry.id).padStart(3,'0')} / 098`;
@@ -207,7 +210,7 @@ function setupMemory(){
     const b=document.createElement('button');b.className='hx71-memory-item';b.type='button';
     let label='STORYBOARD';
     for(const r of ranges) if(i>=r[0]&&i<=r[1]) label=r[2];
-    b.innerHTML=`<img src="${BASE}storyboard/frames/${String(i).padStart(3,'0')}.webp" alt="Frame ${String(i).padStart(3,'0')} — ${label}" loading="lazy" ><span>${String(i).padStart(3,'0')}</span>`;
+    b.innerHTML=`<img src="${BASE}storyboard/thumbs/${String(i).padStart(3,'0')}.webp" alt="Frame ${String(i).padStart(3,'0')} — ${label}" loading="lazy" ><span>${String(i).padStart(3,'0')}</span>`;
     b.addEventListener('click',()=>openFrameViewer(i));
     grid.appendChild(b);
   }
@@ -670,6 +673,8 @@ setupAudio();
 setTimeFromScroll();
 
 updateUI(true);
+// V81: image-first presentation is active from the first frame; playback only adds motion/audio.
+document.body.classList.add('hx81-image-first');
 frame(performance.now());
 
 // initial hero video fallback for reduced motion: still image remains behind 3D.

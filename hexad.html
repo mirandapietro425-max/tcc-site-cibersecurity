@@ -175,6 +175,7 @@
   <div id="hx71-caption" class="hx71-caption"><span id="hx71-caption-kicker">O VAZIO</span><p id="hx71-caption-text">Partículas quase imóveis.</p></div>
   <button id="hx71-sound-small" class="hx71-sound-small" type="button">SOM OFF</button>
   <div id="hx71-play-indicator" class="hx71-play-indicator" hidden><span></span> FILME EM REPRODUÇÃO</div>
+  <div class="hx81-image-first-note" aria-hidden="true"><span>FILME VISUAL</span><i></i><b>98 FRAMES · NARRATIVA PRINCIPAL</b></div>
 
   <aside id="hx72-deck" class="hx72-deck" aria-hidden="true">
     <div class="hx72-deck-backdrop"></div>
@@ -195,6 +196,24 @@
     </div>
   </aside>
 </div>
+
+<aside id="hx82-film-rail" class="hx82-film-rail" aria-label="Controles do filme">
+  <div class="hx82-rail-top"><span id="hx82-rail-act">ATO 01 · O VAZIO</span><b id="hx82-rail-frame">001 / 098</b></div>
+  <div class="hx82-rail-actions">
+    <button id="hx82-rail-play" type="button" aria-label="Reproduzir ou pausar o filme">▶</button>
+    <button id="hx82-rail-inspect" type="button">INSPECIONAR MOMENTO</button>
+    <button id="hx82-rail-lens" type="button">LENTE HEXAD</button>
+    <button id="hx82-rail-compare" type="button">COMPARAR</button>
+  </div>
+  <div class="hx82-rail-hint">SCROLL / SWIPE · NAVEGUE PELO FILME</div>
+</aside>
+<aside id="hx82-lens-panel" class="hx82-lens-panel" aria-hidden="true">
+  <div class="hx82-lens-inner">
+    <header class="hx82-lens-head"><div><span class="hx71-kicker">LENTE HEXAD</span><h3>O que este momento revela?</h3><p id="hx82-lens-context">A imagem mostra a informação dentro da narrativa.</p></div><button id="hx82-lens-close" class="hx71-close" type="button">FECHAR ×</button></header>
+    <div class="hx82-lens-grid" id="hx82-lens-grid"></div>
+    <div class="hx82-lens-detail" id="hx82-lens-detail"><span>LEIA A IMAGEM COMO EVIDÊNCIA</span><p></p></div>
+  </div>
+</aside>
 <script>
 (() => {
   const loader = document.getElementById('hx72-loader');
@@ -267,5 +286,6 @@
 })();
 </script>
 <script type="module" src="hexad-v72-cinematic.js"></script>
+<script type="module" src="hexad-v82-ux.js"></script>
 </body>
 </html>
