@@ -185,6 +185,41 @@
     </div>
   </aside>
 </div>
+<script>
+(() => {
+  const loader = document.getElementById('hx72-loader');
+  const copy = document.getElementById('hx72-loader-copy');
+  const bar = document.getElementById('hx72-loader-bar-fill');
+  let booted = false;
+  const watchdog = setTimeout(() => {
+    if (booted) return;
+    booted = true;
+    document.body.classList.add('hx72-boot-fallback');
+    if (copy) copy.textContent = 'Modo cinematográfico';
+    if (bar) bar.style.width = '100%';
+    loader?.classList.add('is-done');
+    const video = document.getElementById('hx71-cinema-video');
+    const film = document.getElementById('hx71-film');
+    film?.addEventListener('click', async () => {
+      const src = document.getElementById('hx71-cinema-webm');
+      const mp4 = document.getElementById('hx71-cinema-mp4');
+      if (src) src.src = 'assets/hexad/video/hexad-genesis.webm';
+      if (mp4) mp4.src = 'assets/hexad/video/hexad-genesis.mp4';
+      video?.load();
+      try { await video?.play(); } catch {}
+      document.querySelector('.hx71-cinema-layer')?.style.setProperty('opacity','1');
+    }, {once:false});
+    document.querySelector('#hx71-index')?.addEventListener('click', () => {
+      const first = document.querySelector('.hx71-chapter[data-start="0"]');
+      first?.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+    document.querySelector('#hx71-memory')?.addEventListener('click', () => {
+      document.querySelector('#hx71-memory-drawer')?.classList.add('is-open');
+    });
+  }, 7500);
+  window.addEventListener('hexad:booted', () => { booted = true; clearTimeout(watchdog); }, {once:true});
+})();
+</script>
 <script type="module" src="hexad-v72-cinematic.js"></script>
 </body>
 </html>

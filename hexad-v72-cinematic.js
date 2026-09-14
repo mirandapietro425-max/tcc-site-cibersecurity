@@ -270,10 +270,26 @@ function setup3D(){
   const sg=new THREE.BufferGeometry();sg.setAttribute('position',new THREE.BufferAttribute(starPos,3));
   const stars=new THREE.Points(sg,new THREE.PointsMaterial({color:0xb9d7ff,size:.021,transparent:true,opacity:.54}));scene.add(stars);
 
-  const loadingManager=new THREE.LoadingManager();
-loadingManager.onStart=(_,loaded,total)=>{ if(loaderBar){loaderBar.style.width='4%';loaderCopy.textContent='Preparando ativos' } };
-loadingManager.onProgress=(_,loaded,total)=>{ if(loaderBar){loaderBar.style.width=Math.max(4,Math.round((loaded/Math.max(total,1))*92))+'%';loaderCopy.textContent=`Carregando universo · ${loaded}/${total}` } };
-loadingManager.onLoad=()=>{ if(loaderBar) loaderBar.style.width='100%'; if(loaderCopy) loaderCopy.textContent='Universo pronto'; setTimeout(()=>loaderEl?.classList.add('is-done'),320); };
+  let bootFinished=false;
+let criticalLoaded=0;
+function finishBoot(label='Universo pronto'){
+  if(bootFinished)return;
+  bootFinished=true;
+  if(loaderBar) loaderBar.style.width='100%';
+  if(loaderCopy) loaderCopy.textContent=label;
+  loaderEl?.classList.add('is-done');
+  window.dispatchEvent(new CustomEvent('hexad:booted',{detail:{label}}));
+}
+const bootTimeout=setTimeout(()=>finishBoot('Experiência pronta'),4800);
+const markCritical=()=>{
+  criticalLoaded++;
+  if(criticalLoaded>=2){ clearTimeout(bootTimeout); finishBoot('Universo pronto'); }
+};
+const loadingManager=new THREE.LoadingManager();
+loadingManager.onStart=(_,loaded,total)=>{ if(loaderBar){loaderBar.style.width='4%';loaderCopy.textContent='Preparando o universo' } };
+loadingManager.onProgress=(_,loaded,total)=>{ if(loaderBar){loaderBar.style.width=Math.max(8,Math.min(88,Math.round((loaded/Math.max(total,1))*88)))+'%';loaderCopy.textContent=`Carregando universo · ${loaded}/${total}` } };
+loadingManager.onLoad=()=>finishBoot('Universo pronto');
+loadingManager.onError=(url)=>console.warn('HEXAD asset load failed',url);
 const loader=new GLTFLoader(loadingManager);
   let core=null,fragment=null,drone=null,scanner=null,sun=null;
   const planets=[];
@@ -281,9 +297,9 @@ const loader=new GLTFLoader(loadingManager);
   const nodes=[];
   function load(name,group,cb){loader.load(BASE+'3d/'+name,g=>{const m=g.scene;m.traverse(o=>{if(o.isMesh){o.frustumCulled=true;if(o.material){o.material.metalness=Math.min(1,(o.material.metalness??.45)+.1);o.material.roughness=Math.max(.2,(o.material.roughness??.5)-.05)}}});cb(m)},undefined,err=>console.warn('HEXAD asset',name,err))}
 
-  load('hexad-data-core.glb',coreGroup,m=>{core=m;core.scale.setScalar(1.25)});
-  load('hexad-data-fragment.glb',root,m=>{fragment=m;fragment.scale.setScalar(.58)});
-  load('hexad-drone.glb',droneGroup,m=>{drone=m;drone.scale.setScalar(.68)});
+  load('hexad-data-core.glb',coreGroup,m=>{core=m;core.scale.setScalar(1.25);markCritical()});
+  load('hexad-data-fragment.glb',root,m=>{fragment=m;fragment.scale.setScalar(.58);markCritical()});
+  load('hexad-drone.glb',droneGroup,m=>{drone=m;drone.scale.setScalar(.68);markCritical()});
   load('hexad-scanner.glb',droneGroup,m=>{scanner=m;scanner.scale.setScalar(.5);scanner.visible=false});
   load('hexad-sun.glb',root,m=>{sun=m;sun.scale.setScalar(.5);sun.visible=false});
   worlds.forEach((w,i)=>load(w.model,worldGroup,m=>{m.userData.index=i;m.scale.setScalar(.7);m.position.set(Math.cos(i*Math.PI/3-Math.PI/2)*3.15,Math.sin(i*Math.PI/3-Math.PI/2)*1.15,Math.sin(i*Math.PI/3-Math.PI/2)*1.35);planets[i]=m}));
@@ -294,8 +310,8 @@ const loader=new GLTFLoader(loadingManager);
   addEventListener('resize',resize,{passive:true});resize();
   sceneApi={renderer,scene,camera,root,core,fragment,drone,scanner,sun,planets,stars,orbitGroup,satellites,nodes,key,rim,threatLight};
 }
-try{setup3D()}catch(err){console.error(err);document.body.classList.add('hx71-no-webgl'); loaderCopy&&(loaderCopy.textContent='Modo cinematográfico'); setTimeout(()=>loaderEl?.classList.add('is-done'),600)}
-if(!sceneApi) setTimeout(()=>loaderEl?.classList.add('is-done'),900);
+try{setup3D()}catch(err){console.error(err);document.body.classList.add('hx71-no-webgl'); clearTimeout(bootTimeout); finishBoot('Modo cinematográfico')}
+if(!sceneApi){ clearTimeout(bootTimeout); finishBoot('Modo cinematográfico'); }
 
 
 function visual(t,now){
