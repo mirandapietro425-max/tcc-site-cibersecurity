@@ -1,0 +1,37 @@
+/* CyberShield chain final image framing — preserve interaction, make artwork readable. */
+.attack-page .atlas-frame{
+  aspect-ratio:16/9;
+  min-height:0;
+  height:min(70vw,720px);
+}
+.attack-page .atlas-image{
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  filter:saturate(.92) contrast(1.03) brightness(.82)!important;
+}
+.attack-page .atlas-hotspots{inset:0!important;}
+.attack-page .atlas-focus{
+  left:18px!important;bottom:18px!important;
+  max-width:min(360px,42%);
+  z-index:12;
+}
+@media(max-width:760px){
+  .attack-page .atlas-frame{
+    width:100%; height:auto; min-height:0; aspect-ratio:16/9;
+  }
+  .attack-page .atlas-image{object-fit:cover!important;}
+  .attack-page .atlas-focus{
+    left:10px!important;right:10px!important;bottom:10px!important;
+    max-width:none!important;padding:10px 12px!important;
+    background:rgba(4,10,16,.62)!important;
+    backdrop-filter:blur(8px);
+  }
+  .attack-page .atlas-hot{width:34px;height:34px;}
+}
+@media(max-width:380px){
+  .attack-page .atlas-hot{width:30px;height:30px;font-size:.46rem;}
+  .attack-page .atlas-focus{font-size:.78rem!important;}
+}

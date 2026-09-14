@@ -45,3 +45,22 @@
   .attack-page .object-stage-image{width:96%; left:2%; bottom:4%; border-radius:10px;}
   .attack-page .object-stage-image img{aspect-ratio:16/9; object-fit:contain; box-shadow:0 20px 45px rgba(0,0,0,.38);}
 }
+
+
+/* Final image presentation: each supplied 16:9 artwork fills the entire attack scene. */
+.attack-page .attack-scene{position:relative;overflow:hidden;}
+.attack-page .object-stage-image{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;left:0!important;bottom:auto!important;z-index:5!important;opacity:0;pointer-events:none;transition:opacity .55s ease,transform .8s cubic-bezier(.2,.8,.2,1);transform:scale(1.015);}
+.attack-page .object-stage-image img{display:block!important;width:100%!important;height:100%!important;max-width:none!important;aspect-ratio:auto!important;object-fit:cover!important;object-position:center!important;border-radius:0!important;filter:saturate(.94) contrast(1.04) brightness(.72)!important;}
+.attack-page .attack-scene[data-stage="recon"] .object-recon,
+.attack-page .attack-scene[data-stage="weapon"] .object-weapon,
+.attack-page .attack-scene[data-stage="delivery"] .object-delivery,
+.attack-page .attack-scene[data-stage="exploit"] .object-exploit-image,
+.attack-page .attack-scene[data-stage="install"] .object-install-image,
+.attack-page .attack-scene[data-stage="c2"] .object-c2-image,
+.attack-page .attack-scene[data-stage="objectives"] .object-objectives-image{opacity:1;transform:scale(1);}
+.attack-page .attack-scene:after{content:"";position:absolute;inset:0;z-index:6;pointer-events:none;background:linear-gradient(90deg,rgba(3,8,13,.66),rgba(3,8,13,.08) 48%,rgba(3,8,13,.48)),linear-gradient(180deg,rgba(3,8,13,.18),transparent 40%,rgba(3,8,13,.58));}
+.attack-page .attack-scene > :not(.object-stage-image):not(.scene-object){z-index:7;}
+@media(max-width:760px){
+  .attack-page .object-stage-image{inset:0!important;width:100%!important;height:100%!important;}
+  .attack-page .object-stage-image img{object-fit:cover!important;object-position:center!important;}
+}

@@ -1,0 +1,20 @@
+/* Main experience: keep privacy environment readable on narrow screens. */
+@media(max-width:700px){
+  #experience .chapter-privacy .webgl{
+    transform:scale(.88)!important;
+    transform-origin:center center;
+    width:113.64%!important;
+    height:113.64%!important;
+    left:-6.82%!important;
+    top:-6.82%!important;
+  }
+}
+@media(max-width:390px){
+  #experience .chapter-privacy .webgl{
+    transform:scale(.82)!important;
+    width:121.95%!important;
+    height:121.95%!important;
+    left:-10.98%!important;
+    top:-10.98%!important;
+  }
+}

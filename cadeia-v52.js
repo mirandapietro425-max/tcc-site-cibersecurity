@@ -98,11 +98,12 @@
       b.textContent=String(i+1).padStart(2,'0');
       b.style.left=`${x}%`;
       b.style.top=`${y}%`;
-      b.dataset.stageIndex=String(i);
+      b.dataset.stageIndex=String(i); b.dataset.targetStage=stages[i].id;
       b.setAttribute('aria-label',`${stages[i].index} ${stages[i].name}`);
       b.title=`Ir para ${stages[i].index} · ${stages[i].name}`;
       b.addEventListener('click',()=>{
         setActive(i,true);
+        scene.dataset.stage=stages[i].id;
         document.getElementById('theater')?.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
       });
       holder.appendChild(b);

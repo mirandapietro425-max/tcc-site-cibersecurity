@@ -572,11 +572,14 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
           world.group.position.set(0,0,0);
           world.group.rotation.z=0;
         } else {
-          world.camera.position.z=(cfg.target>4.4?10:9) - centered*1.75;
-          world.camera.position.x=world.mouse.x*(1.5+centered*1.2);
-          world.camera.position.y=world.mouse.y*(-.55-centered*.35);
+          const privacyMobile = world.kind==='privacy' && matchMedia('(max-width:700px)').matches;
+          world.camera.position.z = privacyMobile
+            ? 11.8 - centered*0.9
+            : (cfg.target>4.4?10:9) - centered*1.75;
+          world.camera.position.x=world.mouse.x*(privacyMobile ? .8 : (1.5+centered*1.2));
+          world.camera.position.y=world.mouse.y*(privacyMobile ? -.28 : (-.55-centered*.35));
 
-          world.group.position.y=(local-.5)*.65;
+          world.group.position.y=(local-.5)*(privacyMobile ? .38 : .65);
           world.group.rotation.z=(local-.5)*.06;
         }
 

@@ -79,6 +79,7 @@
     const letters = [...heading.querySelectorAll('.v70-letter')];
     letters.forEach((letter, i) => {
       const delay = reduced ? 0 : (intro ? Math.min(i, 36) * 42 : Math.min(i, 36) * 34);
+      letter.style.setProperty('--v70-delay', `${delay}ms`);
       setTimeout(() => {
         letter.classList.add('is-visible');
         playLetterSound(i);
@@ -97,8 +98,8 @@
 
     // Desktop: do not start while the user is still in the previous scene.
     // Mobile keeps the more forgiving trigger that was already working well.
-    const topLimit = innerWidth <= 700 ? innerHeight * 0.82 : innerHeight * 0.58;
-    const bottomLimit = innerWidth <= 700 ? innerHeight * 0.18 : innerHeight * 0.26;
+    const topLimit = innerHeight * 0.82;
+    const bottomLimit = innerHeight * 0.18;
     return r.top <= topLimit && r.bottom >= bottomLimit;
   }
 
@@ -140,7 +141,7 @@
       });
     }, {
       root: null,
-      rootMargin: innerWidth <= 700 ? '-10% 0px -18% 0px' : '-34% 0px -34% 0px',
+      rootMargin: '-10% 0px -18% 0px',
       threshold: 0.01
     });
 

@@ -64,3 +64,64 @@ html,body{overflow-x:hidden;}
   .chapter-intro .hero-3d .v70-letter{display:inline-block;white-space:pre;opacity:0;transform:translate3d(0,22px,0) scale(.985);filter:blur(6px);}
   .chapter-intro .hero-3d .v70-letter.is-visible{opacity:1;transform:none;filter:none;}
 }
+
+/* V70 final desktop parity: the same readable arrival choreography is used on every viewport. */
+@keyframes v70LetterRender{
+  0%{opacity:0;transform:translate3d(0,22px,0) scale(.975);filter:blur(6px)}
+  55%{opacity:.82;filter:blur(2px)}
+  100%{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}
+}
+.v70-letter{
+  opacity:0!important;
+  transform:translate3d(0,22px,0) scale(.975)!important;
+  filter:blur(6px)!important;
+  display:inline-block!important;
+  white-space:pre!important;
+  vertical-align:baseline;
+}
+.v70-letter.is-visible{
+  opacity:1!important;
+  transform:none!important;
+  filter:none!important;
+  animation:v70LetterRender .72s cubic-bezier(.2,.82,.2,1) both;
+}
+.chapter-intro .hero-3d .v70-letter{
+  opacity:0!important;
+  transform:translate3d(0,22px,0) scale(.975)!important;
+  filter:blur(6px)!important;
+}
+.chapter-intro .hero-3d .v70-letter.is-visible{
+  opacity:1!important;
+  transform:none!important;
+  filter:none!important;
+  animation:v70LetterRender .82s cubic-bezier(.2,.82,.2,1) both;
+}
+@media(prefers-reduced-motion:reduce){
+  .v70-letter,.chapter-intro .hero-3d .v70-letter{opacity:1!important;transform:none!important;filter:none!important;animation:none!important}
+}
+
+/* Live Signal / scanning trail: visible on desktop and mobile. */
+.protect-v32-scan{
+  z-index:4!important;
+  opacity:.72!important;
+  overflow:hidden;
+  background:linear-gradient(180deg,transparent 0%,rgba(112,231,247,.03) 42%,rgba(112,231,247,.12) 50%,rgba(112,231,247,.03) 58%,transparent 100%)!important;
+  background-size:100% 34%!important;
+  animation:protectScanFull 6.5s linear infinite!important;
+  mix-blend-mode:screen;
+}
+.protect-v32-scan::after{
+  content:"";
+  position:absolute;
+  left:-12%;
+  right:-12%;
+  top:-5%;
+  height:2px;
+  background:linear-gradient(90deg,transparent,rgba(112,231,247,.14) 18%,rgba(112,231,247,.95) 50%,rgba(140,255,181,.34) 82%,transparent);
+  box-shadow:0 0 18px rgba(112,231,247,.52),0 0 48px rgba(112,231,247,.24);
+  filter:blur(.15px);
+  animation:protectSignalBeam 4.8s cubic-bezier(.45,0,.55,1) infinite;
+}
+@keyframes protectScanFull{0%{background-position:0 -34%}100%{background-position:0 134%}}
+@keyframes protectSignalBeam{0%{transform:translateY(-40%);opacity:0}10%{opacity:.9}50%{opacity:1}90%{opacity:.9}100%{transform:translateY(5400%);opacity:0}}
+@media(prefers-reduced-motion:reduce){.protect-v32-scan{animation:none!important}.protect-v32-scan::after{animation:none!important;opacity:.35}}
