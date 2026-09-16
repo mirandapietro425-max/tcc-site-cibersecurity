@@ -27,8 +27,6 @@ const progressFill=document.querySelector('#hx71-progress-fill');
 const timeLabel=document.querySelector('#hx71-time');
 const chapterNo=document.querySelector('#hx71-chapter-no');
 const chapterName=document.querySelector('#hx71-chapter-name');
-const captionKicker=document.querySelector('#hx71-caption-kicker');
-const captionText=document.querySelector('#hx71-caption-text');
 const videoLayer=document.querySelector('.hx71-cinema-layer');
 const cinemaVideo=document.querySelector('#hx71-cinema-video');
 const storyboardStage=document.querySelector('#hx71-storyboard-stage');
@@ -133,15 +131,15 @@ const loaderCopy=document.querySelector('#hx72-loader-copy');
 const DURATION=376.659;
 let filmPlaybackRate=1;
 const chapters=[
-  {id:'void',name:'O VAZIO',start:0,end:38.269,cap:'O VAZIO',copy:'Partículas quase imóveis.'},
-  {id:'birth',name:'O NASCIMENTO',start:38.269,end:80.509,cap:'FORMAÇÃO',copy:'O fragmento encontra estrutura.'},
-  {id:'forces',name:'AS SEIS FORÇAS',start:80.509,end:109.4,cap:'SEIS CONDIÇÕES',copy:'Uma informação, seis propriedades.'},
-  {id:'equilibrium',name:'O EQUILÍBRIO',start:109.4,end:114.364,cap:'EQUILÍBRIO',copy:'Tudo responde em conjunto.'},
-  {id:'threat',name:'A AMEAÇA',start:114.364,end:163.683,cap:'AMEAÇA',copy:'O sistema observa.'},
-  {id:'collapse',name:'O COLAPSO',start:163.683,end:223.53,cap:'COLAPSO',copy:'O universo não explode. Ele falha.'},
-  {id:'investigation',name:'A INVESTIGAÇÃO',start:223.53,end:274.756,cap:'EVIDÊNCIA',copy:'Cada leitura reduz a incerteza.'},
-  {id:'restoration',name:'A RESTAURAÇÃO',start:274.756,end:336.039,cap:'RESTAURAÇÃO',copy:'Detectar. Isolar. Reparar. Verificar. Restaurar. Estabilizar.'},
-  {id:'synthesis',name:'A SÍNTESE',start:336.039,end:DURATION,cap:'SÍNTESE',copy:'Seis forças, um sistema, uma informação.'}
+  {id:'void',name:'O VAZIO',start:0,end:38.269,copy:'Partículas quase imóveis.'},
+  {id:'birth',name:'O NASCIMENTO',start:38.269,end:80.509,copy:'O fragmento encontra estrutura.'},
+  {id:'forces',name:'AS SEIS FORÇAS',start:80.509,end:109.4,copy:'Uma informação, seis propriedades.'},
+  {id:'equilibrium',name:'O EQUILÍBRIO',start:109.4,end:114.364,copy:'Tudo responde em conjunto.'},
+  {id:'threat',name:'A AMEAÇA',start:114.364,end:163.683,copy:'O sistema observa.'},
+  {id:'collapse',name:'O COLAPSO',start:163.683,end:223.53,copy:'O universo não explode. Ele falha.'},
+  {id:'investigation',name:'A INVESTIGAÇÃO',start:223.53,end:274.756,copy:'Cada leitura reduz a incerteza.'},
+  {id:'restoration',name:'A RESTAURAÇÃO',start:274.756,end:336.039,copy:'Detectar. Isolar. Reparar. Verificar. Restaurar. Estabilizar.'},
+  {id:'synthesis',name:'A SÍNTESE',start:336.039,end:DURATION,copy:'Seis forças, um sistema, uma informação.'}
 ];
 
 const worlds=[
@@ -698,8 +696,6 @@ function updateUI(force=false){
   timeLabel.textContent=fmt(t);
   chapterNo.textContent=String(chapters.indexOf(c)+1).padStart(2,'0');
   chapterName.textContent=c.name;
-  captionKicker.textContent=c.cap;
-  captionText.textContent=c.copy;
   const fx=worlds[experience.activeWorld];
   document.querySelectorAll('.hx71-force-card').forEach((el,j)=>el.classList.toggle('is-active',j===experience.activeWorld&&c.id==='forces'));
   // chapter-specific copy states

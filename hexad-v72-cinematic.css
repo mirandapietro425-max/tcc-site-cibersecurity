@@ -20,9 +20,9 @@ button{cursor:pointer}.hx71{position:relative;background:#020309;min-height:100s
 .hx71-final{margin:auto;text-align:center;max-width:980px;position:relative;z-index:8}.hx71-final p{margin-left:auto;margin-right:auto}.hx71-sixline{width:min(760px,90vw);height:140px;margin:35px auto;background:radial-gradient(circle at center,rgba(199,247,255,.12),transparent 54%);position:relative}.hx71-sixline:before{content:"";position:absolute;left:50%;top:50%;width:95px;height:95px;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(199,247,255,.34);box-shadow:0 0 70px rgba(199,247,255,.18)}.hx71-sixline:after{content:"CONFIDENCIALIDADE  ·  POSSE / CONTROLE  ·  INTEGRIDADE  ·  AUTENTICIDADE  ·  DISPONIBILIDADE  ·  UTILIDADE";position:absolute;left:0;right:0;top:calc(50% + 60px);font:8px 'DM Mono',monospace;line-height:1.9;letter-spacing:.12em;color:#788492}.hx71-final-actions{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
 .hx71-force-panel,.hx71-memory-drawer{position:fixed;z-index:40;top:0;bottom:0;background:rgba(4,6,11,.9);backdrop-filter:blur(22px);transform:translateX(105%);transition:transform .55s cubic-bezier(.22,.7,.2,1);border-left:1px solid var(--line);pointer-events:none}.hx71-force-panel{right:0;width:min(460px,92vw);padding:120px 44px 40px}.hx71-force-panel.is-open,.hx71-memory-drawer.is-open{transform:translateX(0);pointer-events:auto}.hx71-force-panel h3{font-size:clamp(44px,5vw,72px);letter-spacing:-.05em;line-height:.95;margin:0 0 20px}.hx71-force-panel p{color:#b5c0cb;line-height:1.7}.hx71-force-note{margin-top:50px;border-top:1px solid var(--line);padding-top:16px;display:grid;gap:8px}.hx71-force-note span{color:#8c97a4;font:9px 'DM Mono',monospace;letter-spacing:.15em}.hx71-force-note b{font:10px 'DM Mono',monospace;letter-spacing:.11em;color:var(--danger)}
 .hx71-memory-drawer{left:0;right:0;transform:translateY(105%);border-left:0;border-top:1px solid var(--line);padding:32px 30px 28px;overflow:auto}.hx71-memory-drawer.is-open{transform:translateY(0)}.hx71-memory-head{display:flex;justify-content:space-between;gap:24px;align-items:flex-start;max-width:var(--max);margin:0 auto 24px}.hx71-memory-head h3{margin:0;font-size:30px}.hx71-memory-head p{margin:8px 0 0;color:#909ba8;max-width:600px;font-size:13px;line-height:1.6}.hx71-close{border:1px solid var(--line);background:transparent;color:#cfd8e1;padding:10px 12px;font:9px 'DM Mono',monospace;letter-spacing:.14em;white-space:nowrap}.hx71-memory-grid{max-width:var(--max);margin:auto;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.hx71-memory-item{position:relative;padding:0;border:0;background:#04070c;overflow:hidden}.hx71-memory-item img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;filter:saturate(.86) brightness(.83);transition:.22s}.hx71-memory-item:hover img{filter:none;transform:scale(1.03)}.hx71-memory-item span{position:absolute;left:6px;bottom:5px;font:8px 'DM Mono',monospace;color:#fff;background:rgba(0,0,0,.48);padding:2px 4px}
-.hx71-caption{position:fixed;left:30px;bottom:27px;z-index:19;max-width:360px;pointer-events:none}.hx71-caption span{font:9px 'DM Mono',monospace;letter-spacing:.17em;color:#74808d}.hx71-caption p{margin:7px 0 0;color:#d5dde5;font-size:12px;line-height:1.5}.hx71-sound-small{position:fixed;right:30px;bottom:24px;z-index:21;border:0;background:transparent;color:#75818e;font:9px 'DM Mono',monospace;letter-spacing:.14em}.hx71-play-indicator{position:fixed;left:50%;bottom:24px;z-index:21;transform:translateX(-50%);font:9px 'DM Mono',monospace;letter-spacing:.14em;color:#b8c2cc;display:flex;gap:8px;align-items:center}.hx71-play-indicator span{width:6px;height:6px;background:var(--cyan);border-radius:50%;box-shadow:0 0 14px rgba(199,247,255,.6)}
+.hx71-sound-small{position:fixed;right:30px;bottom:24px;z-index:21;border:0;background:transparent;color:#75818e;font:9px 'DM Mono',monospace;letter-spacing:.14em}.hx71-play-indicator{position:fixed;left:50%;bottom:24px;z-index:21;transform:translateX(-50%);font:9px 'DM Mono',monospace;letter-spacing:.14em;color:#b8c2cc;display:flex;gap:8px;align-items:center}.hx71-play-indicator span{width:6px;height:6px;background:var(--cyan);border-radius:50%;box-shadow:0 0 14px rgba(199,247,255,.6)}
 @media(max-width:1100px){.hx71-forces{right:3vw;grid-template-columns:repeat(2,180px)}.hx71-steps{right:3vw;width:320px}.hx71-readout{right:3vw}.hx71-restore-button{right:3vw}}
-@media(max-width:800px){.hx71-top{height:70px;padding:0 15px;grid-template-columns:1fr auto}.hx71-top-center{display:none}.hx71-actions .hx71-btn:not(.hx71-btn-main){display:none}.hx71-progress{top:70px;left:15px;right:15px}.hx71-chapter{min-height:760px;height:20vh;padding:0 18px;align-items:end;padding-bottom:24vh}.hx71-chapter h1,.hx71-chapter h2,.hx71-final h2{font-size:clamp(42px,13vw,76px)}.hx71-chapter p{font-size:14px;margin-top:20px}.hx71-forces{position:absolute;left:18px;right:18px;top:auto;bottom:10vh;transform:none;display:grid;grid-template-columns:1fr 1fr;gap:5px}.hx71-force-card{padding:12px}.hx71-readout{top:auto;bottom:13vh;left:18px;right:18px;width:auto}.hx71-impact{right:18px;top:25vh;transform:none}.hx71-impact span{font-size:115px}.hx71-steps{left:18px;right:18px;top:auto;bottom:11vh;width:auto}.hx71-restore-button{left:18px;right:18px;bottom:4vh}.hx71-final{padding-bottom:14vh}.hx71-memory-grid{grid-template-columns:repeat(3,1fr)}.hx71-memory-drawer{padding:18px 14px}.hx71-memory-head{margin-bottom:14px}.hx71-caption{left:18px;bottom:18px;max-width:260px}.hx71-sound-small{right:18px;bottom:18px}.hx71-play-indicator{display:none}}
+@media(max-width:800px){.hx71-top{height:70px;padding:0 15px;grid-template-columns:1fr auto}.hx71-top-center{display:none}.hx71-actions .hx71-btn:not(.hx71-btn-main){display:none}.hx71-progress{top:70px;left:15px;right:15px}.hx71-chapter{min-height:760px;height:20vh;padding:0 18px;align-items:end;padding-bottom:24vh}.hx71-chapter h1,.hx71-chapter h2,.hx71-final h2{font-size:clamp(42px,13vw,76px)}.hx71-chapter p{font-size:14px;margin-top:20px}.hx71-forces{position:absolute;left:18px;right:18px;top:auto;bottom:10vh;transform:none;display:grid;grid-template-columns:1fr 1fr;gap:5px}.hx71-force-card{padding:12px}.hx71-readout{top:auto;bottom:13vh;left:18px;right:18px;width:auto}.hx71-impact{right:18px;top:25vh;transform:none}.hx71-impact span{font-size:115px}.hx71-steps{left:18px;right:18px;top:auto;bottom:11vh;width:auto}.hx71-restore-button{left:18px;right:18px;bottom:4vh}.hx71-final{padding-bottom:14vh}.hx71-memory-grid{grid-template-columns:repeat(3,1fr)}.hx71-memory-drawer{padding:18px 14px}.hx71-memory-head{margin-bottom:14px}.hx71-sound-small{right:18px;bottom:18px}.hx71-play-indicator{display:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}.hx71-cinema-layer{display:none}.hx71-chapter{min-height:100svh}}
 
 .hx71-frame-viewer{position:fixed;inset:0;z-index:60;background:rgba(1,2,6,.94);backdrop-filter:blur(18px);display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .35s ease}.hx71-frame-viewer.is-open{opacity:1;pointer-events:auto}.hx71-frame-viewer img{max-width:min(92vw,1400px);max-height:82vh;object-fit:contain;box-shadow:0 30px 100px rgba(0,0,0,.45)}.hx71-frame-viewer>.hx71-close{position:absolute;top:24px;right:24px}.hx71-frame-viewer>div{position:absolute;bottom:30px;left:30px;display:grid;gap:6px}.hx71-frame-viewer>div b{font-size:20px}.hx71-frame-viewer>div span{font:9px 'DM Mono',monospace;letter-spacing:.16em;color:#7c8895}
@@ -245,9 +245,7 @@ html.hx72-view-transitions::view-transition-old(root),html.hx72-view-transitions
 .hx71-chapter-copy,
 .hx71-center-message,
 .hx71-force-panel,
-.hx71-caption{
-  text-shadow:0 12px 32px rgba(0,0,0,.76);
-}
+
 @media (max-width:800px){
   .hx71-storyboard-stage{opacity:.96 !important}
   #hx71-canvas{opacity:.035 !important}
@@ -642,7 +640,6 @@ body.hx71-film-ended .hx71-end-actions .hx71-btn{
   #hx71-story .hx71-chapter{height:100vh!important;min-height:0!important;max-height:none!important;box-sizing:border-box;padding-top:clamp(92px,11vh,132px);padding-bottom:clamp(90px,11vh,132px);}
   #hx71-story .hx71-chapter-copy{max-width:min(520px,calc(100vw - 760px));}
   #hx71-story .hx71-chapter[data-id="void"] .hx71-chapter-copy{max-width:520px;}
-  #hx71-caption{bottom:clamp(90px,12vh,140px)!important;z-index:30;}
   .hx71-readout,.hx71-forces,.hx71-steps,.hx71-impact,.hx71-restore-button{z-index:22;}
   .hx71-chapter[data-id="forces"] .hx71-readout,
   .hx71-chapter[data-id="threat"] .hx71-readout,
@@ -655,7 +652,6 @@ body.hx71-film-ended .hx71-end-actions .hx71-btn{
   #hx71-story .hx71-chapter{height:100svh!important;min-height:0!important;max-height:none!important;padding:92px 28px 92px!important;gap:24px;}
   #hx71-story .hx71-chapter-copy{max-width:min(480px,calc(100vw - 420px));}
   .hx71-readout,.hx71-forces,.hx71-steps,.hx71-impact,.hx71-restore-button{max-width:300px;}
-  #hx71-caption{bottom:76px!important;}
 }
 /* Keep Ato 01 image-first: the authored storyboard remains visible while 3D characters stay hidden. */
 body.hx71-act-void #hx71-canvas,
@@ -665,7 +661,6 @@ body.hx71-act-void .hx71-storyboard-stage{opacity:1!important;visibility:visible
 .hx71-speed-control{min-width:52px;text-align:center;font-variant-numeric:tabular-nums;}
 @media (max-width:600px){
   .hx71-speed-control{min-width:46px;min-height:44px;padding-inline:10px;}
-  #hx71-caption{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;margin:20px 14px 90px!important;}
 }
 
 
@@ -684,7 +679,6 @@ body.hx71-act-void .hx71-storyboard-stage{opacity:1!important;visibility:visible
   #hx71-story .hx71-chapter-copy::before,
   #hx71-story .hx71-center-message::before,
   #hx71-story .hx71-final::before{content:"";position:absolute;inset:-28px -34px;z-index:-1;background:radial-gradient(ellipse at center,rgba(7,16,24,.92),rgba(7,16,24,.45) 62%,transparent 100%);pointer-events:none;}
-  #hx71-caption{background:rgba(7,16,24,.82)!important;padding:10px 14px;border-left:1px solid rgba(142,240,255,.42);}
 }
 /* V92 — preserve the visual archive only when the user opens Memória Visual. */
 #hx71-memory-drawer .hx71-memory-item img{display:block;}
