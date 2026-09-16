@@ -157,10 +157,7 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
   const MODEL_BASE = 'assets/models/';
   // Primeira página: somente estes CINCO personagens novos.
   // Eles substituem os objetos/personagens grandes antigos nos cinco primeiros pontos visuais.
-  const introSatellites = [
-    {file:'cybershield_robot_woman.glb', target:1.60, pos:[-2.25,-.10,.30], rotY:.10, speed:.08},
-    {file:'cybershield_robot_normal.glb', target:1.60, pos:[ 2.25,-.10,.30], rotY:-.10, speed:.08}
-  ];
+  const introSatellites = [];
 
   const modelByKind = {
     intro:null,
@@ -236,17 +233,18 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
     }
 
     geometry.setAttribute('position', new THREE.BufferAttribute(positions,3));
-    group.add(new THREE.Points(
+    const particleField = new THREE.Points(
       geometry,
       new THREE.PointsMaterial({
         color:0x6ee7f7,
-        size:mobile ? .025 : .032,
+        size:mobile ? .032 : .042,
         transparent:true,
-        opacity:.42,
+        opacity:.58,
         blending:THREE.AdditiveBlending,
         depthWrite:false
       })
-    ));
+    );
+    group.add(particleField);
 
     const rings = [];
     for (let i=0;i<3;i++) {
@@ -271,6 +269,7 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
       scene,
       camera,
       group,
+      particleField,
       kind,
       rings,
       model:null,
@@ -512,6 +511,10 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
       // órbitas e modelos têm uma animação contínua e independente do scroll.
       group.rotation.y = t * .025 + local.x * .05;
       group.rotation.x += ((local.y * -.08) - group.rotation.x) * .025;
+      particleField.rotation.y = t * .035;
+      particleField.rotation.x = Math.sin(t * .18) * .035;
+      particleField.position.y = Math.sin(t * .42) * .045;
+      particleField.material.opacity = .47 + Math.sin(t * .85) * .11;
       rings.forEach((ring,i)=>{
         ring.rotation.z += (i%2 ? .0016 : -.0012);
         ring.rotation.y += .0007;
