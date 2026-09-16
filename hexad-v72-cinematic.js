@@ -391,7 +391,7 @@ function syncAmbience(t){
 function syncNarration(force=false){
   if(!experience.sound) return;
   const a=window.__hexadNarrationMaster || (narrationAudio = new Audio(BASE+'audio/narration/narration-master.mp3'));
-  a.preload='auto'; a.volume=.96;
+  a.preload='auto'; a.volume=.96; a.playbackRate=filmPlaybackRate;
   window.__hexadNarrationMaster=a;
   narrationAudio=a;
   const target=Math.max(0,Math.min(DURATION,experience.time));
@@ -881,4 +881,25 @@ if(!reduced){
   addEventListener('scroll',markAct,{passive:true});
   addEventListener('resize',markAct,{passive:true});
   setTimeout(()=>{markAct();applyFilmRate();},0);
+})();
+
+
+/* V93 — explicit next phase control and dependable pause state. */
+(function(){
+  const next=document.querySelector('#hx71-next');
+  next?.addEventListener('click',()=>{
+    const current=getChapter(experience.time);
+    const index=chapters.indexOf(current);
+    const target=chapters[Math.min(chapters.length-1,index+1)];
+    if(!target)return;
+    experience.playing=false;
+    narrationAudio?.pause(); audio?.main?.pause();
+    experience.time=target.start;
+    setScrollFromTime(target.start);
+    document.body.classList.remove('hx71-film-mode');
+    updateUI(true);
+    document.querySelector('#hx71-film')?.setAttribute('aria-pressed','false');
+    const b=document.querySelector('#hx71-film'); if(b)b.innerHTML='<span>▶</span> ASSISTIR FILME';
+    const indicator=document.querySelector('#hx71-play-indicator'); if(indicator)indicator.hidden=true;
+  });
 })();

@@ -687,3 +687,16 @@ body.hx71-act-void .hx71-storyboard-stage{opacity:1!important;visibility:visible
 }
 /* V92 — preserve the visual archive only when the user opens Memória Visual. */
 #hx71-memory-drawer .hx71-memory-item img{display:block;}
+
+
+/* V93 — keep authored storyboard behind the narrative cards on desktop. */
+@media (min-width:901px){
+  #hx71-canvas,.hx71-fallback-visual,.hx71-cinema-layer{display:none!important;visibility:hidden!important;opacity:0!important;}
+  .hx71-storyboard-stage{display:grid!important;visibility:visible!important;opacity:.42!important;z-index:1!important;pointer-events:none!important;background:#020308!important;}
+  .hx71-storyboard-stage .hx71-storyboard-frame img{filter:saturate(.9) contrast(1.04) brightness(.66)!important;}
+  #hx71-story{background:#071018!important;}
+  #hx71-story .hx71-chapter-copy,#hx71-story .hx71-center-message,#hx71-story .hx71-final{z-index:8;}
+  .hx71-next-control,.hx71-speed-control{display:inline-flex!important;visibility:visible!important;}
+}
+.hx71-next-control{min-width:96px;}
+@media(max-width:900px){.hx71-next-control{min-height:44px;}.hx71-speed-control{display:inline-flex!important;}}
