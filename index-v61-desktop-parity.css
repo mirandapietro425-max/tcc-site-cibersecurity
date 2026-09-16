@@ -18,7 +18,13 @@ html,body{overflow-x:hidden;}
   height:auto!important;
   padding-block:clamp(72px,9svh,108px)!important;
 }
-#experience .chapter .webgl,
+#experience .chapter .webgl{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  z-index:0!important;
+}
 #experience .chapter .model-status,
 #experience .chapter .chapter-noise{
   display:none!important;
@@ -26,9 +32,13 @@ html,body{overflow-x:hidden;}
   opacity:0!important;
   pointer-events:none!important;
 }
-#experience .chapter-content,
-#experience .intro-copy{
+#experience .chapter-content{
   position:relative!important;
+  z-index:5!important;
+}
+#experience .chapter-intro .intro-copy{
+  position:absolute!important;
+  inset:0!important;
   z-index:5!important;
 }
 @media (max-width:700px){
