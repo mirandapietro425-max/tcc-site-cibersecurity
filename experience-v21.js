@@ -157,7 +157,10 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
   const MODEL_BASE = 'assets/models/';
   // Primeira página: somente estes CINCO personagens novos.
   // Eles substituem os objetos/personagens grandes antigos nos cinco primeiros pontos visuais.
-  const introSatellites = [];
+  const introSatellites = [
+    {file:'cybershield_robot_woman.glb', target:1.60, pos:[-2.25,-.10,.30], rotY:.10, speed:.08},
+    {file:'cybershield_robot_normal.glb', target:1.60, pos:[ 2.25,-.10,.30], rotY:-.10, speed:.08}
+  ];
 
   const modelByKind = {
     intro:null,
@@ -505,36 +508,34 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
 
       const local = world.mouse;
       const cfg=configs[kind] || configs.intro;
-      if (cfg.character && model) {
-        // V54: os personagens ficam vivos mesmo em desktop: rotação + respiração vertical.
-        group.rotation.set(0,0,0);
-        model.rotation.x = -Math.PI / 2;
-        const satellite = model.userData.satelliteIndex ?? -1;
-        const baseY = model.userData.baseY ?? model.position.y;
+      // Mantém o universo vivo mesmo quando a câmera está parada: partículas,
+      // órbitas e modelos têm uma animação contínua e independente do scroll.
+      group.rotation.y = t * .025 + local.x * .05;
+      group.rotation.x += ((local.y * -.08) - group.rotation.x) * .025;
+      rings.forEach((ring,i)=>{
+        ring.rotation.z += (i%2 ? .0016 : -.0012);
+        ring.rotation.y += .0007;
+      });
+
+      const animatedModels = cfg.character
+        ? (model ? [model] : world.models)
+        : (model ? [model] : []);
+      animatedModels.forEach((currentModel,index)=>{
+        currentModel.rotation.x = -Math.PI / 2;
+        const satellite = currentModel.userData.satelliteIndex ?? -1;
+        const baseY = currentModel.userData.baseY ?? currentModel.position.y;
         if (satellite >= 0) {
-          model.rotation.y = (model.userData.baseRotationY || 0) + t * (0.22 + (model.userData.introSpin || 0.08));
-          model.position.y = baseY + Math.sin(t * 0.9 + satellite * 0.8) * 0.07;
+          currentModel.rotation.y = (currentModel.userData.baseRotationY || 0) + t * (0.22 + (currentModel.userData.introSpin || 0.08));
+          currentModel.position.y = baseY + Math.sin(t * 0.9 + satellite * 0.8) * 0.07;
+          currentModel.rotation.z = Math.sin(t * 0.55 + satellite * .4) * 0.018;
         } else {
-          model.rotation.y = (model.userData.baseRotationY || 0) + t * 0.34;
-          model.position.y = baseY + Math.sin(t * 0.75) * 0.045;
+          const pulse=1+Math.sin(t*1.2+kind.length+index)*.022;
+          currentModel.scale.setScalar((currentModel.userData.baseScale||1)*pulse);
+          currentModel.rotation.y = (currentModel.userData.baseRotationY || 0) + t * 0.34;
+          currentModel.position.y = baseY + Math.sin(t * 0.75 + index) * 0.045;
+          currentModel.rotation.z = Math.sin(t * 0.55 + index * .4) * 0.018;
         }
-        model.rotation.z = Math.sin(t * 0.55 + Math.max(0,satellite) * .4) * 0.018;
-      } else {
-        group.rotation.y += .001;
-        group.rotation.y += local.x*.00055;
-        group.rotation.x += ((local.y*-0.08)-group.rotation.x)*.025;
-
-        rings.forEach((ring,i)=>{
-          ring.rotation.z += (i%2 ? .0016 : -.0012);
-          ring.rotation.y += .0007;
-        });
-
-        if (model) {
-          const pulse=1+Math.sin(t*1.2+kind.length)*.022;
-          model.scale.setScalar((model.userData.baseScale||1)*pulse);
-          model.rotation.y += .0015;
-        }
-      }
+      });
 
       if (world.mixer) world.mixer.update(world.clock.getDelta());
       renderer.render(world.scene,camera);
