@@ -458,7 +458,7 @@ document.querySelector('#hx71-observe').addEventListener('click',()=>{sfx('alert
 document.querySelectorAll('[data-investigate]').forEach((b,i)=>{
   b.addEventListener('click',()=>{document.querySelectorAll('[data-investigate]').forEach(x=>x.classList.remove('is-active'));b.classList.add('is-active');jump(223.63+i*12)})
 });
-document.querySelector('#hx71-restart').addEventListener('click',()=>{experience.playing=false;stopFilmClock();narrationAudio?.pause();audio.main?.pause();experience.time=0;setScrollFromTime(0);closePanels();updateUI(true)});
+document.querySelector('#hx71-restart')?.addEventListener('click',()=>{experience.playing=false;stopFilmClock();narrationAudio?.pause();audio.main?.pause();experience.time=0;setScrollFromTime(0);closePanels();updateUI(true)});
 document.querySelector('#hx71-chapter1')?.addEventListener('click',()=>{
   experience.playing=false;
   stopFilmClock();

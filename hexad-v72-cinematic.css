@@ -718,3 +718,36 @@ body.hx71-act-void .hx71-storyboard-stage{opacity:1!important;visibility:visible
   .hx71-control-dock{left:12px;right:12px;bottom:max(10px,env(safe-area-inset-bottom));transform:none;justify-content:stretch;}
   .hx71-control-dock .hx71-btn{flex:1;padding-inline:8px;font-size:10px;}
 }
+
+/* V95 — desktop text-only film: every scroll is one complete narrative phase. */
+@media (min-width:901px){
+  #hx71-canvas,.hx71-fallback-visual,.hx71-cinema-layer,.hx71-storyboard-stage{
+    display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;
+  }
+  .hx71,#hx71-story{background:linear-gradient(180deg,#071018 0%,#0b1922 52%,#071018 100%)!important;}
+  #hx71-story{height:auto!important;min-height:0!important;}
+  #hx71-story .hx71-chapter{
+    min-height:100svh!important;height:100svh!important;max-height:none!important;box-sizing:border-box!important;
+    padding:clamp(88px,11vh,128px) clamp(28px,8vw,140px) clamp(104px,13vh,150px)!important;
+    display:flex!important;align-items:center!important;justify-content:flex-start!important;
+    gap:clamp(24px,4vw,64px)!important;background:transparent!important;
+  }
+  #hx71-story .hx71-chapter-copy,#hx71-story .hx71-center-message,#hx71-story .hx71-final{
+    position:relative!important;z-index:30!important;width:min(760px,100%)!important;max-width:760px!important;
+    margin:0!important;opacity:1!important;visibility:visible!important;transform:none!important;filter:none!important;
+  }
+  #hx71-story .hx71-chapter-copy::before,#hx71-story .hx71-center-message::before,#hx71-story .hx71-final::before{display:none!important;}
+  #hx71-story .hx71-forces,#hx71-story .hx71-readout,#hx71-story .hx71-impact,#hx71-story .hx71-steps,#hx71-story .hx71-restore-button{
+    position:relative!important;inset:auto!important;right:auto!important;bottom:auto!important;top:auto!important;
+    transform:none!important;width:min(760px,100%)!important;max-width:760px!important;margin:22px 0 0!important;z-index:31!important;
+  }
+  #hx71-story .hx71-forces{display:grid!important;}
+  #hx71-story .hx71-chapter[data-id="forces"] .hx71-chapter-copy,#hx71-story .hx71-chapter[data-id="threat"] .hx71-chapter-copy,
+  #hx71-story .hx71-chapter[data-id="collapse"] .hx71-chapter-copy,#hx71-story .hx71-chapter[data-id="investigation"] .hx71-chapter-copy,
+  #hx71-story .hx71-chapter[data-id="restoration"] .hx71-chapter-copy{margin:0!important;}
+  #hx71-caption,.hx81-image-first-note{display:none!important;}
+  #hx71-story .hx71-final-actions,#hx71-story .hx71-after-film{position:relative!important;z-index:40!important;}
+}
+
+/* Keep the optional 2× control legible in the compact dock. */
+.hx71-control-dock .hx71-speed-control,.hx71-control-dock #hx71-speed-dock{min-width:58px!important;}
