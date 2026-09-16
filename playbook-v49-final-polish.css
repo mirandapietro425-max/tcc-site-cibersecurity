@@ -1,0 +1,97 @@
+/* PLAYBOOK V49 — editorial desktop layout + continuous knowledge motion */
+@media (min-width: 1400px) {
+  .pb45-grid {
+    width: min(1540px, 100%);
+    grid-template-columns: minmax(420px, .7fr) minmax(700px, 1.3fr) !important;
+    gap: clamp(44px, 5vw, 96px) !important;
+  }
+
+  .pb45-copy {
+    max-width: 560px !important;
+    padding-left: clamp(10px, 1vw, 24px);
+  }
+
+  .pb45-copy h2 {
+    max-width: 560px !important;
+    font-size: clamp(4.25rem, 5.2vw, 6.5rem) !important;
+    line-height: .9 !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    hyphens: none !important;
+    text-wrap: balance;
+  }
+
+  .pb45-copy > p {
+    max-width: 510px !important;
+  }
+
+  .pb45-stage-wrap {
+    justify-self: end;
+    width: min(820px, 100%) !important;
+  }
+
+  .pb45-stage,
+  .pb45-inspector {
+    max-width: 700px !important;
+  }
+}
+
+@media (min-width: 721px) and (max-width: 1399px) {
+  .pb45-copy h2 {
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    hyphens: none !important;
+    text-wrap: balance;
+  }
+}
+
+/* The lower archive cards should feel alive on desktop again, while remaining tap-friendly on mobile. */
+@keyframes pb49CapsuleDrift {
+  0%, 100% { translate: 0 0; }
+  24% { translate: 9vw -5px; }
+  50% { translate: 20vw 5px; }
+  76% { translate: 31vw -3px; }
+}
+
+@media (min-width: 721px) {
+  .pb45-capsule {
+    animation: pb49CapsuleDrift 18s cubic-bezier(.37, 0, .2, 1) infinite;
+    will-change: translate;
+  }
+
+  .pb45-capsule:hover,
+  .pb45-capsule:focus-visible,
+  .pb45-capsule.is-selected {
+    animation-play-state: paused;
+  }
+}
+
+@media (max-width: 720px) {
+  .pb45-khead h2 {
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    hyphens: none !important;
+    text-wrap: balance;
+  }
+
+  .pb45-capsule {
+    animation: pb49MobileLift .7s cubic-bezier(.23, 1, .32, 1) both;
+    animation-delay: calc(var(--card-index, 0) * 70ms);
+  }
+
+  .pb45-capsule:nth-of-type(5) { --card-index: 1; }
+  .pb45-capsule:nth-of-type(6) { --card-index: 2; }
+  .pb45-capsule:nth-of-type(7) { --card-index: 3; }
+  .pb45-capsule:nth-of-type(8) { --card-index: 4; }
+  .pb45-capsule:nth-of-type(9) { --card-index: 5; }
+  .pb45-capsule:nth-of-type(10) { --card-index: 6; }
+}
+
+@keyframes pb49MobileLift {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pb45-capsule { animation: none !important; }
+}
