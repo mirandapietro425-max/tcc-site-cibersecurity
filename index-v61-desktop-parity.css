@@ -12,3 +12,29 @@ html,body{overflow-x:hidden;}
 @media (min-width:701px){
   .chapter:not(.chapter-intro) .chapter-content h2.v70-lettered{opacity:1!important;transform:none!important;filter:none!important;}
 }
+
+/* V63 — compact text-first sequence: no character/robot occupies a chapter. */
+#experience .chapter{
+  min-height:clamp(430px,68svh,720px)!important;
+  height:auto!important;
+  padding-block:clamp(72px,9svh,108px)!important;
+}
+#experience .chapter .webgl,
+#experience .chapter .model-status,
+#experience .chapter .chapter-noise{
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+#experience .chapter-content,
+#experience .intro-copy{
+  position:relative!important;
+  z-index:5!important;
+}
+@media (max-width:700px){
+  #experience .chapter{
+    min-height:clamp(420px,72svh,620px)!important;
+    padding-block:64px 78px!important;
+  }
+}

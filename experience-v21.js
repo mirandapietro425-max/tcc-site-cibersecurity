@@ -157,17 +157,14 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
   const MODEL_BASE = 'assets/models/';
   // Primeira página: somente estes CINCO personagens novos.
   // Eles substituem os objetos/personagens grandes antigos nos cinco primeiros pontos visuais.
-  const introSatellites = [
-    {file:'cybershield_robot_woman.glb', target:1.42, pos:[0.00, 1.05,.30], rotY:.10, speed:.08},
-    {file:'cybershield_robot_normal.glb', target:1.42, pos:[0.00,-1.15,.30], rotY:-.10, speed:.08}
-  ];
+  const introSatellites = [];
 
   const modelByKind = {
     intro:null,
     user:null,
-    threat:'cybershield_robot_woman.glb',
-    attack:'cybershield_robot_normal.glb',
-    defense:'cybershield_robot_boy.glb',
+    threat:null,
+    attack:null,
+    defense:null,
     privacy:null,
     dev:null,
     final:null
@@ -454,7 +451,7 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
     world._loadRequested=true;
     const file=modelByKind[kind] || null;
     chapter.dataset.model = file || (kind==='intro' ? 'intro-orbit' : '');
-    if(kind==='intro') loadIntroSatellites(chapter,world);
+    if(kind==='intro' && introSatellites.length) loadIntroSatellites(chapter,world);
     else if(file) loadSingleModel(chapter,world,file);
     else {
       chapter.classList.add('no-character');
