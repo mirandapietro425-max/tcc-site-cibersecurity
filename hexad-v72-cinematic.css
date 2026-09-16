@@ -905,3 +905,37 @@ body.hx71-act-void .hx71-storyboard-stage{opacity:1!important;visibility:visible
     transform:none!important;
   }
 }
+
+/* V90.5 — restore the authored image theatre on desktop and reserve space
+   for the chapter label beside the header actions. */
+@media (min-width:901px){
+  #hx71-storyboard-stage{
+    display:grid!important;
+    position:fixed!important;
+    inset:0!important;
+    visibility:visible!important;
+    opacity:.58!important;
+    z-index:1!important;
+    pointer-events:none!important;
+    background:#020308!important;
+  }
+  #hx71-story{
+    background:transparent!important;
+  }
+  .hx71-top-center{
+    position:relative!important;
+    z-index:23!important;
+    justify-self:end!important;
+    margin-right:clamp(18px,2vw,36px)!important;
+    white-space:nowrap!important;
+  }
+  .hx71-actions{
+    position:relative!important;
+    z-index:24!important;
+    min-width:0!important;
+  }
+}
+@media (min-width:901px) and (max-width:1400px){
+  .hx71-actions .hx71-next-control{display:none!important;}
+  .hx71-top-center{margin-right:14px!important;}
+}
