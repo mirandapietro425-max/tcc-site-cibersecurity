@@ -205,7 +205,6 @@
       analyser.getByteFrequencyData(buffer);
       let sum = 0; for (let i=0;i<24;i++) sum += buffer[i];
       const level = sum / 24 / 255;
-      core?.style.setProperty('--pb45-audio-level', level.toFixed(3));
       core?.style.setProperty('filter', `drop-shadow(0 0 ${18 + level*44}px rgba(112,231,247,${.10 + level*.28}))`);
     };
     tick();

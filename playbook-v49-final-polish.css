@@ -61,7 +61,8 @@
 }
 
 /* The lower archive cards should feel alive on desktop again, while remaining tap-friendly on mobile. */
-@keyframes pb50CardFloat {
+/* Keep the original Playbook motion name, but constrain its path to the visible frame. */
+@keyframes pb45Flow {
   0%, 100% { transform: translate3d(0, 0, 0); }
   25% { transform: translate3d(8px, -7px, 0); }
   50% { transform: translate3d(-6px, 5px, 0); }
@@ -70,7 +71,7 @@
 
 @media (min-width: 721px) {
   .pb45-capsule {
-    animation: pb50CardFloat 8s ease-in-out infinite;
+    animation: pb45Flow 8s ease-in-out infinite;
     will-change: transform;
   }
 
@@ -102,12 +103,12 @@
     opacity: 1;
   }
 
-  .pb45-capsule:nth-of-type(5) { --card-index: 1; }
-  .pb45-capsule:nth-of-type(6) { --card-index: 2; }
-  .pb45-capsule:nth-of-type(7) { --card-index: 3; }
-  .pb45-capsule:nth-of-type(8) { --card-index: 4; }
-  .pb45-capsule:nth-of-type(9) { --card-index: 5; }
-  .pb45-capsule:nth-of-type(10) { --card-index: 6; }
+  .pb45-capsule.c1 { --card-index: 0; }
+  .pb45-capsule.c2 { --card-index: 1; }
+  .pb45-capsule.c3 { --card-index: 2; }
+  .pb45-capsule.c4 { --card-index: 3; }
+  .pb45-capsule.c5 { --card-index: 4; }
+  .pb45-capsule.c6 { --card-index: 5; }
 }
 
 @keyframes pb49MobileDrift {
