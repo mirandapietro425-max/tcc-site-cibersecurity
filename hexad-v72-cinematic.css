@@ -258,11 +258,6 @@ html.hx72-view-transitions::view-transition-old(root),html.hx72-view-transitions
   }
 }
 
-/* V81 image-first status marker */
-.hx81-image-first-note{position:fixed;left:28px;bottom:26px;z-index:24;display:flex;align-items:center;gap:9px;font:7px 'DM Mono',monospace;letter-spacing:.16em;color:rgba(216,247,255,.72);pointer-events:none;}
-.hx81-image-first-note span{color:#d8f7ff}.hx81-image-first-note i{width:18px;height:1px;background:rgba(142,240,255,.38);display:block}.hx81-image-first-note b{font-weight:500;color:rgba(188,203,211,.64)}
-@media(max-width:560px){.hx81-image-first-note{left:18px;bottom:18px;max-width:calc(100vw - 36px);font-size:6.5px}.hx81-image-first-note b{display:none}}
-
 /* V82 — IMAGE-FIRST EXPERIENCE */
 body.hx81-image-first .hx71-storyboard-stage{opacity:.99!important;z-index:6!important}
 body.hx81-image-first #hx71-canvas{opacity:.02!important;z-index:2!important}
@@ -648,7 +643,6 @@ body.hx71-film-ended .hx71-end-actions .hx71-btn{
   #hx71-story .hx71-chapter-copy{max-width:min(520px,calc(100vw - 760px));}
   #hx71-story .hx71-chapter[data-id="void"] .hx71-chapter-copy{max-width:520px;}
   #hx71-caption{bottom:clamp(90px,12vh,140px)!important;z-index:30;}
-  .hx81-image-first-note{bottom:clamp(150px,18vh,210px)!important;top:auto!important;max-width:360px;z-index:31;}
   .hx71-readout,.hx71-forces,.hx71-steps,.hx71-impact,.hx71-restore-button{z-index:22;}
   .hx71-chapter[data-id="forces"] .hx71-readout,
   .hx71-chapter[data-id="threat"] .hx71-readout,
@@ -662,7 +656,6 @@ body.hx71-film-ended .hx71-end-actions .hx71-btn{
   #hx71-story .hx71-chapter-copy{max-width:min(480px,calc(100vw - 420px));}
   .hx71-readout,.hx71-forces,.hx71-steps,.hx71-impact,.hx71-restore-button{max-width:300px;}
   #hx71-caption{bottom:76px!important;}
-  .hx81-image-first-note{bottom:108px!important;top:auto!important;max-width:300px;}
 }
 /* Keep Ato 01 image-first: the authored storyboard remains visible while 3D characters stay hidden. */
 body.hx71-act-void #hx71-canvas,
@@ -673,7 +666,6 @@ body.hx71-act-void .hx71-storyboard-stage{opacity:1!important;visibility:visible
 @media (max-width:600px){
   .hx71-speed-control{min-width:46px;min-height:44px;padding-inline:10px;}
   #hx71-caption{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;margin:20px 14px 90px!important;}
-  .hx81-image-first-note{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;margin:12px 14px!important;max-width:none;}
 }
 
 
