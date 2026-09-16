@@ -88,6 +88,15 @@ html.hx72-view-transitions::view-transition-old(root),html.hx72-view-transitions
 .hx71-frame-compare figure{margin:0;opacity:.45;transform:scale(.96);transition:opacity .35s ease,transform .35s ease}.hx71-frame-compare figure.is-current{opacity:1;transform:none}.hx71-frame-compare img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:1px solid rgba(126,233,255,.13);background:#05080d}.hx71-frame-compare figcaption{margin-top:7px;font:8px 'DM Mono',monospace;letter-spacing:.13em;color:#70808b}
 .hx71-frame-story{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;max-width:1400px;width:100%;margin:0 auto;border-top:1px solid rgba(131,165,177,.13);padding-top:14px}.hx71-frame-story>div:first-child{max-width:620px}.hx71-frame-story-copy{margin:.35rem 0 0;color:#c9d7df;font-size:14px;line-height:1.55}.hx71-frame-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:7px}.hx71-frame-actions .hx71-btn{min-height:38px}
 .hx71-frame-actions .hx71-btn:disabled{opacity:.35;cursor:not-allowed}
+/* V90.2 — the legacy viewer rule above used absolute positioning for every
+   direct child, which stacked the header, frames and copy on top of each
+   other. Keep each region in normal flow so the three images and controls
+   remain readable at every desktop height. */
+.hx71-frame-viewer{min-height:100svh;overflow:auto;justify-content:center}
+.hx71-frame-viewer>.hx71-frame-viewer-head{position:static;left:auto;bottom:auto;display:flex}
+.hx71-frame-viewer>.hx71-frame-compare{position:static;left:auto;bottom:auto;display:grid;min-height:0}
+.hx71-frame-viewer>.hx71-frame-story{position:static;left:auto;bottom:auto;display:flex}
+.hx71-frame-compare img{max-height:min(48vh,520px)}
 @media(max-width:900px){
   .hx71-storyboard-tools{left:18px;right:18px;bottom:52px;width:auto;padding:9px 10px}
   .hx71-frame-viewer{padding:18px 14px;overflow:auto;justify-content:flex-start;padding-top:24px}

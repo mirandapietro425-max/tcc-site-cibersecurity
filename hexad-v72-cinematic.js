@@ -74,7 +74,10 @@ async function syncStoryboard(t,force=false){
   const activate=()=>{
     if(requestId!==storyboardRequestId || idx!==storyboardIndex) return;
     storyboardLayer=layer;
-    storyboardImgs.forEach((el,i)=>el?.classList.toggle('is-active',i===layer));
+    storyboardImgs.forEach((el,i)=>{
+      el?.classList.toggle('is-active',i===layer);
+      el?.parentElement?.classList.toggle('is-active',i===layer);
+    });
     if(storyboardAct) storyboardAct.textContent=`FRAME ${String(entry.id).padStart(3,'0')} / 098`;
     if(storyboardSync) storyboardSync.textContent=experience.playing?'NARRAÇÃO · SINCRONIZADA':'STORYBOARD · NAVEGAÇÃO';
   };

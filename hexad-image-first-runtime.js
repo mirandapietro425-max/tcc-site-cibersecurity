@@ -143,7 +143,10 @@
     owner?.style.setProperty('--hx-frame-image', `url("${src}")`);
     img.onload = () => {
       active = nextLayer;
-      imgs.forEach((el,i)=>el?.classList.toggle('is-active', i === active));
+      imgs.forEach((el,i)=>{
+        el?.classList.toggle('is-active', i === active);
+        el?.parentElement?.classList.toggle('is-active', i === active);
+      });
       imgs[active]?.parentElement?.style.setProperty('--hx-frame-image', `url("${src}")`);
       const act = document.querySelector('#hx71-storyboard-act');
       if(act) act.textContent = `FRAME ${String(id).padStart(3,'0')} / 098`;
@@ -157,7 +160,12 @@
   imgs[0]?.setAttribute('loading','eager');
   imgs[0]?.setAttribute('decoding','sync');
   imgs[0]?.parentElement?.style.setProperty('--hx-frame-image', `url("${srcFor(1)}")`);
-  const activateFirst = () => { imgs[0]?.classList.add('is-active'); imgs[1]?.classList.remove('is-active'); };
+  const activateFirst = () => {
+    imgs.forEach((el,i)=>{
+      el?.classList.toggle('is-active', i === 0);
+      el?.parentElement?.classList.toggle('is-active', i === 0);
+    });
+  };
   if (imgs[0]?.complete && imgs[0]?.naturalWidth > 0) activateFirst();
   else imgs[0]?.addEventListener('load', activateFirst, {once:true});
   const loader = document.querySelector('#hx72-loader');
