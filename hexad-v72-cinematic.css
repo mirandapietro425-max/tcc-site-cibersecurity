@@ -666,3 +666,24 @@ body.hx71-act-void .hx71-storyboard-stage{opacity:1!important;visibility:visible
   #hx71-caption{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;margin:20px 14px 90px!important;}
   .hx81-image-first-note{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;margin:12px 14px!important;max-width:none;}
 }
+
+
+/* V92 — desktop narrative is text-first: no GLB, robot or blank visual blocks. */
+@media (min-width:901px){
+  .hx71{background:#071018!important;}
+  #hx71-canvas,
+  .hx71-fallback-visual,
+  .hx71-cinema-layer,
+  .hx71-storyboard-stage{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;}
+  #hx71-story{background:linear-gradient(180deg,#071018 0%,#0a151d 50%,#071018 100%);}
+  #hx71-story .hx71-chapter{background:transparent!important;}
+  #hx71-story .hx71-chapter-copy,
+  #hx71-story .hx71-center-message,
+  #hx71-story .hx71-final{isolation:isolate;}
+  #hx71-story .hx71-chapter-copy::before,
+  #hx71-story .hx71-center-message::before,
+  #hx71-story .hx71-final::before{content:"";position:absolute;inset:-28px -34px;z-index:-1;background:radial-gradient(ellipse at center,rgba(7,16,24,.92),rgba(7,16,24,.45) 62%,transparent 100%);pointer-events:none;}
+  #hx71-caption{background:rgba(7,16,24,.82)!important;padding:10px 14px;border-left:1px solid rgba(142,240,255,.42);}
+}
+/* V92 — preserve the visual archive only when the user opens Memória Visual. */
+#hx71-memory-drawer .hx71-memory-item img{display:block;}
