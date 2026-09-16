@@ -61,19 +61,25 @@
 }
 
 /* The lower archive cards should feel alive on desktop again, while remaining tap-friendly on mobile. */
-@keyframes pb49CapsuleDrift {
-  0% { transform: translate3d(0, 0, 0); }
-  25% { transform: translate3d(27vw, -4px, 0); }
-  50% { transform: translate3d(54vw, 5px, 0); }
-  75% { transform: translate3d(29vw, 7px, 0); }
-  100% { transform: translate3d(112vw, 0, 0); }
+@keyframes pb50CardFloat {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  25% { transform: translate3d(8px, -7px, 0); }
+  50% { transform: translate3d(-6px, 5px, 0); }
+  75% { transform: translate3d(10px, 3px, 0); }
 }
 
 @media (min-width: 721px) {
   .pb45-capsule {
-    animation: pb49CapsuleDrift 18s cubic-bezier(.37, 0, .2, 1) infinite;
+    animation: pb50CardFloat 8s ease-in-out infinite;
     will-change: transform;
   }
+
+  .pb45-capsule.c1 { left: 4%; }
+  .pb45-capsule.c2 { right: 4%; }
+  .pb45-capsule.c3 { left: 20%; }
+  .pb45-capsule.c4 { right: 20%; }
+  .pb45-capsule.c5 { left: 48%; }
+  .pb45-capsule.c6 { left: 4%; }
 
   .pb45-capsule:hover,
   .pb45-capsule:focus-visible,
