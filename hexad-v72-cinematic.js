@@ -903,3 +903,23 @@ if(!reduced){
     const indicator=document.querySelector('#hx71-play-indicator'); if(indicator)indicator.hidden=true;
   });
 })();
+
+
+/* V94 — synchronized always-visible control dock. */
+(function(){
+  const pause=document.querySelector('#hx71-pause-dock');
+  const speed=document.querySelector('#hx71-speed-dock');
+  const next=document.querySelector('#hx71-next-dock');
+  const headerSpeed=document.querySelector('#hx71-speed');
+  function syncDock(){
+    const playing=!!experience.playing;
+    if(pause){pause.innerHTML=playing?'Ⅱ PAUSAR FILME':'▶ ASSISTIR FILME';pause.setAttribute('aria-pressed',String(playing));}
+    const fast=filmPlaybackRate===2;
+    [speed,headerSpeed].filter(Boolean).forEach(b=>{b.textContent=fast?'2×':'1×';b.setAttribute('aria-pressed',String(fast));b.title=fast?'Voltar para 1×':'Acelerar para 2×';});
+  }
+  pause?.addEventListener('click',()=>{toggleFilm();syncDock();});
+  speed?.addEventListener('click',()=>{filmPlaybackRate=filmPlaybackRate===1?2:1;[narrationAudio,audio?.main,cinemaVideo,...(audio?.ambiences?[...audio.ambiences.values()]:[])].filter(Boolean).forEach(m=>{try{m.playbackRate=filmPlaybackRate}catch{}});syncDock();});
+  next?.addEventListener('click',()=>{document.querySelector('#hx71-next')?.click();setTimeout(syncDock,0);});
+  setInterval(syncDock,250);
+  syncDock();
+})();

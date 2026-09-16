@@ -700,3 +700,21 @@ body.hx71-act-void .hx71-storyboard-stage{opacity:1!important;visibility:visible
 }
 .hx71-next-control{min-width:96px;}
 @media(max-width:900px){.hx71-next-control{min-height:44px;}.hx71-speed-control{display:inline-flex!important;}}
+
+
+/* V94 — always-visible film dock and genuinely continuous desktop text flow. */
+.hx71-control-dock{position:fixed;left:50%;bottom:max(22px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:120;display:flex;align-items:center;gap:8px;padding:8px;border:1px solid rgba(150,210,224,.28);background:rgba(3,9,15,.94);box-shadow:0 14px 44px rgba(0,0,0,.42);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);visibility:visible!important;opacity:1!important;pointer-events:auto!important;}
+.hx71-control-dock .hx71-btn{min-height:44px;white-space:nowrap;pointer-events:auto!important;}
+@media (min-width:901px){
+  #hx71-story{height:auto!important;min-height:0!important;background:#071018!important;}
+  #hx71-story .hx71-chapter{height:auto!important;min-height:0!important;max-height:none!important;padding-top:clamp(88px,10vh,120px)!important;padding-bottom:clamp(34px,4vh,56px)!important;align-items:flex-start!important;display:flex!important;}
+  #hx71-story .hx71-chapter-copy,#hx71-story .hx71-center-message,#hx71-story .hx71-final{opacity:1!important;visibility:visible!important;transform:none!important;filter:none!important;position:relative!important;z-index:30!important;}
+  #hx71-story .hx71-chapter-copy{margin:0!important;}
+  .hx71-storyboard-stage{display:grid!important;position:fixed!important;inset:0!important;visibility:visible!important;opacity:.34!important;z-index:1!important;pointer-events:none!important;}
+  .hx71-storyboard-stage .hx71-storyboard-frame img{filter:saturate(.88) contrast(1.03) brightness(.62)!important;}
+  .hx71-chapter-copy::before,.hx71-center-message::before,.hx71-final::before{background:linear-gradient(90deg,rgba(5,14,21,.96),rgba(5,14,21,.78) 72%,rgba(5,14,21,.18))!important;inset:-22px -32px!important;z-index:-1!important;}
+}
+@media(max-width:600px){
+  .hx71-control-dock{left:12px;right:12px;bottom:max(10px,env(safe-area-inset-bottom));transform:none;justify-content:stretch;}
+  .hx71-control-dock .hx71-btn{flex:1;padding-inline:8px;font-size:10px;}
+}
