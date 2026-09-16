@@ -37,6 +37,10 @@ html,body{overflow-x:hidden;}
   position:relative!important;
   z-index:5!important;
 }
+#experience .chapter-intro .intro-copy{
+  position:absolute!important;
+  inset:0!important;
+}
 @media (max-width:700px){
   #experience .chapter{
     min-height:clamp(420px,72svh,620px)!important;
