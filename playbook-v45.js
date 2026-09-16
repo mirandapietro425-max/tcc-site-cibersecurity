@@ -66,7 +66,7 @@
     name.textContent = p.name;
     copy.textContent = p.copy;
     index.textContent = `${String(selected + 1).padStart(2,'0')} / 06`;
-    coreStatus.textContent = p.status;
+    if (coreStatus) coreStatus.textContent = p.status;
     archive.dataset.protocol = String(selected + 1);
     inspector?.classList.add('is-changing');
     window.setTimeout(() => inspector?.classList.remove('is-changing'), 180);
