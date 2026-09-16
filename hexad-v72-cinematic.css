@@ -834,3 +834,10 @@ body.hx71-act-void .hx71-storyboard-stage{opacity:1!important;visibility:visible
   #hx71-story .hx71-chapter[data-id="threat"] .hx71-readout,
   #hx71-story .hx71-chapter[data-id="investigation"] .hx71-readout{right:24px!important;width:28vw!important;}
 }
+
+/* V98 — the backdrop is behind the narrative stacking context, never over it. */
+@media (min-width:901px){
+  body.hx81-image-first .hx71-storyboard-stage{z-index:1!important;}
+  #hx71-story{z-index:5!important;}
+  #hx71-story .hx71-chapter-copy,#hx71-story .hx71-center-message,#hx71-story .hx71-final{z-index:30!important;}
+}
