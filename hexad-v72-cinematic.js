@@ -74,6 +74,18 @@ function syncStoryboardCards(idx){
     if(card) card.dataset.frame=String(entry.id);
   });
 }
+storyboardCardImgs.forEach((img)=>{
+  const card=img?.parentElement;
+  if(!card) return;
+  card.tabIndex=0;
+  card.setAttribute('role','button');
+  card.setAttribute('aria-label','Abrir este momento do storyboard');
+  const open=()=>openFrameViewer(Number(card.dataset.frame)||1);
+  card.addEventListener('click',open);
+  card.addEventListener('keydown',(event)=>{
+    if(event.key==='Enter'||event.key===' '){event.preventDefault();open();}
+  });
+});
 
 async function syncStoryboard(t,force=false){
   if(!storyboardStage || !STORYBOARD_SEQUENCE.length) return;

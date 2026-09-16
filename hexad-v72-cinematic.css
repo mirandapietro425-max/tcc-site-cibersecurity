@@ -939,3 +939,21 @@ body.hx71-act-void .hx71-storyboard-stage{opacity:1!important;visibility:visible
   .hx71-actions .hx71-next-control{display:none!important;}
   .hx71-top-center{margin-right:14px!important;}
 }
+
+/* V90.6 — interactive storyboard cards and a clearer image-first hero. */
+.hx71-storyboard-stage{
+  background-color:#020308!important;
+  background-image:radial-gradient(circle at 58% 42%,rgba(27,93,130,.18),transparent 34%),radial-gradient(circle at 78% 24%,rgba(91,53,169,.16),transparent 30%),url('assets/hexad/textures/hexad-nebula.png')!important;
+  background-size:cover,cover,cover!important;
+  background-position:center!important;
+}
+.hx71-storyboard-cards{pointer-events:auto!important;width:min(1160px,82vw);grid-template-columns:1fr minmax(360px,1.75fr) 1fr;}
+.hx71-storyboard-card{cursor:pointer;outline:none;}
+.hx71-storyboard-card:hover,.hx71-storyboard-card:focus-visible{opacity:.8;transform:scale(.95);}
+.hx71-storyboard-card.is-current:hover,.hx71-storyboard-card.is-current:focus-visible{opacity:1;transform:scale(1.025);}
+.hx71-storyboard-card.is-current img{filter:saturate(1.05) contrast(1.08) brightness(.98);box-shadow:0 0 42px rgba(66,187,218,.24),0 22px 60px rgba(0,0,0,.5);}
+.hx71-storyboard-card.is-current{transform:scale(1.015);}
+@media(max-width:900px){
+  .hx71-storyboard-cards{width:calc(100vw - 28px);grid-template-columns:1fr 1.45fr 1fr;}
+  .hx71-storyboard-card.is-current img{filter:saturate(1.02) contrast(1.06) brightness(.93);}
+}
