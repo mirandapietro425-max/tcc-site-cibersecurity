@@ -789,3 +789,48 @@ body.hx71-act-void .hx71-storyboard-stage{opacity:1!important;visibility:visible
     pointer-events:none!important;
   }
 }
+
+/* V97 — restrained floating cards: secondary information, never a second hero. */
+@media (min-width:901px){
+  #hx71-story .hx71-chapter[data-id="forces"] .hx71-forces{
+    position:absolute!important;top:50%!important;right:clamp(36px,7vw,120px)!important;
+    width:min(410px,34vw)!important;max-width:none!important;margin:0!important;
+    transform:translateY(-50%)!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
+  }
+  #hx71-story .hx71-force-card{
+    min-height:82px!important;padding:13px 14px!important;background:rgba(5,14,22,.46)!important;
+    border-color:rgba(199,247,255,.14)!important;box-shadow:0 16px 44px rgba(0,0,0,.18)!important;
+    backdrop-filter:blur(9px)!important;transition:background .25s ease,border-color .25s ease,transform .25s ease!important;
+  }
+  #hx71-story .hx71-force-card:hover,#hx71-story .hx71-force-card.is-active{
+    background:rgba(8,24,34,.72)!important;border-color:rgba(199,247,255,.38)!important;transform:translateY(-2px)!important;
+  }
+  #hx71-story .hx71-chapter[data-id="threat"] .hx71-readout,
+  #hx71-story .hx71-chapter[data-id="investigation"] .hx71-readout{
+    position:absolute!important;top:50%!important;right:clamp(52px,9vw,150px)!important;
+    width:min(280px,24vw)!important;margin:0!important;transform:translateY(-50%)!important;
+    background:rgba(5,14,22,.52)!important;border:1px solid rgba(199,247,255,.16)!important;
+    border-left:2px solid rgba(199,247,255,.52)!important;box-shadow:0 18px 48px rgba(0,0,0,.2)!important;
+    backdrop-filter:blur(12px)!important;
+  }
+  #hx71-story .hx71-chapter[data-id="restoration"] .hx71-steps{
+    position:absolute!important;top:50%!important;right:clamp(42px,8vw,132px)!important;
+    width:min(360px,30vw)!important;margin:0!important;transform:translateY(-50%)!important;
+    padding:14px 18px!important;background:rgba(5,14,22,.46)!important;
+    border:1px solid rgba(199,247,255,.14)!important;box-shadow:0 18px 48px rgba(0,0,0,.18)!important;
+    backdrop-filter:blur(11px)!important;
+  }
+  #hx71-story .hx71-chapter[data-id="forces"] .hx71-chapter-copy,
+  #hx71-story .hx71-chapter[data-id="threat"] .hx71-chapter-copy,
+  #hx71-story .hx71-chapter[data-id="investigation"] .hx71-chapter-copy,
+  #hx71-story .hx71-chapter[data-id="restoration"] .hx71-chapter-copy{
+    width:min(620px,48vw)!important;max-width:620px!important;
+  }
+}
+@media (max-width:1100px) and (min-width:901px){
+  #hx71-story .hx71-force-card{min-height:70px!important;padding:10px!important;}
+  #hx71-story .hx71-chapter[data-id="forces"] .hx71-forces{right:24px!important;width:34vw!important;}
+  #hx71-story .hx71-chapter[data-id="threat"] .hx71-readout,
+  #hx71-story .hx71-chapter[data-id="investigation"] .hx71-readout{right:24px!important;width:28vw!important;}
+}
