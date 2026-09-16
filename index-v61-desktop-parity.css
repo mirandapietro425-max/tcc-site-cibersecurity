@@ -19,7 +19,6 @@ html,body{overflow-x:hidden;}
   height:auto!important;
   padding-block:clamp(72px,9svh,108px)!important;
 }
-#experience .chapter:not(.chapter-intro) .webgl,
 #experience .chapter:not(.chapter-intro) .model-status,
 #experience .chapter:not(.chapter-intro) .chapter-noise{
   display:none!important;
