@@ -220,30 +220,30 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
     fill.position.set(3,-1.5,0);
     scene.add(fill);
 
-    const count = mobile ? 420 : 900;
+    const count = mobile ? 260 : 520;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(count * 3);
 
     for (let i=0;i<count;i++) {
-      // Campo amplo: as estrelas ocupam toda a abertura, não apenas o miolo.
-      positions[i*3] = THREE.MathUtils.randFloatSpread(11.5);
-      positions[i*3+1] = THREE.MathUtils.randFloatSpread(8.2);
-      positions[i*3+2] = THREE.MathUtils.randFloatSpread(5.5);
+      const radius = THREE.MathUtils.randFloat(2.4,7.5);
+      const angle = Math.random() * Math.PI * 2;
+      positions[i*3] = Math.cos(angle) * radius;
+      positions[i*3+1] = THREE.MathUtils.randFloatSpread(5);
+      positions[i*3+2] = Math.sin(angle) * radius;
     }
 
     geometry.setAttribute('position', new THREE.BufferAttribute(positions,3));
-    const particleField = new THREE.Points(
+    group.add(new THREE.Points(
       geometry,
       new THREE.PointsMaterial({
         color:0x6ee7f7,
-        size:mobile ? .032 : .042,
+        size:mobile ? .025 : .032,
         transparent:true,
-        opacity:.58,
+        opacity:.42,
         blending:THREE.AdditiveBlending,
         depthWrite:false
       })
-    );
-    group.add(particleField);
+    ));
 
     const rings = [];
     for (let i=0;i<3;i++) {
@@ -268,7 +268,6 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
       scene,
       camera,
       group,
-      particleField,
       kind,
       rings,
       model:null,
@@ -491,7 +490,7 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
     const t=performance.now()*.001;
 
     worlds.forEach(world => {
-      const { renderer, canvas, camera, group, particleField, rings, kind, model } = world;
+      const { renderer, canvas, camera, group, rings, kind, model } = world;
 
       if (kind !== 'intro' && !world._visible) return;
       const width=canvas.clientWidth;
@@ -510,10 +509,6 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
       // órbitas e modelos têm uma animação contínua e independente do scroll.
       group.rotation.y = t * .025 + local.x * .05;
       group.rotation.x += ((local.y * -.08) - group.rotation.x) * .025;
-      particleField.rotation.y = t * .035;
-      particleField.rotation.x = Math.sin(t * .18) * .035;
-      particleField.position.y = Math.sin(t * .42) * .045;
-      particleField.material.opacity = .47 + Math.sin(t * .85) * .11;
       rings.forEach((ring,i)=>{
         ring.rotation.z += (i%2 ? .0016 : -.0012);
         ring.rotation.y += .0007;

@@ -12,33 +12,24 @@ html,body{overflow-x:hidden;}
 @media (min-width:701px){
   .chapter:not(.chapter-intro) .chapter-content h2.v70-lettered{opacity:1!important;transform:none!important;filter:none!important;}
 }
-
-/* V63 — compact text-first sequence for later chapters; the opening keeps its spatial 3D scene. */
+/* V63 — compact text-first sequence: no character/robot occupies a chapter. */
 #experience .chapter{
   min-height:clamp(430px,68svh,720px)!important;
   height:auto!important;
   padding-block:clamp(72px,9svh,108px)!important;
 }
-#experience .chapter:not(.chapter-intro) .model-status,
-#experience .chapter:not(.chapter-intro) .chapter-noise{
+#experience .chapter .webgl,
+#experience .chapter .model-status,
+#experience .chapter .chapter-noise{
   display:none!important;
   visibility:hidden!important;
   opacity:0!important;
   pointer-events:none!important;
 }
-#experience .chapter-intro{
-  min-height:100svh!important;
-  height:100svh!important;
-  padding-block:0!important;
-}
 #experience .chapter-content,
 #experience .intro-copy{
   position:relative!important;
   z-index:5!important;
-}
-#experience .chapter-intro .intro-copy{
-  position:absolute!important;
-  inset:0!important;
 }
 @media (max-width:700px){
   #experience .chapter{
