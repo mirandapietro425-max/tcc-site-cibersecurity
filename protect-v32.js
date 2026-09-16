@@ -65,6 +65,7 @@
   let audioOn = false;
   let index = 0;
   let moving = false;
+  let queuedScene = null;
   let wheelCooldown = false;
 
   const preloads = scenes.flatMap(s => [s.art]);
@@ -73,7 +74,7 @@
 
   function setScene(next, animate = true) {
     next = Math.max(0, Math.min(scenes.length - 1, next));
-    if (moving && animate) return;
+    if (moving && animate) { queuedScene = next; return; }
     const s = scenes[next];
     index = next;
     railItems.forEach((el,i) => el.classList.toggle('is-active', i === next));
@@ -97,7 +98,16 @@
         art.src = s.art;
         art.alt = s.label;
         requestAnimationFrame(() => art.classList.remove('is-changing'));
-        setTimeout(() => { moving = false; }, 260);
+        setTimeout(() => {
+          moving = false;
+          if (queuedScene !== null && queuedScene !== index) {
+            const queued = queuedScene;
+            queuedScene = null;
+            setScene(queued);
+          } else {
+            queuedScene = null;
+          }
+        }, 260);
       }, 180);
       transition.currentTime = 0;
       transition.play().catch(() => {});

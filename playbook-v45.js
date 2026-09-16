@@ -23,6 +23,7 @@
   const dossierBody = page.querySelector('[data-pb45-dossier-body]');
   const dossierTag = page.querySelector('[data-pb45-dossier-tag]');
   const dossierIndex = page.querySelector('[data-pb45-dossier-index]');
+  const dossierRoute = page.querySelector('[data-pb45-dossier-route]');
   const dossierClose = page.querySelector('.pb45-dossier-close');
   const audioBtn = page.querySelector('.pb45-audio');
   const motionBtn = page.querySelector('.pb45-motion');
@@ -94,6 +95,7 @@
     dossierBody.textContent = k.body;
     dossierTag.textContent = k.tag;
     dossierIndex.textContent = String(i + 1).padStart(2,'0');
+    if (dossierRoute) dossierRoute.textContent = k.route;
     playTone('safe');
     dossierClose?.focus({preventScroll:true});
   }
