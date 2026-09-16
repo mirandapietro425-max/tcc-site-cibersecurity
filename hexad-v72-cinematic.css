@@ -751,3 +751,41 @@ body.hx71-act-void .hx71-storyboard-stage{opacity:1!important;visibility:visible
 
 /* Keep the optional 2× control legible in the compact dock. */
 .hx71-control-dock .hx71-speed-control,.hx71-control-dock #hx71-speed-dock{min-width:58px!important;}
+
+/* V96 — authored images return as a fixed theatre backdrop; copy remains the foreground. */
+@media (min-width:901px){
+  .hx71-storyboard-stage{
+    display:grid!important;
+    position:fixed!important;
+    inset:0!important;
+    visibility:visible!important;
+    opacity:.52!important;
+    z-index:2!important;
+    pointer-events:none!important;
+    background:#020308!important;
+  }
+  .hx71-storyboard-stage .hx71-storyboard-frame img{
+    display:block!important;
+    width:100%!important;
+    height:100%!important;
+    object-fit:cover!important;
+    filter:saturate(.92) contrast(1.05) brightness(.66)!important;
+  }
+  .hx71-storyboard-wash{
+    display:block!important;
+    background:linear-gradient(90deg,rgba(2,7,12,.86) 0%,rgba(2,7,12,.48) 46%,rgba(2,7,12,.58) 100%),linear-gradient(180deg,rgba(2,7,12,.38),rgba(2,7,12,.12) 45%,rgba(2,7,12,.64))!important;
+  }
+  #hx71-story .hx71-chapter-copy,#hx71-story .hx71-center-message,#hx71-story .hx71-final{
+    z-index:30!important;
+    text-shadow:0 4px 24px rgba(0,0,0,.82);
+  }
+  #hx71-story .hx71-chapter-copy::before,#hx71-story .hx71-center-message::before,#hx71-story .hx71-final::before{
+    display:block!important;
+    content:""!important;
+    position:absolute!important;
+    inset:-30px -38px!important;
+    z-index:-1!important;
+    background:linear-gradient(90deg,rgba(4,11,17,.86),rgba(4,11,17,.58) 68%,transparent)!important;
+    pointer-events:none!important;
+  }
+}
