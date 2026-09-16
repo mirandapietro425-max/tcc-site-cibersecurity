@@ -220,16 +220,15 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
     fill.position.set(3,-1.5,0);
     scene.add(fill);
 
-    const count = mobile ? 260 : 520;
+    const count = mobile ? 420 : 900;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(count * 3);
 
     for (let i=0;i<count;i++) {
-      const radius = THREE.MathUtils.randFloat(2.4,7.5);
-      const angle = Math.random() * Math.PI * 2;
-      positions[i*3] = Math.cos(angle) * radius;
-      positions[i*3+1] = THREE.MathUtils.randFloatSpread(5);
-      positions[i*3+2] = Math.sin(angle) * radius;
+      // Campo amplo: as estrelas ocupam toda a abertura, não apenas o miolo.
+      positions[i*3] = THREE.MathUtils.randFloatSpread(11.5);
+      positions[i*3+1] = THREE.MathUtils.randFloatSpread(8.2);
+      positions[i*3+2] = THREE.MathUtils.randFloatSpread(5.5);
     }
 
     geometry.setAttribute('position', new THREE.BufferAttribute(positions,3));
