@@ -9,8 +9,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="hexad-v72-cinematic.css">
-<link rel="stylesheet" href="hexad-v90-structure.css">
+<link rel="stylesheet" href="hexad.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"
+  }
+}
+</script>
 <link rel="preload" as="image" href="assets/hexad/storyboard/frames/001.webp" fetchpriority="high">
 <style id="hexad-v84-first-frame-failsafe">
 .hx71-storyboard-stage{opacity:1!important;visibility:visible!important;background:#020308!important}
@@ -290,7 +296,6 @@
   window.addEventListener('hexad:booted', () => { booted = true; clearTimeout(watchdog); revealLoader('Universo pronto'); }, {once:true});
 })();
 </script>
-<script src="hexad-image-first-runtime.js"></script>
-<script type="module" src="hexad-v72-cinematic.js"></script>
+<script type="module" src="hexad.js"></script>
 </body>
 </html>

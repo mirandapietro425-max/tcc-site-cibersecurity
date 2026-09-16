@@ -242,10 +242,6 @@ html.hx72-view-transitions::view-transition-old(root),html.hx72-view-transitions
 .hx71-film-mode .hx71-cinema-layer{
   opacity:.045 !important;
 }
-.hx71-chapter-copy,
-.hx71-center-message,
-.hx71-force-panel,
-
 @media (max-width:800px){
   .hx71-storyboard-stage{opacity:.96 !important}
   #hx71-canvas{opacity:.035 !important}
