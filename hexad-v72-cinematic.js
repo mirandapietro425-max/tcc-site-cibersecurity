@@ -887,10 +887,11 @@ if(!reduced){
 /* V93 — explicit next phase control and dependable pause state. */
 (function(){
   const next=document.querySelector('#hx71-next');
-  next?.addEventListener('click',()=>{
+  const prev=document.querySelector('#hx71-prev');
+  function goToChapter(direction){
     const current=getChapter(experience.time);
     const index=chapters.indexOf(current);
-    const target=chapters[Math.min(chapters.length-1,index+1)];
+    const target=chapters[Math.max(0,Math.min(chapters.length-1,index+direction))];
     if(!target)return;
     experience.playing=false;
     narrationAudio?.pause(); audio?.main?.pause();
@@ -901,7 +902,10 @@ if(!reduced){
     document.querySelector('#hx71-film')?.setAttribute('aria-pressed','false');
     const b=document.querySelector('#hx71-film'); if(b)b.innerHTML='<span>▶</span> ASSISTIR FILME';
     const indicator=document.querySelector('#hx71-play-indicator'); if(indicator)indicator.hidden=true;
-  });
+  }
+  next?.addEventListener('click',()=>goToChapter(1));
+  prev?.addEventListener('click',()=>goToChapter(-1));
+  window.__hexadGoToChapter=goToChapter;
 })();
 
 
@@ -909,6 +913,7 @@ if(!reduced){
 (function(){
   const pause=document.querySelector('#hx71-pause-dock');
   const speed=document.querySelector('#hx71-speed-dock');
+  const prev=document.querySelector('#hx71-prev-dock');
   const next=document.querySelector('#hx71-next-dock');
   const headerSpeed=document.querySelector('#hx71-speed');
   function syncDock(){
@@ -919,6 +924,7 @@ if(!reduced){
   }
   pause?.addEventListener('click',()=>{toggleFilm();syncDock();});
   speed?.addEventListener('click',()=>{filmPlaybackRate=filmPlaybackRate===1?2:1;[narrationAudio,audio?.main,cinemaVideo,...(audio?.ambiences?[...audio.ambiences.values()]:[])].filter(Boolean).forEach(m=>{try{m.playbackRate=filmPlaybackRate}catch{}});syncDock();});
+  prev?.addEventListener('click',()=>{window.__hexadGoToChapter?.(-1);setTimeout(syncDock,0);});
   next?.addEventListener('click',()=>{document.querySelector('#hx71-next')?.click();setTimeout(syncDock,0);});
   setInterval(syncDock,250);
   syncDock();
