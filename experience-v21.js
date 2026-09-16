@@ -492,7 +492,7 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
     const t=performance.now()*.001;
 
     worlds.forEach(world => {
-      const { renderer, canvas, camera, group, rings, kind, model } = world;
+      const { renderer, canvas, camera, group, particleField, rings, kind, model } = world;
 
       if (kind !== 'intro' && !world._visible) return;
       const width=canvas.clientWidth;
