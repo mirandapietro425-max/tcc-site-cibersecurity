@@ -1,0 +1,110 @@
+/* PLAYBOOK V50 — editorial desktop + motion parity across devices. */
+
+/* Keep the editorial copy readable: no mid-word clipping or forced breaks. */
+.pb45-copy h2,
+.pb45-khead h2 {
+  overflow: visible !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: none !important;
+  text-wrap: balance;
+}
+
+/* The lower knowledge cards are alive again, without leaving their lane. */
+@keyframes pb50CardFloat {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  25% { transform: translate3d(7px, -6px, 0); }
+  50% { transform: translate3d(-5px, 5px, 0); }
+  75% { transform: translate3d(8px, 2px, 0); }
+}
+
+@keyframes pb50CardFloatMobile {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -6px, 0); }
+}
+
+.pb45-capsule {
+  animation: pb50CardFloatMobile 5.8s ease-in-out infinite;
+  animation-delay: calc(var(--card-index, 0) * 90ms);
+  will-change: transform;
+}
+
+.pb45-capsule:hover,
+.pb45-capsule:focus-visible,
+.pb45-capsule.is-selected {
+  animation-play-state: paused;
+}
+
+.pb45-capsule.c1 { --card-index: 0; }
+.pb45-capsule.c2 { --card-index: 1; }
+.pb45-capsule.c3 { --card-index: 2; }
+.pb45-capsule.c4 { --card-index: 3; }
+.pb45-capsule.c5 { --card-index: 4; }
+.pb45-capsule.c6 { --card-index: 5; }
+
+/* Desktop only: give the Playbook system more room on the right and let the copy breathe. */
+@media (min-width: 1101px) {
+  .pb45-grid {
+    grid-template-columns: minmax(360px, .78fr) minmax(650px, 1.22fr) !important;
+    gap: clamp(42px, 5vw, 96px) !important;
+    align-items: center !important;
+  }
+
+  .pb45-copy {
+    max-width: 560px !important;
+    padding-inline: 0 !important;
+  }
+
+  .pb45-copy h2 {
+    max-width: 9ch !important;
+    font-size: clamp(3.7rem, 5.2vw, 6.4rem) !important;
+    line-height: .92 !important;
+    letter-spacing: -.055em !important;
+  }
+
+  .pb45-copy > p {
+    max-width: 490px !important;
+    line-height: 1.7 !important;
+  }
+
+  .pb45-stage-wrap {
+    max-width: 720px !important;
+    justify-self: end !important;
+  }
+
+  .pb45-stage,
+  .pb45-inspector {
+    max-width: 720px !important;
+  }
+
+  .pb45-capsule {
+    animation-name: pb50CardFloat;
+    animation-duration: 8s;
+  }
+}
+
+/* Tablet keeps a clean single column; the desktop editorial shift never leaks here. */
+@media (min-width: 721px) and (max-width: 1100px) {
+  .pb45-copy h2 {
+    max-width: 11ch !important;
+    line-height: .94 !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .pb45-khead h2 {
+    max-width: 14ch !important;
+    line-height: .96 !important;
+  }
+
+  .pb45-capsule {
+    transform: translateZ(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pb45-capsule {
+    animation: none !important;
+    will-change: auto;
+  }
+}
