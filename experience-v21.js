@@ -158,13 +158,13 @@ import { GLTFLoader } from 'https://esm.sh/three@0.170.0/examples/jsm/loaders/GL
   // Primeira página: somente estes CINCO personagens novos.
   // Eles substituem os objetos/personagens grandes antigos nos cinco primeiros pontos visuais.
   const introSatellites = [
-    {file:'cybershield_robot_woman.glb', target:1.60, pos:[-2.25,-.10,.30], rotY:.10, speed:.08},
-    {file:'cybershield_robot_normal.glb', target:1.60, pos:[ 2.25,-.10,.30], rotY:-.10, speed:.08}
+    {file:'cybershield_robot_woman.glb', target:1.42, pos:[0.00, 1.05,.30], rotY:.10, speed:.08},
+    {file:'cybershield_robot_normal.glb', target:1.42, pos:[0.00,-1.15,.30], rotY:-.10, speed:.08}
   ];
 
   const modelByKind = {
-    intro:'cybershield_human_man.glb',
-    user:'cybershield_human_woman.glb',
+    intro:null,
+    user:null,
     threat:'cybershield_robot_woman.glb',
     attack:'cybershield_robot_normal.glb',
     defense:'cybershield_robot_boy.glb',
