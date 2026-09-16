@@ -120,6 +120,25 @@
   const narrationMasterSrc = 'assets/hexad/audio/narration/narration-master.mp3';
 
   const srcFor = (id) => `assets/hexad/storyboard/frames/${String(id).padStart(3,'0')}.webp`;
+  const cardImgs = [
+    document.querySelector('#hx71-storyboard-card-prev'),
+    document.querySelector('#hx71-storyboard-card-current'),
+    document.querySelector('#hx71-storyboard-card-next')
+  ];
+  const syncCards = (idx) => {
+    if(!cardImgs.some(Boolean)) return;
+    const indexes = [Math.max(0,idx-1), idx, Math.min(frames.length-1,idx+1)];
+    indexes.forEach((frameIndex, cardIndex) => {
+      const frame = frames[frameIndex];
+      const img = cardImgs[cardIndex];
+      if(!frame || !img) return;
+      img.src = srcFor(frame.id);
+      img.alt = `Frame ${String(frame.id).padStart(3,'0')} do storyboard`;
+      const card = img.parentElement;
+      card?.classList.toggle('is-current', cardIndex === 1);
+      if(card) card.dataset.frame = String(frame.id);
+    });
+  };
   const clamp = (n,a,b) => Math.max(a,Math.min(b,n));
   const frameAt = (t) => {
     let lo=0, hi=frames.length-1, best=0;
@@ -130,6 +149,7 @@
     const idx = frames.findIndex(f => f.id === id);
     if(idx < 0 || id === currentId && !immediate) return;
     currentId = id;
+    syncCards(idx);
     const nextLayer = (active + 1) % 2;
     const img = imgs[nextLayer];
     if(!img) return;

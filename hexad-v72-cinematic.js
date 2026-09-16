@@ -33,6 +33,11 @@ const videoLayer=document.querySelector('.hx71-cinema-layer');
 const cinemaVideo=document.querySelector('#hx71-cinema-video');
 const storyboardStage=document.querySelector('#hx71-storyboard-stage');
 const storyboardImgs=[document.querySelector('#hx71-storyboard-img-a'),document.querySelector('#hx71-storyboard-img-b')];
+const storyboardCardImgs=[
+  document.querySelector('#hx71-storyboard-card-prev'),
+  document.querySelector('#hx71-storyboard-card-current'),
+  document.querySelector('#hx71-storyboard-card-next')
+];
 const storyboardAct=document.querySelector('#hx71-storyboard-act');
 const storyboardSync=document.querySelector('#hx71-storyboard-sync');
 let storyboardIndex=-1;
@@ -55,6 +60,20 @@ function storyboardIndexAt(t){
   while(lo<=hi){const m=(lo+hi)>>1; if(STORYBOARD_SEQUENCE[m].cue<=t){best=m;lo=m+1}else hi=m-1;}
   return best;
 }
+function syncStoryboardCards(idx){
+  if(!storyboardCardImgs.some(Boolean)) return;
+  const ids=[Math.max(0,idx-1),idx,Math.min(STORYBOARD_SEQUENCE.length-1,idx+1)];
+  ids.forEach((sequenceIndex,cardIndex)=>{
+    const entry=STORYBOARD_SEQUENCE[sequenceIndex];
+    const img=storyboardCardImgs[cardIndex];
+    if(!entry||!img) return;
+    img.src=frameSource(entry.id);
+    img.alt=`Frame ${String(entry.id).padStart(3,'0')} do storyboard`;
+    const card=img.parentElement;
+    card?.classList.toggle('is-current',cardIndex===1);
+    if(card) card.dataset.frame=String(entry.id);
+  });
+}
 
 async function syncStoryboard(t,force=false){
   if(!storyboardStage || !STORYBOARD_SEQUENCE.length) return;
@@ -63,6 +82,7 @@ async function syncStoryboard(t,force=false){
   storyboardIndex=idx;
   const requestId=++storyboardRequestId;
   const entry=STORYBOARD_SEQUENCE[idx];
+  syncStoryboardCards(idx);
   // Always warm a generous look-ahead so the next authored image is ready before its cue.
   STORYBOARD_SEQUENCE.slice(idx+1, idx+5).forEach(e=>preloadStoryboard(e.id));
   const layer=(storyboardLayer+1)%2;

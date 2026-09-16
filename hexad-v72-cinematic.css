@@ -850,3 +850,22 @@ body.hx71-act-void .hx71-storyboard-stage{opacity:1!important;visibility:visible
   #hx71-story{z-index:5!important;}
   #hx71-story .hx71-chapter-copy,#hx71-story .hx71-center-message,#hx71-story .hx71-final{z-index:30!important;}
 }
+
+/* V90.3 — storyboard cards synchronized with the narration. */
+.hx71-storyboard-cards{position:absolute;left:50%;bottom:clamp(74px,12vh,132px);z-index:3;display:grid;grid-template-columns:1fr minmax(300px,1.5fr) 1fr;align-items:center;gap:clamp(8px,1.1vw,16px);width:min(1080px,76vw);transform:translateX(-50%);pointer-events:none;opacity:.88;filter:drop-shadow(0 22px 42px rgba(0,0,0,.42));}
+.hx71-storyboard-card{min-width:0;margin:0;opacity:.48;transform:scale(.91);transition:opacity .45s ease,transform .45s ease;}
+.hx71-storyboard-card.is-current{opacity:1;transform:none;}
+.hx71-storyboard-card img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:1px solid rgba(157,224,238,.22);background:#05080d;filter:saturate(.86) contrast(1.04) brightness(.7);}
+.hx71-storyboard-card.is-current img{filter:saturate(.98) contrast(1.06) brightness(.86);border-color:rgba(199,247,255,.5);box-shadow:0 0 34px rgba(66,187,218,.14);}
+.hx71-storyboard-card figcaption{margin-top:7px;font:8px 'DM Mono',monospace;letter-spacing:.14em;color:#93a6af;text-align:center;}
+.hx71-storyboard-card.is-current figcaption{color:#d5f7ff;}
+@media(max-width:900px){
+  .hx71-storyboard-cards{bottom:clamp(126px,22vh,190px);width:calc(100vw - 36px);grid-template-columns:1fr 1.35fr 1fr;gap:6px;opacity:.72;}
+  .hx71-storyboard-card{transform:scale(.96);}
+  .hx71-storyboard-card img{border-color:rgba(157,224,238,.16);}
+}
+@media(max-width:560px){
+  .hx71-storyboard-cards{bottom:clamp(178px,27vh,230px);width:calc(100vw - 28px);gap:4px;}
+  .hx71-storyboard-card figcaption{font-size:6px;letter-spacing:.08em;}
+}
+@media(prefers-reduced-motion:reduce){.hx71-storyboard-card{transition:none!important;}}
