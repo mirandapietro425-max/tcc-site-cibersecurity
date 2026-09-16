@@ -96,6 +96,7 @@ const loaderBar=document.querySelector('#hx72-loader-bar-fill');
 const loaderCopy=document.querySelector('#hx72-loader-copy');
 
 const DURATION=376.659;
+let filmPlaybackRate=1;
 const chapters=[
   {id:'void',name:'O VAZIO',start:0,end:38.269,cap:'O VAZIO',copy:'Partículas quase imóveis.'},
   {id:'birth',name:'O NASCIMENTO',start:38.269,end:80.509,cap:'FORMAÇÃO',copy:'O fragmento encontra estrutura.'},
@@ -702,13 +703,13 @@ function frame(now){
   lastRAF=now;
   if(experience.playing){
     // V90: o áudio master é a fonte de tempo do filme.
-    // RAF apenas renderiza; ele não dita a progressão visual quando o áudio está tocando.
+    // V91: o fallback RAF respeita o controle 1×/2×.
     const master=narrationAudio;
     const audioClock=(master && !master.paused && master.readyState>=2 && Number.isFinite(master.currentTime))
       ? master.currentTime
       : null;
     experience.time=audioClock===null
-      ? Math.min(DURATION,experience.time+dt)
+      ? Math.min(DURATION,experience.time+dt*filmPlaybackRate)
       : clamp(audioClock,0,DURATION);
     experience.progress=experience.time/DURATION;
     setScrollFromTime(experience.time);
@@ -860,3 +861,24 @@ if(!reduced){
   },{passive:true});
 }
 
+
+
+/* V91 — playback speed and chapter visibility */
+(function(){
+  const speedButton=document.querySelector('#hx71-speed');
+  function applyFilmRate(){
+    const rate=filmPlaybackRate;
+    [narrationAudio,audio?.main,cinemaVideo,...(audio?.ambiences ? [...audio.ambiences.values()] : [])]
+      .filter(Boolean).forEach(media=>{try{media.playbackRate=rate;}catch{}});
+    if(speedButton){speedButton.textContent=rate===2?'2×':'1×';speedButton.setAttribute('aria-pressed',String(rate===2));speedButton.title=rate===2?'Voltar para velocidade normal':'Acelerar filme';}
+  }
+  speedButton?.addEventListener('click',()=>{filmPlaybackRate=filmPlaybackRate===1?2:1;applyFilmRate();});
+  const originalUpdateUI=window.updateUI;
+  function markAct(){
+    const active=document.querySelector('#hx71-story .hx71-chapter.is-active') || [...document.querySelectorAll('#hx71-story .hx71-chapter')].find(el=>{const top=el.getBoundingClientRect().top;return top<=innerHeight*.55 && top+el.offsetHeight>innerHeight*.25;});
+    document.body.classList.toggle('hx71-act-void',!!active && active.dataset.id==='void');
+  }
+  addEventListener('scroll',markAct,{passive:true});
+  addEventListener('resize',markAct,{passive:true});
+  setTimeout(()=>{markAct();applyFilmRate();},0);
+})();

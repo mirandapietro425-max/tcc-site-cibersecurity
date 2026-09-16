@@ -630,3 +630,39 @@ body.hx71-film-ended .hx71-end-actions .hx71-btn{
 @media(prefers-reduced-motion:reduce){
   .hx71-end-actions{transition:none}
 }
+
+
+/* V91 — continuous desktop chapters, protected copy zones and compact film controls */
+@media (min-width:1101px){
+  #hx71-story{height:900vh!important;}
+  #hx71-story .hx71-chapter{height:100vh!important;min-height:0!important;max-height:none!important;box-sizing:border-box;padding-top:clamp(92px,11vh,132px);padding-bottom:clamp(90px,11vh,132px);}
+  #hx71-story .hx71-chapter-copy{max-width:min(520px,calc(100vw - 760px));}
+  #hx71-story .hx71-chapter[data-id="void"] .hx71-chapter-copy{max-width:520px;}
+  #hx71-caption{bottom:clamp(90px,12vh,140px)!important;z-index:30;}
+  .hx81-image-first-note{bottom:clamp(150px,18vh,210px)!important;top:auto!important;max-width:360px;z-index:31;}
+  .hx71-readout,.hx71-forces,.hx71-steps,.hx71-impact,.hx71-restore-button{z-index:22;}
+  .hx71-chapter[data-id="forces"] .hx71-readout,
+  .hx71-chapter[data-id="threat"] .hx71-readout,
+  .hx71-chapter[data-id="investigation"] .hx71-readout{right:clamp(36px,5vw,92px);}
+  .hx71-chapter[data-id="forces"] .hx71-chapter-copy,
+  .hx71-chapter[data-id="threat"] .hx71-chapter-copy,
+  .hx71-chapter[data-id="investigation"] .hx71-chapter-copy{margin-right:clamp(48px,6vw,96px)!important;}
+}
+@media (min-width:901px) and (max-width:1100px){
+  #hx71-story .hx71-chapter{height:100svh!important;min-height:0!important;max-height:none!important;padding:92px 28px 92px!important;gap:24px;}
+  #hx71-story .hx71-chapter-copy{max-width:min(480px,calc(100vw - 420px));}
+  .hx71-readout,.hx71-forces,.hx71-steps,.hx71-impact,.hx71-restore-button{max-width:300px;}
+  #hx71-caption{bottom:76px!important;}
+  .hx81-image-first-note{bottom:108px!important;top:auto!important;max-width:300px;}
+}
+/* Keep Ato 01 image-first: the authored storyboard remains visible while 3D characters stay hidden. */
+body.hx71-act-void #hx71-canvas,
+body.hx71-act-void .hx71-fallback-visual,
+body.hx71-act-void .hx71-cinema-layer{opacity:0!important;visibility:hidden!important;pointer-events:none!important;}
+body.hx71-act-void .hx71-storyboard-stage{opacity:1!important;visibility:visible!important;z-index:12;}
+.hx71-speed-control{min-width:52px;text-align:center;font-variant-numeric:tabular-nums;}
+@media (max-width:600px){
+  .hx71-speed-control{min-width:46px;min-height:44px;padding-inline:10px;}
+  #hx71-caption{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;margin:20px 14px 90px!important;}
+  .hx81-image-first-note{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;margin:12px 14px!important;max-width:none;}
+}
