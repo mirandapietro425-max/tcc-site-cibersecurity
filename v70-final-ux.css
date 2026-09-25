@@ -5,10 +5,11 @@ html,body{overflow-x:hidden;}
 .chapter-intro{overflow:hidden;position:relative;}
 .chapter-intro .webgl{opacity:.80!important;visibility:visible!important;pointer-events:none!important;z-index:0!important;}
 .chapter-intro .intro-copy{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:clamp(18px,4vw,48px);}
-.chapter-intro .hero-3d{opacity:1!important;visibility:visible!important;transform:none!important;filter:none!important;animation:none!important;font:600 clamp(3.15rem,8.6vw,8.6rem)/.88 var(--display);letter-spacing:-.07em;margin:0;max-width:100%;white-space:nowrap;color:transparent;background:linear-gradient(110deg,#f3f7fb 0%,#dcebf1 46%,#8ee8df 100%);-webkit-background-clip:text;background-clip:text;text-shadow:0 14px 45px rgba(110,231,247,.14);}
+.chapter-intro .hero-3d{opacity:1!important;visibility:visible!important;transform:none!important;filter:none!important;animation:none!important;font:600 clamp(3.15rem,8.6vw,8.6rem)/.88 var(--display);letter-spacing:-.07em;margin:0;max-width:100%;white-space:nowrap;color:#eaf4f6;-webkit-text-fill-color:#eaf4f6;text-shadow:0 14px 45px rgba(110,231,247,.14);}
+.chapter-intro .hero-3d::after{content:none!important;}
 .chapter-intro .hero-3d .v70-word{display:inline-block;white-space:nowrap;}
 .chapter-intro .hero-3d .v70-letter{display:inline-block;white-space:pre;opacity:0;transform:translate3d(0,18px,0) scale(.98);filter:blur(4px);will-change:opacity,transform,filter;}
-.chapter-intro .hero-3d .v70-letter{color:transparent;background:linear-gradient(110deg,#f3f7fb 0%,#dcebf1 46%,#8ee8df 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.chapter-intro .hero-3d .v70-letter{color:#eaf4f6;background:none;-webkit-text-fill-color:#eaf4f6;}
 .chapter-intro .hero-3d .v70-letter.is-visible{opacity:1;transform:none;filter:none;transition:opacity .50s cubic-bezier(.2,.8,.2,1),transform .64s cubic-bezier(.2,.8,.2,1),filter .64s cubic-bezier(.2,.8,.2,1);}
 .chapter-intro .intro-sub{max-width:720px;margin:22px auto 0;}
 .chapter-intro .scroll-cue{margin-top:26px;}
